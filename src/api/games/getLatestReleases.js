@@ -4,7 +4,7 @@
 	Arnaud De Baerdemaeker
 */
 
-import axiosInstance from "./baseAPICallSettings";
+import axiosInstance from "../baseAPICallSettings";
 
 const getLatestReleases = async () => {
 	const date = new Date();

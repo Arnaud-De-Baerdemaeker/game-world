@@ -4,7 +4,7 @@
 	Arnaud De Baerdemaeker
 */
 
-import axiosInstance from "./baseAPICallSettings";
+import axiosInstance from "../baseAPICallSettings";
 
 const getGameDetails = async (slug) => {
 	return await axiosInstance.get(
