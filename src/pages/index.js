@@ -17,9 +17,9 @@ import {getLatestReleases} from "@/api/games/getLatestReleases";
 import styles from "./Home.module.css";
 
 const Home = (props) => {
-	const [currentPage, setCurrentPage] = useState(2);
-	const [moreResults, setMoreResults] = useState(null);
-	console.log(moreResults)
+	const [nextPage, setNextPage] = useState(2);
+	const [moreResults, setMoreResults] = useState([]);
+	const [hasMoreResults, setHasMoreResults] = useState(null);
 
 	return(
 		<>
@@ -39,146 +39,152 @@ const Home = (props) => {
 				/>
 			</Head>
 			<Menu />
-			<List title="Latest releases">
-				{props.latestReleases.results.length > 0
-					? props.latestReleases.results.map(entry => (
-						<Card
-							key={entry.id}
-							id={entry.id}
-							slug={entry.slug}
-							pathname={`/game/[slug]`}
-							as={`/game/${entry.slug}`}
-							dominantColor={entry.dominant_color}
-							saturatedColor={entry.saturated_color}
-							shortScreenshots={entry.short_screenshorts}
-							tags={entry.tags}
-						>
-							<article>
-								<div>
-									<img
-										src={entry.background_image}
-										alt=""
-										className=""
-									/>
-									<h3 data-name={entry.slug}>{entry.name}</h3>
-								</div>
-								<menu></menu>
-								<dl>
-									<dt>Platforms</dt>
-									{entry.platforms.length > 0
-										? <>
-											{entry.platforms.map(item => (
-												<dd
-													key={item.platform.id}
-													data-platform={item.platform.slug}
-												>
-													{item.platform.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
+			<main>
+				<List title="Latest releases">
+					{props.latestReleases.results.length > 0
+						? props.latestReleases.results.map(entry => (
+							<Card
+								key={entry.id}
+								id={entry.id}
+								slug={entry.slug}
+								pathname={`/game/[slug]`}
+								as={`/game/${entry.slug}`}
+								dominantColor={entry.dominant_color}
+								saturatedColor={entry.saturated_color}
+								shortScreenshots={entry.short_screenshorts}
+								tags={entry.tags}
+							>
+								<article>
+									<div>
+										<img
+											src={entry.background_image}
+											alt=""
+											className=""
+										/>
+										<h3 data-name={entry.slug}>{entry.name}</h3>
+									</div>
+									<menu></menu>
+									<dl>
+										<dt>Platforms</dt>
+										{entry.platforms.length > 0
+											? <>
+												{entry.platforms.map(item => (
+													<dd
+														key={item.platform.id}
+														data-platform={item.platform.slug}
+													>
+														{item.platform.name}
+													</dd>
+												))}
+											</>
+											: <dd>N/A</dd>
+										}
 
-									<dt>Release</dt>
-									{entry.released
-										? <dd>{entry.released}</dd>
-										: <dd>N/A</dd>
-									}
+										<dt>Release</dt>
+										{entry.released
+											? <dd>{entry.released}</dd>
+											: <dd>N/A</dd>
+										}
 
-									<dt>Genres</dt>
-									{entry.genres.length > 0
-										? <>
-											{entry.genres.map(item => (
-												<dd
-													key={item.id}
-													data-genre={item.slug}
-												>
-													{item.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-								</dl>
-							</article>
-						</Card>
-					))
-					: <p>No results were returned</p>
-				}
-			</List>
-			{moreResults != null
-				? moreResults.results.length > 0
-					? moreResults.results.map(entry => (
-						<Card
-							key={entry.id}
-							id={entry.id}
-							slug={entry.slug}
-							pathname={`/game/[slug]`}
-							as={`/game/${entry.slug}`}
-							dominantColor={entry.dominant_color}
-							saturatedColor={entry.saturated_color}
-							shortScreenshots={entry.short_screenshorts}
-							tags={entry.tags}
-						>
-							<article>
-								<div>
-									<img
-										src={entry.background_image}
-										alt=""
-										className=""
-									/>
-									<h3 data-name={entry.slug}>{entry.name}</h3>
-								</div>
-								<menu></menu>
-								<dl>
-									<dt>Platforms</dt>
-									{entry.platforms.length > 0
-										? <>
-											{entry.platforms.map(item => (
-												<dd
-													key={item.platform.id}
-													data-platform={item.platform.slug}
-												>
-													{item.platform.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
+										<dt>Genres</dt>
+										{entry.genres.length > 0
+											? <>
+												{entry.genres.map(item => (
+													<dd
+														key={item.id}
+														data-genre={item.slug}
+													>
+														{item.name}
+													</dd>
+												))}
+											</>
+											: <dd>N/A</dd>
+										}
+									</dl>
+								</article>
+							</Card>
+						))
+						: <p>No results were returned</p>
+					}
+					{moreResults.length != 0
+						? moreResults.map(entry => (
+							<Card
+									key={entry.id}
+									id={entry.id}
+									slug={entry.slug}
+									pathname={`/game/[slug]`}
+									as={`/game/${entry.slug}`}
+									dominantColor={entry.dominant_color}
+									saturatedColor={entry.saturated_color}
+									shortScreenshots={entry.short_screenshorts}
+									tags={entry.tags}
+								>
+									<article>
+										<div>
+											<img
+												src={entry.background_image}
+												alt=""
+												className=""
+											/>
+											<h3 data-name={entry.slug}>{entry.name}</h3>
+										</div>
+										<menu></menu>
+										<dl>
+											<dt>Platforms</dt>
+											{entry.platforms.length > 0
+												? <>
+													{entry.platforms.map(item => (
+														<dd
+															key={item.platform.id}
+															data-platform={item.platform.slug}
+														>
+															{item.platform.name}
+														</dd>
+													))}
+												</>
+												: <dd>N/A</dd>
+											}
 
-									<dt>Release</dt>
-									{entry.released
-										? <dd>{entry.released}</dd>
-										: <dd>N/A</dd>
-									}
+											<dt>Release</dt>
+											{entry.released
+												? <dd>{entry.released}</dd>
+												: <dd>N/A</dd>
+											}
 
-									<dt>Genres</dt>
-									{entry.genres.length > 0
-										? <>
-											{entry.genres.map(item => (
-												<dd
-													key={item.id}
-													data-genre={item.slug}
-												>
-													{item.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-								</dl>
-							</article>
-						</Card>
-					))
-					: <p>No results were returned</p>
-				: null
-			}
-			<LoadMore
-				currentPage={currentPage}
-				setCurrentPage={setCurrentPage}
-				moreResults={moreResults}
-				setMoreResults={setMoreResults}
-			/>
+											<dt>Genres</dt>
+											{entry.genres.length > 0
+												? <>
+													{entry.genres.map(item => (
+														<dd
+															key={item.id}
+															data-genre={item.slug}
+														>
+															{item.name}
+														</dd>
+													))}
+												</>
+												: <dd>N/A</dd>
+											}
+										</dl>
+									</article>
+							</Card>
+						))
+						: null
+					}
+				</List>
+				<LoadMore
+					nextPage={nextPage}
+					setNextPage={setNextPage}
+					moreResults={moreResults}
+					setMoreResults={setMoreResults}
+					setHasMoreResults={setHasMoreResults}
+					apiCall={getLatestReleases}
+					next={props.latestReleases.next != null || hasMoreResults == true
+						? true
+						: false
+					}
+				/>
+			</main>
 		</>
 	);
 }
