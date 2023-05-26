@@ -5,7 +5,7 @@
 */
 
 import Head from "next/head";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
 import List from "@/components/list/List";
@@ -20,6 +20,15 @@ const Home = (props) => {
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 	const [hasMoreResults, setHasMoreResults] = useState(null);
+
+	useEffect(() => {
+		if(props.publishers.next != null) {
+			setHasMoreResults(true);
+		}
+		else {
+			setHasMoreResults(false);
+		}
+	}, []);
 
 	return(
 		<>
