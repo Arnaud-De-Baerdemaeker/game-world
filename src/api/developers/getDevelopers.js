@@ -6,7 +6,7 @@
 
 import axiosInstance from "../baseAPICallSettings";
 
-const getDevelopers = async (nextPage) => {
+const getDevelopers = async ({nextPage}) => {
 	return await axiosInstance.get(
 		"/developers",
 		{
