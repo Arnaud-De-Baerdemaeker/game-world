@@ -6,58 +6,25 @@
 
 import axiosInstance from "../baseAPICallSettings";
 
-const getLatestReleases = async () => {
-	const date = new Date();
-	const unchangedCurrentDateValues = {
-		date: `${date.getDate()}`,
-		currentMonth: `${date.getMonth() + 1}`,
-		lastMonth: `${date.getMonth()}`
-	};
+const getLatestReleases = async (params) => {
+	const currentDate = new Date();
+	const pastDate = new Date();
 
-	let changedCurrentDateValues = {
-		date: null,
-		currentMonth: null,
-		lastMonth: null
-	};
+	pastDate.setDate(pastDate.getDate() - 30);
 
-	const formFullDate = () => {
-		if(unchangedCurrentDateValues.date.length === 1) {
-			changedCurrentDateValues.date = `0${unchangedCurrentDateValues.date}`;
+	const formattedCurrentDate = currentDate.toISOString().split("T")[0];
+	const formattedPastDate = pastDate.toISOString().split("T")[0];
+
+	return await axiosInstance.get(
+		"/games",
+		{
+			params: {
+				page: params.nextPage ? params.nextPage : 1,
+				page_size: 20,
+				dates: `${formattedPastDate},${formattedCurrentDate}`
+			}
 		}
-		else {
-			changedCurrentDateValues.date = unchangedCurrentDateValues.date;
-		}
-
-		if(unchangedCurrentDateValues.currentMonth.length === 1) {
-			changedCurrentDateValues.currentMonth = `0${unchangedCurrentDateValues.currentMonth}`;
-		}
-
-		if(unchangedCurrentDateValues.lastMonth.length === 1) {
-			changedCurrentDateValues.lastMonth = `0${unchangedCurrentDateValues.lastMonth}`;
-		}
-	};
-
-	formFullDate();
-
-	const formCurrentFullDate = () => {
-		const fullCurrentDate = `${date.getFullYear()}-${changedCurrentDateValues.currentMonth}-${changedCurrentDateValues.date}`;
-
-		return fullCurrentDate;
-	};
-
-	const form30DaysPriorFullDate = () => {
-		const fullPriorDate = `${date.getFullYear()}-${changedCurrentDateValues.lastMonth}-${changedCurrentDateValues.date}`;
-
-		return fullPriorDate;
-	};
-
-	return await axiosInstance.get("/games", {
-		params: {
-			page: 1,
-			page_size: 15,
-			dates: `${form30DaysPriorFullDate()},${formCurrentFullDate()}`
-		}
-	});
+	);
 }
 
 export {getLatestReleases};
