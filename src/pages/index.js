@@ -19,15 +19,11 @@ import styles from "./Home.module.css";
 const Home = (props) => {
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
-	const [hasMoreResults, setHasMoreResults] = useState(null);
+	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
+	const [hasFollowingCallsMoreResults, setHasFollowingCallsMoreResults] = useState(null);
 
 	useEffect(() => {
-		if(props.publishers.next != null) {
-			setHasMoreResults(true);
-		}
-		else {
-			setHasMoreResults(false);
-		}
+		props.latestReleases.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
 	}, []);
 
 	return(
@@ -75,7 +71,7 @@ const Home = (props) => {
 									<menu></menu>
 									<dl>
 										<dt>Platforms</dt>
-										{entry.platforms.length > 0
+										{entry.platforms
 											? <>
 												{entry.platforms.map(item => (
 													<dd
@@ -96,7 +92,7 @@ const Home = (props) => {
 										}
 
 										<dt>Genres</dt>
-										{entry.genres.length > 0
+										{entry.genres
 											? <>
 												{entry.genres.map(item => (
 													<dd
@@ -118,64 +114,64 @@ const Home = (props) => {
 					{moreResults.length != 0
 						? moreResults.map(entry => (
 							<Card
-									key={entry.id}
-									id={entry.id}
-									slug={entry.slug}
-									pathname={`/game/[slug]`}
-									as={`/game/${entry.slug}`}
-									dominantColor={entry.dominant_color}
-									saturatedColor={entry.saturated_color}
-									shortScreenshots={entry.short_screenshorts}
-									tags={entry.tags}
-								>
-									<article>
-										<div>
-											<img
-												src={entry.background_image}
-												alt=""
-												className=""
-											/>
-											<h3 data-name={entry.slug}>{entry.name}</h3>
-										</div>
-										<menu></menu>
-										<dl>
-											<dt>Platforms</dt>
-											{entry.platforms.length > 0
-												? <>
-													{entry.platforms.map(item => (
-														<dd
-															key={item.platform.id}
-															data-platform={item.platform.slug}
-														>
-															{item.platform.name}
-														</dd>
-													))}
-												</>
-												: <dd>N/A</dd>
-											}
+								key={entry.id}
+								id={entry.id}
+								slug={entry.slug}
+								pathname={`/game/[slug]`}
+								as={`/game/${entry.slug}`}
+								dominantColor={entry.dominant_color}
+								saturatedColor={entry.saturated_color}
+								shortScreenshots={entry.short_screenshorts}
+								tags={entry.tags}
+							>
+								<article>
+									<div>
+										<img
+											src={entry.background_image}
+											alt=""
+											className=""
+										/>
+										<h3 data-name={entry.slug}>{entry.name}</h3>
+									</div>
+									<menu></menu>
+									<dl>
+										<dt>Platforms</dt>
+										{entry.platforms
+											? <>
+												{entry.platforms.map(item => (
+													<dd
+														key={item.platform.id}
+														data-platform={item.platform.slug}
+													>
+														{item.platform.name}
+													</dd>
+												))}
+											</>
+											: <dd>N/A</dd>
+										}
 
-											<dt>Release</dt>
-											{entry.released
-												? <dd>{entry.released}</dd>
-												: <dd>N/A</dd>
-											}
+										<dt>Release</dt>
+										{entry.released
+											? <dd>{entry.released}</dd>
+											: <dd>N/A</dd>
+										}
 
-											<dt>Genres</dt>
-											{entry.genres.length > 0
-												? <>
-													{entry.genres.map(item => (
-														<dd
-															key={item.id}
-															data-genre={item.slug}
-														>
-															{item.name}
-														</dd>
-													))}
-												</>
-												: <dd>N/A</dd>
-											}
-										</dl>
-									</article>
+										<dt>Genres</dt>
+										{entry.genres
+											? <>
+												{entry.genres.map(item => (
+													<dd
+														key={item.id}
+														data-genre={item.slug}
+													>
+														{item.name}
+													</dd>
+												))}
+											</>
+											: <dd>N/A</dd>
+										}
+									</dl>
+								</article>
 							</Card>
 						))
 						: null
@@ -186,9 +182,10 @@ const Home = (props) => {
 					setNextPage={setNextPage}
 					moreResults={moreResults}
 					setMoreResults={setMoreResults}
-					setHasMoreResults={setHasMoreResults}
+					setHasFirstCallMoreResults={setHasFirstCallMoreResults}
+					setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
 					apiCall={getLatestReleases}
-					next={props.latestReleases.next != null || hasMoreResults == true
+					next={hasFirstCallMoreResults || hasFollowingCallsMoreResults
 						? true
 						: false
 					}
@@ -201,7 +198,7 @@ const Home = (props) => {
 export default Home;
 
 const getStaticProps = async () => {
-	const latestReleasesRequest = await getLatestReleases();
+	const latestReleasesRequest = await getLatestReleases({});
 	const latestReleasesResponse = latestReleasesRequest.data;
 
 	return {
