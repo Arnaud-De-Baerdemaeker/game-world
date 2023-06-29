@@ -7,7 +7,6 @@
 import axiosInstance from "../baseAPICallSettings";
 
 const getPublishers = async (nextPage) => {
-	console.log(nextPage)
 	return await axiosInstance.get(
 		"/publishers",
 		{
