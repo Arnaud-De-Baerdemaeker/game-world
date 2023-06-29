@@ -30,6 +30,12 @@ const Menu = () => {
 		},
 		{
 			listItemClass: styles.listItem,
+			href: "/platforms",
+			linkClass: styles.link,
+			value: "Platforms"
+		},
+		{
+			listItemClass: styles.listItem,
 			href: "/library",
 			linkClass: styles.link,
 			value: "My Library"
