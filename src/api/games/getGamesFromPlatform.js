@@ -6,13 +6,13 @@
 
 import axiosInstance from "../baseAPICallSettings";
 
-const getGamesFromPlatform = async (id) => {
+const getGamesFromPlatform = async (parameters) => {
 	return await axiosInstance.get(
-		`/games`,
+		"/games",
 		{
 			params: {
-				platforms: id,
-				page: 1,
+				platforms: parameters.id,
+				page: parameters.nextPage ? parameters.nextPage : 1,
 				page_size: 20
 			}
 		}
