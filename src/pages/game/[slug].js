@@ -6,14 +6,16 @@
 
 import {useState} from "react";
 import Head from "next/head";
+import Link from "next/link";
 
-import Menu from "../../components/menu/Menu";
-import Footer from "../../components/footer/Footer";
+import Menu from "@/components/menu/Menu";
+import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
-import {getGameDetails} from "../../api/games/getGameDetails";
-import {getGameScreenshots} from "../../api/games/getGameScreenshots";
-import {getGameTrailers} from "../../api/games/getGameTrailers";
-import {getGameAchievements} from "../../api/games/getGameAchievements";
+import {getGameDetails} from "@/api/games/getGameDetails";
+import {getGameScreenshots} from "@/api/games/getGameScreenshots";
+import {getGameTrailers} from "@/api/games/getGameTrailers";
+import {getGameAchievements} from "@/api/games/getGameAchievements";
 import {getGameAdditions} from "@/api/games/getGameAdditions";
 
 const Game = (props) => {
@@ -64,14 +66,12 @@ const Game = (props) => {
 				/>
 			</Head>
 			<Menu />
-			<header>
-				<img
-					src={props.gameDetails.background_image}
-					alt={`"${props.gameDetails.name}" cover image`}
-					className=""
-				/>
-				<h2>{props.gameDetails.name}</h2>
-			</header>
+			<Header
+				imageSrc={props.gameDetails.background_image}
+				imageAlt={`"${props.gameDetails.name}" cover image`}
+				imageClass=""
+				title={<h2>{props.gameDetails.name}</h2>}
+			/>
 			<main>
 				<section>
 					<h3>Release date</h3>
@@ -132,7 +132,19 @@ const Game = (props) => {
 					{props.gameDetails.genres.length > 0
 						? <ul>
 							{props.gameDetails.genres.map(entry => (
-								<li key={entry.id}>{entry.name}</li>
+								<li key={entry.id}>
+									<Link
+										href={{
+											pathname: entry.slug,
+											query: {
+												slug: entry.slug
+											}
+										}}
+										as={`/genre/${entry.slug}`}
+									>
+										{entry.name}
+									</Link>
+								</li>
 							))}
 						</ul>
 						: <p>TBA</p>
