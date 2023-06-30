@@ -9,7 +9,7 @@ import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
 import List from "@/components/list/List";
-import Card from "@/components/card/Card";
+import CompanyCard from "@/components/cards/CompanyCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 
 import {getDevelopers} from "@/api/developers/getDevelopers";
@@ -46,41 +46,33 @@ const Developers = (props) => {
 				<List title="Developers">
 					{props.developers.results.length > 0
 						? props.developers.results.map(entry => (
-							<Card
+							<CompanyCard
 								key={entry.id}
 								id={entry.id}
-								slug={entry.slug}
 								pathname={`/developer/[slug]`}
 								as={`/developer/${entry.slug}`}
-							>
-								<div style={{backgroundImage: `url("${entry.image_background}")`}}>
-									<h3>{entry.name}</h3>
-									<dl>
-										<dt>Games count</dt>
-										<dd>{entry.games_count ? entry.games_count : "N/A"}</dd>
-									</dl>
-								</div>
-							</Card>
+								imageSrc={entry.image_background}
+								imageAlt=""
+								imageClass=""
+								companyName={entry.name}
+								companyGames={entry.games_count}
+							/>
 						))
 						: <p>No results were returned</p>
 					}
 					{moreResults.length != 0
 						? moreResults.map(entry => (
-							<Card
+							<CompanyCard
 								key={entry.id}
 								id={entry.id}
-								slug={entry.slug}
 								pathname={`/publisher/[slug]`}
 								as={`/publisher/${entry.slug}`}
-							>
-								<div style={{backgroundImage: `url("${entry.image_background}")`}}>
-									<h3>{entry.name}</h3>
-									<dl>
-										<dt>Games count</dt>
-										<dd>{entry.games_count ? entry.games_count : "N/A"}</dd>
-									</dl>
-								</div>
-							</Card>
+								imageSrc={entry.image_background}
+								imageAlt=""
+								imageClass=""
+								companyName={entry.name}
+								companyGames={entry.games_count}
+							/>
 						))
 						: null
 					}
