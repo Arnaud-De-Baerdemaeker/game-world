@@ -5,21 +5,30 @@
 */
 
 import Head from "next/head";
-import {useEffect} from "react";
+import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
-import Card from "@/components/card/Card";
+import Header from "@/components/header/Header";
+import GameCard from "@/components/cards/GameCard";
+import LoadMore from "@/components/loadMore/LoadMore";
 
 import {getPlatformDetails} from "@/api/platforms/getPlatformDetails";
 import {getGamesFromPlatform} from "@/api/games/getGamesFromPlatform";
 
 const Platform = (props) => {
+	const [nextPage, setNextPage] = useState(2);
+	const [moreResults, setMoreResults] = useState([]);
+	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
+	const [hasFollowingCallsMoreResults, setHasFollowingCallsMoreResults] = useState(null);
+
 	useEffect(() => {
 		const parser = new DOMParser();
 		const parsedContent = parser.parseFromString(props.platformDetails.description, "text/html");
 		const elements = parsedContent.body.children;
 		const target = document.querySelector("#platformDescription");
 		target.append(...elements);
+
+		props.gamesFromPlatform.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
 	}, []);
 
 	return(
@@ -40,14 +49,12 @@ const Platform = (props) => {
 				/>
 			</Head>
 			<Menu />
-			<header>
-				<img
-					src={props.platformDetails.image_background}
-					alt={`"${props.platformDetails.name}" cover image`}
-					className=""
-				/>
-				<h2>{props.platformDetails.name}</h2>
-			</header>
+			<Header
+				imageSrc={props.platformDetails.image_background}
+				imageAlt={`"${props.platformDetails.name}" cover image`}
+				imageClass=""
+				title={<h2>{props.platformDetails.name}</h2>}
+			/>
 			<main>
 				<div id="platformDescription"></div>
 
@@ -62,76 +69,72 @@ const Platform = (props) => {
 					<dd>{props.platformDetails.year_end ? props.platformDetails.year_end : "N/A"}</dd>
 				</dl>
 
-				{props.platformGames.results.length > 0
+				{props.gamesFromPlatform.results.length > 0
 					? <section>
 						<h3>Games on {props.platformDetails.name}</h3>
-						{props.platformGames.results.map(entry => (
-							<Card
-								key={entry.id}
-								id={entry.id}
-								slug={entry.slug}
-								pathname={`/game/[slug]`}
-								as={`/game/${entry.slug}`}
-								dominantColor={entry.dominant_color}
-								saturatedColor={entry.saturated_color}
-								shortScreenshots={entry.short_screenshorts}
-								tags={entry.tags}
-							>
-								<article>
-									<div>
-										<img
-											src={entry.background_image}
-											alt=""
-											className=""
-										/>
-										<h3 data-name={entry.slug}>{entry.name}</h3>
-									</div>
-									<menu>
-										{/* <li></li> */}
-									</menu>
-									<dl>
-										<dt>Platforms</dt>
-										{entry.platforms.length > 0
-											? <>
-												{entry.platforms.map(item => (
-													<dd
-														key={item.platform.id}
-														data-platform={item.platform.slug}
-													>
-														{item.platform.name}
-													</dd>
-												))}
-											</>
-											: <dd>N/A</dd>
-										}
 
-										<dt>Release</dt>
-										{entry.released
-											? <dd>{entry.released}</dd>
-											: <dd>N/A</dd>
-										}
-
-										<dt>Genres</dt>
-										{entry.genres.length > 0
-											? <>
-												{entry.genres.map(item => (
-													<dd
-														key={item.id}
-														data-genre={item.slug}
-													>
-														{item.name}
-													</dd>
-												))}
-											</>
-											: <dd>N/A</dd>
-										}
-									</dl>
-								</article>
-							</Card>
-						))}
+						<div>
+							{props.gamesFromPlatform.results.map(entry => (
+								<GameCard
+									key={entry.id}
+									id={entry.id}
+									slug={entry.slug}
+									pathname={`/game/[slug]`}
+									as={`/game/${entry.slug}`}
+									dominantColor={entry.dominant_color}
+									saturatedColor={entry.saturated_color}
+									shortScreenshots={entry.short_screenshorts}
+									tags={entry.tags}
+									imageSrc={entry.background_image}
+									imageAlt=""
+									imageClass=""
+									gameName={entry.name}
+									gamePlatforms={entry.platforms}
+									gameRelease={entry.released}
+									gameGenres={entry.genres}
+								/>
+							))}
+						</div>
 					</section>
 					: <p>No results were returned</p>
 				}
+				{moreResults.length != 0
+					? moreResults.map(entry => (
+						<GameCard
+							key={entry.id}
+							id={entry.id}
+							slug={entry.slug}
+							pathname={`/game/[slug]`}
+							as={`/game/${entry.slug}`}
+							dominantColor={entry.dominant_color}
+							saturatedColor={entry.saturated_color}
+							shortScreenshots={entry.short_screenshorts}
+							tags={entry.tags}
+							imageSrc={entry.background_image}
+							imageAlt=""
+							imageClass=""
+							gameName={entry.name}
+							gamePlatforms={entry.platforms}
+							gameRelease={entry.released}
+							gameGenres={entry.genres}
+						/>
+					))
+					: null
+				}
+				<LoadMore
+					nextPage={nextPage}
+					setNextPage={setNextPage}
+					moreResults={moreResults}
+					setMoreResults={setMoreResults}
+					setHasFirstCallMoreResults={setHasFirstCallMoreResults}
+					setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
+					slug={props.platformDetails.slug}
+					apiCall={getGamesFromPlatform}
+					next={hasFirstCallMoreResults || hasFollowingCallsMoreResults
+						? true
+						: false
+					}
+				/>
 			</main>
 		</>
 	);
@@ -140,16 +143,18 @@ const Platform = (props) => {
 export default Platform;
 
 const getServerSideProps = async (context) => {
-	const platformDetailsRequest = await getPlatformDetails(context.query.slug);
-	const platformDetailsResponse = platformDetailsRequest.data;
+	const platformDetailsRequest = getPlatformDetails(context.query.slug);
+	const gamesFromPlatformRequest = getGamesFromPlatform({id: context.query.id});
 
-	const platformGamesRequest = await getGamesFromPlatform(context.query.id);
-	const platformGamesResponse = platformGamesRequest.data;
+	const [platformDetailsResponse, gamesFromPlatformResponse] = await Promise.all([
+		platformDetailsRequest,
+		gamesFromPlatformRequest
+	]);
 
 	return {
 		props: {
-			platformDetails: platformDetailsResponse,
-			platformGames: platformGamesResponse
+			platformDetails: platformDetailsResponse.data,
+			gamesFromPlatform: gamesFromPlatformResponse.data
 		}
 	};
 };

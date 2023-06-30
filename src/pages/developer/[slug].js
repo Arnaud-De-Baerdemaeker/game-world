@@ -8,7 +8,8 @@ import Head from "next/head";
 import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
-import Card from "@/components/card/Card";
+import Header from "@/components/header/Header";
+import GameCard from "@/components/cards/GameCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 
 import {getDeveloperDetails} from "@/api/developers/getDeveloperDetails";
@@ -21,6 +22,12 @@ const Developer = (props) => {
 	const [hasFollowingCallsMoreResults, setHasFollowingCallsMoreResults] = useState(null);
 
 	useEffect(() => {
+		const parser = new DOMParser();
+		const parsedContent = parser.parseFromString(props.developerDetails.description, "text/html");
+		const elements = parsedContent.body.children;
+		const target = document.querySelector("#companyDescription");
+		target.append(...elements);
+
 		props.gamesFromDeveloper.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
 	}, []);
 
@@ -42,22 +49,22 @@ const Developer = (props) => {
 				/>
 			</Head>
 			<Menu />
-			<header>
-				<img
-					src={props.developerDetails.image_background}
-					alt={`"${props.developerDetails.name}" cover image`}
-					className=""
-				/>
-				<h2>{props.developerDetails.name}</h2>
-			</header>
+			<Header
+				imageSrc={props.developerDetails.image_background}
+				imageAlt={`"${props.developerDetails.name}" cover image`}
+				imageClass=""
+				title={<h2>{props.developerDetails.name}</h2>}
+			/>
 			<main>
 				<div id="companyDescription"></div>
+
 				{props.gamesFromDeveloper.results.length > 0
 					? <section>
 						<h3>Games from {props.developerDetails.name}</h3>
+
 						<div>
 							{props.gamesFromDeveloper.results.map(entry => (
-								<Card
+								<GameCard
 									key={entry.id}
 									id={entry.id}
 									slug={entry.slug}
@@ -67,58 +74,14 @@ const Developer = (props) => {
 									saturatedColor={entry.saturated_color}
 									shortScreenshots={entry.short_screenshorts}
 									tags={entry.tags}
-								>
-									<article>
-										<div>
-											<img
-												src={entry.background_image}
-												alt=""
-												className=""
-											/>
-											<h3 data-name={entry.slug}>{entry.name}</h3>
-										</div>
-										<menu>
-											{/* <li></li> */}
-										</menu>
-										<dl>
-											<dt>Platforms</dt>
-											{entry.platforms.length > 0
-												? <>
-													{entry.platforms.map(item => (
-														<dd
-															key={item.platform.id}
-															data-platform={item.platform.slug}
-														>
-															{item.platform.name}
-														</dd>
-													))}
-												</>
-												: <dd>N/A</dd>
-											}
-	
-											<dt>Release</dt>
-											{entry.released
-												? <dd>{entry.released}</dd>
-												: <dd>N/A</dd>
-											}
-	
-											<dt>Genres</dt>
-											{entry.genres.length > 0
-												? <>
-													{entry.genres.map(item => (
-														<dd
-															key={item.id}
-															data-genre={item.slug}
-														>
-															{item.name}
-														</dd>
-													))}
-												</>
-												: <dd>N/A</dd>
-											}
-										</dl>
-									</article>
-								</Card>
+									imageSrc={entry.background_image}
+									imageAlt=""
+									imageClass=""
+									gameName={entry.name}
+									gamePlatforms={entry.platforms}
+									gameRelease={entry.released}
+									gameGenres={entry.genres}
+								/>
 							))}
 						</div>
 					</section>
@@ -126,7 +89,7 @@ const Developer = (props) => {
 				}
 				{moreResults.length != 0
 					? moreResults.map(entry => (
-						<Card
+						<GameCard
 							key={entry.id}
 							id={entry.id}
 							slug={entry.slug}
@@ -136,56 +99,14 @@ const Developer = (props) => {
 							saturatedColor={entry.saturated_color}
 							shortScreenshots={entry.short_screenshorts}
 							tags={entry.tags}
-						>
-							<article>
-								<div>
-									<img
-										src={entry.background_image}
-										alt=""
-										className=""
-									/>
-									<h3 data-name={entry.slug}>{entry.name}</h3>
-								</div>
-								<menu></menu>
-								<dl>
-									<dt>Platforms</dt>
-									{entry.platforms
-										? <>
-											{entry.platforms.map(item => (
-												<dd
-													key={item.platform.id}
-													data-platform={item.platform.slug}
-												>
-													{item.platform.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-	
-									<dt>Release</dt>
-									{entry.released
-										? <dd>{entry.released}</dd>
-										: <dd>N/A</dd>
-									}
-	
-									<dt>Genres</dt>
-									{entry.genres
-										? <>
-											{entry.genres.map(item => (
-												<dd
-													key={item.id}
-													data-genre={item.slug}
-												>
-													{item.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-								</dl>
-							</article>
-						</Card>
+							imageSrc={entry.background_image}
+							imageAlt=""
+							imageClass=""
+							gameName={entry.name}
+							gamePlatforms={entry.platforms}
+							gameRelease={entry.released}
+							gameGenres={entry.genres}
+						/>
 					))
 					: null
 				}
@@ -211,16 +132,18 @@ const Developer = (props) => {
 export default Developer;
 
 const getServerSideProps = async (context) => {
-	const developerDetailsRequest = await getDeveloperDetails(context.query.slug);
-	const developerDetailsResponse = developerDetailsRequest.data;
+	const developerDetailsRequest = getDeveloperDetails(context.query.slug);
+	const gamesFromDeveloperRequest = getGamesFromDeveloper({slug: context.query.slug});
 
-	const gamesFromDeveloperRequest = await getGamesFromDeveloper({slug: context.query.slug});
-	const gamesFromDeveloperResponse = gamesFromDeveloperRequest.data;
+	const [developerDetailsResponse, gamesFromDeveloperResponse] = await Promise.all([
+		developerDetailsRequest,
+		gamesFromDeveloperRequest
+	]);
 
 	return {
 		props: {
-			developerDetails: developerDetailsResponse,
-			gamesFromDeveloper: gamesFromDeveloperResponse
+			developerDetails: developerDetailsResponse.data,
+			gamesFromDeveloper: gamesFromDeveloperResponse.data
 		}
 	};
 };
