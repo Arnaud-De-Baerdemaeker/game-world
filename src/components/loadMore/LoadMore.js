@@ -12,7 +12,7 @@ const LoadMore = (props) => {
 			<p>Your research returned no results</p>
 		);
 	}
-	else if(props.moreResults.length == 0 && props.next == false) {
+	else if(props.next == false) {
 		return(
 			<p>End of the results</p>
 		);
