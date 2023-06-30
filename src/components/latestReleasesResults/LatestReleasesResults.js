@@ -7,7 +7,7 @@
 import {useState} from "react";
 
 import List from "@/components/list/List";
-import Card from "@/components/card/Card";
+import GameCard from "@/components/cards/GameCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 
 import {getLatestReleases} from "@/api/games/getLatestReleases";
@@ -21,7 +21,7 @@ const LatestReleasesResults = (props) => {
 			<List title="Latest releases">
 				{props.latestReleases.results.length > 0
 					? props.latestReleases.results.map(entry => (
-						<Card
+						<GameCard
 							key={entry.id}
 							id={entry.id}
 							slug={entry.slug}
@@ -31,62 +31,20 @@ const LatestReleasesResults = (props) => {
 							saturatedColor={entry.saturated_color}
 							shortScreenshots={entry.short_screenshorts}
 							tags={entry.tags}
-						>
-							<article>
-								<figure>
-									<img
-										src={entry.background_image}
-										alt=""
-										className=""
-									/>
-									<h3 data-name={entry.slug}>{entry.name}</h3>
-								</figure>
-								<menu></menu>
-								<dl>
-									<dt>Platforms</dt>
-									{entry.platforms
-										? <>
-											{entry.platforms.map(item => (
-												<dd
-													key={item.platform.id}
-													data-platform={item.platform.slug}
-												>
-													{item.platform.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-
-									<dt>Release</dt>
-									{entry.released
-										? <dd>{entry.released}</dd>
-										: <dd>N/A</dd>
-									}
-
-									<dt>Genres</dt>
-									{entry.genres
-										? <>
-											{entry.genres.map(item => (
-												<dd
-													key={item.id}
-													data-genre={item.slug}
-												>
-													{item.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-								</dl>
-							</article>
-						</Card>
+							imageSrc={entry.background_image}
+							imageAlt=""
+							imageClass=""
+							gameName={entry.name}
+							gamePlatforms={entry.platforms}
+							gameRelease={entry.released}
+							gameGenres={entry.genres}
+						/>
 					))
 					: <p>No results were returned</p>
 				}
 				{moreResults.length != 0
 					? moreResults.map(entry => (
-						<Card
+						<GameCard
 							key={entry.id}
 							id={entry.id}
 							slug={entry.slug}
@@ -96,56 +54,14 @@ const LatestReleasesResults = (props) => {
 							saturatedColor={entry.saturated_color}
 							shortScreenshots={entry.short_screenshorts}
 							tags={entry.tags}
-						>
-							<article>
-								<figure>
-									<img
-										src={entry.background_image}
-										alt=""
-										className=""
-									/>
-									<h3 data-name={entry.slug}>{entry.name}</h3>
-								</figure>
-								<menu></menu>
-								<dl>
-									<dt>Platforms</dt>
-									{entry.platforms
-										? <>
-											{entry.platforms.map(item => (
-												<dd
-													key={item.platform.id}
-													data-platform={item.platform.slug}
-												>
-													{item.platform.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-
-									<dt>Release</dt>
-									{entry.released
-										? <dd>{entry.released}</dd>
-										: <dd>N/A</dd>
-									}
-
-									<dt>Genres</dt>
-									{entry.genres
-										? <>
-											{entry.genres.map(item => (
-												<dd
-													key={item.id}
-													data-genre={item.slug}
-												>
-													{item.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-								</dl>
-							</article>
-						</Card>
+							imageSrc={entry.background_image}
+							imageAlt=""
+							imageClass=""
+							gameName={entry.name}
+							gamePlatforms={entry.platforms}
+							gameRelease={entry.released}
+							gameGenres={entry.genres}
+						/>
 					))
 					: null
 				}
