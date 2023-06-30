@@ -17,7 +17,20 @@ const Card = (props) => {
 			}}
 			as={props.as}
 		>
-			{props.children}
+			<article>
+				<img
+					src={props.imageSrc}
+					alt={props.imageAlt}
+					className={props.imageClass}
+				/>
+
+				<h3>{props.companyName}</h3>
+
+				<dl>
+					<dt>Games count</dt>
+					<dd>{props.companyGames ? props.companyGames : "N/A"}</dd>
+				</dl>
+			</article>
 		</Link>
 	);
 };
