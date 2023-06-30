@@ -8,6 +8,7 @@ import Head from "next/head";
 import {useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
+import Header from "@/components/header/Header";
 
 import {getPublisherDetails} from "@/api/publishers/getPublisherDetails";
 
@@ -38,14 +39,12 @@ const Publisher = (props) => {
 				/>
 			</Head>
 			<Menu />
-			<header>
-				<img
-					src={props.publisherDetails.image_background}
-					alt={`"${props.publisherDetails.name}" cover image`}
-					className=""
-				/>
-				<h2>{props.publisherDetails.name}</h2>
-			</header>
+			<Header
+				imageSrc={props.publisherDetails.image_background}
+				imageAlt={`"${props.publisherDetails.name}" cover image`}
+				imageClass=""
+				title={<h2>{props.publisherDetails.name}</h2>}
+			/>
 			<main>
 				<div id="companyDescription"></div>
 			</main>
