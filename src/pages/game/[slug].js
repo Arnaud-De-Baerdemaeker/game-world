@@ -15,26 +15,11 @@ import Footer from "@/components/footer/Footer";
 import {getGameDetails} from "@/api/games/getGameDetails";
 import {getGameScreenshots} from "@/api/games/getGameScreenshots";
 import {getGameTrailers} from "@/api/games/getGameTrailers";
-import {getGameAchievements} from "@/api/games/getGameAchievements";
 import {getGameAdditions} from "@/api/games/getGameAdditions";
 
 const Game = (props) => {
-	const [achievements, setAchievements] = useState(null);
-	const [areAchievementsVisible, setAreAchievementsVisible] = useState(false);
 	const [additions, setAdditions] = useState(null);
 	const [areAdditionsVisible, setAreAdditionsVisible] = useState(false);
-
-	const handleAchievementsLoading = async (slug) => {
-		if(achievements == null) {
-			const achievementsListRequest = await getGameAchievements(slug);
-			const achievementsListResponse = achievementsListRequest.data;
-			setAchievements(achievementsListResponse);
-			setAreAchievementsVisible(!areAchievementsVisible);
-		}
-		else {
-			setAreAchievementsVisible(!areAchievementsVisible);
-		}
-	};
 
 	const handleAdditionsLoading = async (slug) => {
 		if(additions == null) {
@@ -206,42 +191,7 @@ const Game = (props) => {
 					}
 				</section>
 
-				<section>
-					<h3>Trophies/Achievements</h3>
-					<button
-						type="button"
-						onClick={() => handleAchievementsLoading(props.gameDetails.slug)}
-						className=""
-					>
-						Show the achievements
-					</button>
-					{areAchievementsVisible == true
-						? achievements.results.length > 0
-							? <dl>
-								{achievements.results.map(entry => (
-									<div key={entry.id}>
-										<div>
-											<img
-												src={entry.image}
-												alt={`${entry.name} achievement icon`}
-												className={""}
-											/>
-										</div>
-										<div>
-											<dt>{entry.name}</dt>
-											<dd>{entry.description}</dd>
-										</div>
-									</div>
-								))}
-							</dl>
-							: <p>TBA</p>
-						: null
-					}
-				</section>
-
-				<section>
-
-				</section>
+				<section></section>
 			</main>
 			<Footer />
 		</>
