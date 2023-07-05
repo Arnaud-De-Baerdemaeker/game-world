@@ -4,7 +4,6 @@
 	Arnaud De Baerdemaeker
 */
 
-import {useState} from "react";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -14,25 +13,8 @@ import Footer from "@/components/footer/Footer";
 
 import {getGameDetails} from "@/api/games/getGameDetails";
 import {getGameScreenshots} from "@/api/games/getGameScreenshots";
-import {getGameTrailers} from "@/api/games/getGameTrailers";
-import {getGameAdditions} from "@/api/games/getGameAdditions";
 
 const Game = (props) => {
-	const [additions, setAdditions] = useState(null);
-	const [areAdditionsVisible, setAreAdditionsVisible] = useState(false);
-
-	const handleAdditionsLoading = async (slug) => {
-		if(additions == null) {
-			const additionsListRequest = await getGameAdditions(props.gameDetails.slug);
-			const additionsListResponse = additionsListRequest.data;
-			setAdditions(additionsListResponse);
-			setAreAdditionsVisible(!areAdditionsVisible);
-		}
-		else {
-			setAreAdditionsVisible(!areAdditionsVisible);
-		}
-	};
-
 	return(
 		<>
 			<Head>
@@ -175,23 +157,6 @@ const Game = (props) => {
 						: <p>TBA</p>
 					}
 				</section>
-
-				<section>
-					{props.trailers.results.length === 1
-						? <h3>Trailer</h3>
-						: <h3>Trailers</h3>
-					}
-					{props.trailers.results.length > 0
-						? <ul>
-							{props.trailers.results.map(entry => (
-								<li></li>
-							))}
-						</ul>
-						: <p>TBA</p>
-					}
-				</section>
-
-				<section></section>
 			</main>
 			<Footer />
 		</>
@@ -203,19 +168,16 @@ export default Game;
 const getServerSideProps = async (context) => {
 	const gameDetailsRequest = getGameDetails(context.query.slug);
 	const screenshotsListRequest = getGameScreenshots(context.query.slug);
-	const trailersListRequest = getGameTrailers(context.query.slug);
 
-	const [gameDetailsResponse, screenshotsListResponse, trailersListResponse] = await Promise.all([
+	const [gameDetailsResponse, screenshotsListResponse] = await Promise.all([
 		gameDetailsRequest,
-		screenshotsListRequest,
-		trailersListRequest
+		screenshotsListRequest
 	]);
 
 	return {
 		props: {
 			gameDetails: gameDetailsResponse.data,
-			screenshots: screenshotsListResponse.data,
-			trailers: trailersListResponse.data
+			screenshots: screenshotsListResponse.data
 		}
 	};
 };
