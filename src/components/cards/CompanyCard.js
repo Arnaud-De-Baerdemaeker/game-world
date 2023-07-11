@@ -18,13 +18,16 @@ const Card = (props) => {
 			as={props.as}
 		>
 			<article>
-				<img
-					src={props.imageSrc}
-					alt={props.imageAlt}
-					className={props.imageClass}
-				/>
-
-				<h3>{props.companyName}</h3>
+				<div>
+					<figure>
+						<img
+							src={props.imageSrc}
+							alt={props.imageAlt}
+							className={props.imageClass}
+						/>
+					</figure>
+					<h3>{props.companyName}</h3>
+				</div>
 
 				<dl>
 					<dt>Games count</dt>
