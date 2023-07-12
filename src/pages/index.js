@@ -55,6 +55,81 @@ const Home = (props) => {
 
 	useEffect(() => {
 		props.latestReleases.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
+
+		// Check if the browser supports IndexedDB
+		if(!('indexedDB' in window)) {
+			alert("This browser doesn't support IndexedDB.");
+			return;
+		}
+
+		// Initialize the database if necessary
+		const openDatabase = window.indexedDB.open("game-world-database", 1);
+		openDatabase.onupgradeneeded = (event) => {
+			let database = openDatabase.result;
+
+			database.onerror = (event) => {
+				alert("Error while loading the database");
+			};
+
+			// Create the Games library object store
+			let createGamesLibrary = database.createObjectStore("Games library", {keyPath: "id"});
+
+			// Define the indexes of the Games library
+			createGamesLibrary.createIndex("id", "id", {unique: true});
+			createGamesLibrary.createIndex("slug", "slug", {unique: true});
+			createGamesLibrary.createIndex("as", "as", {unique: true});
+			createGamesLibrary.createIndex("imageSrc", "imageSrc");
+			createGamesLibrary.createIndex("imageAlt", "imageAlt");
+			createGamesLibrary.createIndex("gameName", "gameName");
+			createGamesLibrary.createIndex("gamePlatforms", "gamePlatforms", {multiEntry: true});
+			createGamesLibrary.createIndex("gameRelease", "gameRelease");
+			createGamesLibrary.createIndex("gameGenres", "gameGenres", {multiEntry: true});
+
+
+			// Create the Games wishlist object store
+			let createGamesWishlist = database.createObjectStore("Games wishlist", {keyPath: "id"});
+
+			// Define the indexes of the Games wishlist
+			createGamesWishlist.createIndex("id", "id", {unique: true});
+			createGamesWishlist.createIndex("slug", "slug", {unique: true});
+			createGamesWishlist.createIndex("as", "as", {unique: true});
+			createGamesWishlist.createIndex("imageSrc", "imageSrc");
+			createGamesWishlist.createIndex("imageAlt", "imageAlt");
+			createGamesWishlist.createIndex("gameName", "gameName");
+			createGamesWishlist.createIndex("gamePlatforms", "gamePlatforms", {multiEntry: true});
+			createGamesWishlist.createIndex("gameRelease", "gameRelease");
+			createGamesWishlist.createIndex("gameGenres", "gameGenres", {multiEntry: true});
+
+
+			// Create the Platforms library object store
+			let createPlatformsLibrary = database.createObjectStore("Platforms library", {keyPath: "id"});
+
+			// Define the indexes of the Platforms library
+			createPlatformsLibrary.createIndex("id", "id", {unique: true});
+			createPlatformsLibrary.createIndex("slug", "slug", {unique: true});
+			createPlatformsLibrary.createIndex("as", "as", {unique: true});
+			createPlatformsLibrary.createIndex("imageSrc", "imageSrc");
+			createPlatformsLibrary.createIndex("imageAlt", "imageAlt");
+			createPlatformsLibrary.createIndex("platformName", "platformName");
+			createPlatformsLibrary.createIndex("gamesCount", "gamesCount", {multiEntry: true});
+			createPlatformsLibrary.createIndex("startYear", "startYear");
+			createPlatformsLibrary.createIndex("endYear", "endYear", {multiEntry: true});
+
+
+			// Create the Platforms wishlist
+			let createPlatformsWishlist = database.createObjectStore("Platforms wishlist", {keyPath: "id"});
+
+			//Define the indexes of the Platform wishlist
+			createPlatformsWishlist.createIndex("id", "id", {unique: true});
+			createPlatformsWishlist.createIndex("slug", "slug", {unique: true});
+			createPlatformsWishlist.createIndex("as", "as", {unique: true});
+			createPlatformsWishlist.createIndex("imageSrc", "imageSrc");
+			createPlatformsWishlist.createIndex("imageAlt", "imageAlt");
+			createPlatformsWishlist.createIndex("platformName", "platformName");
+			createPlatformsWishlist.createIndex("gamesCount", "gamesCount", {multiEntry: true});
+			createPlatformsWishlist.createIndex("startYear", "startYear");
+			createPlatformsWishlist.createIndex("endYear", "endYear", {multiEntry: true});
+		};
 	}, []);
 
 	return(
