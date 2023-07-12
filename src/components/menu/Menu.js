@@ -36,9 +36,9 @@ const Menu = () => {
 		},
 		{
 			listItemClass: styles.listItem,
-			href: "/library",
+			href: "/libraries",
 			linkClass: styles.link,
-			value: "My Library"
+			value: "My Libraries"
 		}
 	];
 
