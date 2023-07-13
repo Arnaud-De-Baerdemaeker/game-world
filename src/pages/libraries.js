@@ -5,10 +5,24 @@
 */
 
 import Head from "next/head";
+import {useState} from "react";
 
 import Menu from "@/components/menu/Menu";
 
 export default function Libraries() {
+	const [isOnCollectionTab, setIsOnCollectionTab] = useState(true);
+
+	const handleTabClicks = (click) => {
+		// Check wich tab has been clicked
+		if(click.target.id === "collection") {
+			// Check if the tab is already active
+			isOnCollectionTab === true ? null : setIsOnCollectionTab(true);
+		}
+		else {
+			isOnCollectionTab === false ? null : setIsOnCollectionTab(false);
+		}
+	};
+
 	return(
 		<>
 			<Head>
@@ -27,7 +41,49 @@ export default function Libraries() {
 				/>
 			</Head>
 			<Menu />
-			<main></main>
+			<main>
+				<ul>
+					<li
+						id="collection"
+						onClick={handleTabClicks}
+					>
+						My collection
+					</li>
+					<li
+						id="wishlist"
+						onClick={handleTabClicks}
+					>
+						My wishlist
+					</li>
+				</ul>
+
+				{isOnCollectionTab
+					? (
+						<section>
+							<h2>My collection</h2>
+							<section>
+								<h3>Games</h3>
+							</section>
+
+							<section>
+								<h3>Platforms</h3>
+							</section>
+						</section>
+					)
+					: (
+						<section>
+							<h2>My wishlist</h2>
+							<section>
+								<h3>Games</h3>
+							</section>
+
+							<section>
+								<h3>Platforms</h3>
+							</section>
+						</section>
+					)
+				}
+			</main>
 		</>
 	);
 }
