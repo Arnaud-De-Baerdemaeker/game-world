@@ -59,6 +59,10 @@ const GameCard = (props) => {
 					// Remove the entry from the database
 					let objectStoreDelete = gamesLibraryStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
+						// Update the state containing the game to remove it
+						let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
+						props.setGamesCollection(filteredArray);
+
 						// TODO: Add modal to indicate the addition failed
 					};
 				}
