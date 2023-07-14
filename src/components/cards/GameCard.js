@@ -129,7 +129,7 @@ const GameCard = (props) => {
 						className={props.imageClass}
 					/>
 				</figure>
-				<h3 data-name={props.slug}>{props.gameName}</h3>
+				<h4 data-name={props.slug}>{props.gameName}</h4>
 			</div>
 
 			<menu>
@@ -168,43 +168,48 @@ const GameCard = (props) => {
 				</ul>
 			</menu>
 
-			<dl>
-				<dt>Platforms</dt>
-				{props.gamePlatforms.length > 0
-					? <>
-						{props.gamePlatforms.map(item => (
-							<dd
-								key={item.platform.id}
-								data-platform={item.platform.slug}
-							>
-								{item.platform.name}
-							</dd>
-						))}
-					</>
-					: <dd>N/A</dd>
-				}
+			{props.gamePlatforms || props.gameRelease || props.gameGenres
+				? (
+					<dl>
+						<dt>Platforms</dt>
+						{props.gamePlatforms.length > 0
+							? <>
+								{props.gamePlatforms.map(item => (
+									<dd
+										key={item.platform.id}
+										data-platform={item.platform.slug}
+									>
+										{item.platform.name}
+									</dd>
+								))}
+							</>
+							: <dd>N/A</dd>
+						}
 
-				<dt>Release</dt>
-				{props.gameRelease
-					? <dd>{props.gameRelease}</dd>
-					: <dd>N/A</dd>
-				}
+						<dt>Release</dt>
+						{props.gameRelease
+							? <dd>{props.gameRelease}</dd>
+							: <dd>N/A</dd>
+						}
 
-				<dt>Genres</dt>
-				{props.gameGenres.length > 0
-					? <>
-						{props.gameGenres.map(item => (
-							<dd
-								key={item.id}
-								data-genre={item.slug}
-							>
-								{item.name}
-							</dd>
-						))}
-					</>
-					: <dd>N/A</dd>
-				}
-			</dl>
+						<dt>Genres</dt>
+						{props.gameGenres.length > 0
+							? <>
+								{props.gameGenres.map(item => (
+									<dd
+										key={item.id}
+										data-genre={item.slug}
+									>
+										{item.name}
+									</dd>
+								))}
+							</>
+							: <dd>N/A</dd>
+						}
+					</dl>
+				)
+				: null
+			}
 		</article>
 	);
 };

@@ -124,7 +124,7 @@ const PlatformCard = (props) => {
 						className={props.imageClass}
 					/>
 				</figure>
-				<h3 data-name={props.slug}>{props.platformName}</h3>
+				<h4 data-name={props.slug}>{props.platformName}</h4>
 			</div>
 
 			<menu>
@@ -163,16 +163,21 @@ const PlatformCard = (props) => {
 				</ul>
 			</menu>
 
-			<dl>
-				<dt>Games count</dt>
-				<dd>{props.gamesCount ? props.gamesCount : "N/A"}</dd>
+			{props.gamesCount || props.startYear || props.endYear
+				? (
+					<dl>
+						<dt>Games count</dt>
+						<dd>{props.gamesCount ? props.gamesCount : "N/A"}</dd>
 
-				<dt>Start year</dt>
-				<dd>{props.startYear ? props.startYear : "N/A"}</dd>
+						<dt>Start year</dt>
+						<dd>{props.startYear ? props.startYear : "N/A"}</dd>
 
-				<dt>End year</dt>
-				<dd>{props.endYear ? props.endYear : "N/A"}</dd>
-			</dl>
+						<dt>End year</dt>
+						<dd>{props.endYear ? props.endYear : "N/A"}</dd>
+					</dl>
+				)
+				: null
+			}
 		</article>
 	);
 };
