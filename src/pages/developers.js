@@ -8,7 +8,6 @@ import Head from "next/head";
 import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
-import List from "@/components/list/List";
 import CompanyCard from "@/components/cards/CompanyCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 
@@ -43,7 +42,8 @@ const Developers = (props) => {
 			</Head>
 			<Menu />
 			<main>
-				<List title="Developers">
+				<h2>Developers</h2>
+				<div>
 					{props.developers.results.length > 0
 						? props.developers.results.map(entry => (
 							<CompanyCard
@@ -76,7 +76,7 @@ const Developers = (props) => {
 						))
 						: null
 					}
-				</List>
+				</div>
 				<LoadMore
 					nextPage={nextPage}
 					setNextPage={setNextPage}

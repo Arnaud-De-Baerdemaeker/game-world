@@ -6,7 +6,6 @@
 
 import {useState} from "react";
 
-import List from "@/components/list/List";
 import GameCard from "@/components/cards/GameCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 
@@ -18,7 +17,8 @@ const LatestReleasesResults = (props) => {
 
 	return(
 		<>
-			<List title="Latest releases">
+			<h2>Latest releases</h2>
+			<div>
 				{props.latestReleases.results.length > 0
 					? props.latestReleases.results.map(entry => (
 						<GameCard
@@ -65,7 +65,7 @@ const LatestReleasesResults = (props) => {
 					))
 					: null
 				}
-			</List>
+			</div>
 			<LoadMore
 				nextPage={nextPage}
 				setNextPage={setNextPage}

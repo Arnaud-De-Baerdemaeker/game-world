@@ -6,7 +6,6 @@
 
 import {useState} from "react";
 
-import List from "@/components/list/List";
 import GameCard from "@/components/cards/GameCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 
@@ -18,7 +17,8 @@ const SearchResults = (props) => {
 
 	return(
 		<>
-			<List title={`Search results for "${props.searchQuery}"`}>
+			<h2>Search results for ${props.searchQuery}</h2>
+			<div>
 				{props.searchResults.results.length > 0
 					? props.searchResults.results.map(entry => (
 						<GameCard
@@ -65,7 +65,7 @@ const SearchResults = (props) => {
 					))
 					: null
 				}
-			</List>
+			</div>
 			<LoadMore
 				searchQuery={props.searchQuery}
 				nextPage={nextPage}
