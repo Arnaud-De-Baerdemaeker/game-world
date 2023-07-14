@@ -8,8 +8,7 @@ import Head from "next/head";
 import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
-import List from "@/components/list/List";
-import Card from "@/components/card/Card";
+import PlatformCard from "@/components/cards/PlatformCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 
 import {getPlatforms} from "@/api/platforms/getPlatforms";
@@ -43,60 +42,47 @@ const Platforms = (props) => {
 			</Head>
 			<Menu />
 			<main>
-				<List title="Platforms">
+				<h2>Platforms</h2>
+				<div>
 					{props.platforms.results.length > 0
 						? props.platforms.results.map(entry => (
-							<Card
+							<PlatformCard
 								key={entry.id}
 								id={entry.id}
 								slug={entry.slug}
 								pathname="/platform/[slug]"
 								as={`/platform/${entry.slug}`}
-							>
-								<div style={{background: `url("${entry.image_background}")`}}>
-									<h3>{entry.name}</h3>
-									<dl>
-										<dt>Games count</dt>
-										<dd>{entry.games_count ? entry.games_count : "N/A"}</dd>
-
-										<dt>Start year</dt>
-										<dd>{entry.year_start ? props.year_start : "N/A"}</dd>
-
-										<dt>End year</dt>
-										<dd>{props.year_end ? props.year_end : "N/A"}</dd>
-									</dl>
-								</div>
-							</Card>
+								imageSrc={entry.image_background}
+								imageAlt=""
+								imageClass=""
+								platformName={entry.name}
+								gamesCount={entry.games_count}
+								startYear={entry.year_start}
+								endYear={entry.year_end}
+							/>
 						))
 						: <p>No results were returned</p>
 					}
 					{moreResults.length != 0
 						? moreResults.map(entry => (
-							<Card
+							<PlatformCard
 								key={entry.id}
 								id={entry.id}
 								slug={entry.slug}
 								pathname="/platform/[slug]"
 								as={`/platform/${entry.slug}`}
-							>
-								<div style={{background: `url("${entry.image_background}")`}}>
-									<h3>{entry.name}</h3>
-									<dl>
-										<dt>Games count</dt>
-										<dd>{entry.games_count ? entry.games_count : "N/A"}</dd>
-
-										<dt>Start year</dt>
-										<dd>{entry.year_start ? props.year_start : "N/A"}</dd>
-
-										<dt>End year</dt>
-										<dd>{props.year_end ? props.year_end : "N/A"}</dd>
-									</dl>
-								</div>
-							</Card>
+								imageSrc={entry.image_background}
+								imageAlt=""
+								imageClass=""
+								platformName={entry.name}
+								gamesCount={entry.games_count}
+								startYear={entry.year_start}
+								endYear={props.year_end}
+							/>
 						))
 						: null
 					}
-				</List>
+				</div>
 				<LoadMore
 					nextPage={nextPage}
 					setNextPage={setNextPage}
