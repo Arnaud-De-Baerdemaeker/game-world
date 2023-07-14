@@ -110,6 +110,10 @@ const GameCard = (props) => {
 					// Remove the entry from the database
 					let objectStoreDelete = gamesWishlistStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
+						// Update the state containing the game to remove it
+						let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
+						props.setGamesWishlist(filteredArray);
+
 						// TODO: Add modal to indicate the addition failed
 					};
 					objectStoreDelete.onerror = (event) => {
