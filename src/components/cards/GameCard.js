@@ -100,7 +100,7 @@ const GameCard = (props) => {
 								objectStoreDelete.onsuccess = (event) => {
 									// TODO: Add modal to indicate the addition worked
 									// TODO: Signify the item has also been removed from the library if it was in
-									if(window.location.pathname === "libraries") {
+									if(window.location.pathname === "/libraries") {
 										let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
 										props.setGamesCollection(filteredArray);
 									}
