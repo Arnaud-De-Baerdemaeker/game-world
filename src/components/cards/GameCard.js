@@ -47,6 +47,11 @@ const GameCard = (props) => {
 								objectStoreDelete.onsuccess = (event) => {
 									// TODO: Add modal to indicate the addition worked
 									// TODO: Signify the item has been removed from the wishlist if added in the library
+									// Update the state containing the game to remove it
+									if(window.location.pathname === "/libraries") {
+										let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
+										props.setGamesWishlist(filteredArray);
+									}
 								};
 								objectStoreDelete.onerror = (event) => {
 									// TODO: Signify the operation to remove from the wishlist failed
