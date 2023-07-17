@@ -35,6 +35,7 @@ const GameCard = (props) => {
 			// Check if the entry is already in the collection
 			let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
 			checkGamesLibraryEntry.onsuccess = (event) => {
+				// If it's not...
 				if(event.target.result === 0) {
 					// Add a new game to the collection
 					let objectStoreAdd = gamesLibraryStore.add(newEntry);
@@ -42,11 +43,13 @@ const GameCard = (props) => {
 						// Check if the same game is in the wishlist
 						let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
 						checkGamesWishlistEntry.onsuccess = (event) => {
+							// If it is...
 							if(event.target.result !== 0) {
 								let objectStoreDelete = gamesWishlistStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
 									// TODO: Add modal to indicate the addition worked
 									// TODO: Signify the item has been removed from the wishlist if added in the library
+
 									// Update the state containing the game to remove it
 									if(window.location.pathname === "/libraries") {
 										let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
@@ -60,6 +63,7 @@ const GameCard = (props) => {
 						};
 					};
 				}
+				// If it is...
 				else {
 					// Remove the game from the collection
 					let objectStoreDelete = gamesLibraryStore.delete(props.id);
@@ -93,6 +97,7 @@ const GameCard = (props) => {
 			// Check if the game is already in the wishlist
 			let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
 			checkGamesWishlistEntry.onsuccess = (event) => {
+				// If it's not...
 				if(event.target.result === 0) {
 					// Add a new game to the wishlist
 					let objectStoreAdd = gamesWishlistStore.add(newEntry);
@@ -100,11 +105,14 @@ const GameCard = (props) => {
 						// Check if the same game is in the collection
 						let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
 						checkGamesLibraryEntry.onsuccess = (event) => {
+							// If it is...
 							if(event.target.result !== 0) {
 								let objectStoreDelete = gamesLibraryStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
 									// TODO: Add modal to indicate the addition worked
 									// TODO: Signify the item has also been removed from the library if it was in
+
+									// Update the state containing the game to remove it
 									if(window.location.pathname === "/libraries") {
 										let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
 										props.setGamesCollection(filteredArray);
@@ -117,6 +125,7 @@ const GameCard = (props) => {
 						};
 					};
 				}
+				// If it is...
 				else {
 					// Remove the game from the wishlist
 					let objectStoreDelete = gamesWishlistStore.delete(props.id);
