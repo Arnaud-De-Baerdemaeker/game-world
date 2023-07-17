@@ -27,26 +27,34 @@ const PlatformCard = (props) => {
 		openDatabase.onsuccess = (event) => {
 			let openedDatabase = event.target.result;
 
-			// Open a transaction and access the Platforms object store
+			// Open a transaction and access the collection and wishlist stores
 			let stores = openedDatabase.transaction(["Platforms library", "Platforms wishlist"], "readwrite");
 			let platformsLibraryStore = stores.objectStore("Platforms library");
 			let platformsWishlistStore = stores.objectStore("Platforms wishlist");
 
-			// Check if the entry is already in the database
+			// Check if the platform is already in the collection
 			let checkPlatformsLibraryEntry = platformsLibraryStore.count(props.id);
 			checkPlatformsLibraryEntry.onsuccess = (event) => {
+				// If it's not...
 				if(event.target.result === 0) {
-					// Add a new entry to the object store
+					// Add a new platform to the collection
 					let objectStoreAdd = platformsLibraryStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
-						// Check if the same entry is in the wishlist
+						// Check if the same platform is in the wishlist
 						let checkPlatformsWishlistEntry = platformsWishlistStore.count(props.id);
 						checkPlatformsWishlistEntry.onsuccess = (event) => {
+							// If it is...
 							if(event.target.result !== 0) {
 								let objectStoreDelete = platformsWishlistStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
 									// TODO: Add a modal to signify the entry has been added to the library
 									// TODO: Signify the item has been removed from the wishlist if added in the library
+
+									// Update the state containing the platform to remove it
+									if(window.location.pathname === "/libraries") {
+										let filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
+										props.setPlatformsWishlist(filteredArray);
+									}
 								};
 								objectStoreDelete.onerror = (event) => {
 									// TODO: Signify the operation to remove from the wishlist failed
@@ -55,10 +63,17 @@ const PlatformCard = (props) => {
 						}
 					};
 				}
+				// If it is...
 				else {
-					// Remove the entry from the database
+					// Remove the platform from the collection
 					let objectStoreDelete = platformsLibraryStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
+						// Update the state containing the platform to remove it
+						if(window.location.pathname === "/libraries") {
+							let filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
+							props.setPlatformsCollection(filteredArray);
+						}
+
 						// TODO: Add modal to indicate the addition failed
 					};
 				}
@@ -74,36 +89,51 @@ const PlatformCard = (props) => {
 		openDatabase.onsuccess = (event) => {
 			let openedDatabase = event.target.result;
 
-			// Open a transaction and access the Platforms object store
+			// Open a transaction and access the collection and wishlist stores
 			let stores = openedDatabase.transaction(["Platforms wishlist", "Platforms library"], "readwrite");
 			let platformsWishlistStore = stores.objectStore("Platforms wishlist");
 			let platformsLibraryStore = stores.objectStore("Platforms library");
 
-			// Check if the entry is already in the database
+			// Check if the platform is already in the wishlist
 			let checkPlatformsWishlistEntry = platformsWishlistStore.count(props.id);
 			checkPlatformsWishlistEntry.onsuccess = (event) => {
+				// If it's not...
 				if(event.target.result === 0) {
-					// Add a new entry to the object store
+					// Add a new platform to the wishlist
 					let objectStoreAdd = platformsWishlistStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
-						// Check if the entry is in the wishlist
+						// Check if the same platform is in the collection
 						let checkPlatformsLibraryEntry = platformsLibraryStore.count(props.id);
 						checkPlatformsLibraryEntry.onsuccess = (event) => {
+							// If it is...
 							if(event.target.result !== 0) {
 								let objectStoreDelete = platformsLibraryStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
 									// TODO: Add a modal to signify the entry has been added to the wishlist
 									// TODO: Signify the entry has been removed from the library if it was in
+
+									// Update the state containing the platform to remove it
+									if(window.location.pathname === '/libraries') {
+										let filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
+										props.setPlatformsCollection(filteredArray);
+									}
 								}
 							}
 						};
 						// TODO: Add modal to indicate the addition worked
 					};
 				}
+				// If it is...
 				else {
-					// Remove the entry from the database
+					// Remove the platform from the wishlist
 					let objectStoreDelete = platformsWishlistStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
+						// Update the state containing the platform to remove it
+						if(window.location.pathname === "/libraries") {
+							let filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
+							props.setPlatformsWishlist(filteredArray);
+						}
+
 						// TODO: Add modal to indicate the addition failed
 					};
 				}
