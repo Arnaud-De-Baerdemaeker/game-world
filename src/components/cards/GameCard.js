@@ -27,19 +27,19 @@ const GameCard = (props) => {
 		openDatabase.onsuccess = (event) => {
 			let openedDatabase = event.target.result;
 
-			// Open a transaction and access the Library object store
+			// Open a transaction and access the collection and wishlist store
 			let stores = openedDatabase.transaction(["Games library", "Games wishlist"], "readwrite");
 			let gamesLibraryStore = stores.objectStore("Games library");
 			let gamesWishlistStore = stores.objectStore("Games wishlist");
 
-			// Check if the entry is already in the database
+			// Check if the entry is already in the collection
 			let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
 			checkGamesLibraryEntry.onsuccess = (event) => {
 				if(event.target.result === 0) {
-					// Add a new entry to the object store
+					// Add a new game to the collection
 					let objectStoreAdd = gamesLibraryStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
-						// Check if the same entry is in the wishlist
+						// Check if the same game is in the wishlist
 						let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
 						checkGamesWishlistEntry.onsuccess = (event) => {
 							if(event.target.result !== 0) {
@@ -56,12 +56,14 @@ const GameCard = (props) => {
 					};
 				}
 				else {
-					// Remove the entry from the database
+					// Remove the game from the collection
 					let objectStoreDelete = gamesLibraryStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
 						// Update the state containing the game to remove it
-						let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
-						props.setGamesCollection(filteredArray);
+						if(window.location.pathname === "/libraries") {
+							let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
+							props.setGamesCollection(filteredArray);
+						}
 
 						// TODO: Add modal to indicate the addition failed
 					};
@@ -78,19 +80,19 @@ const GameCard = (props) => {
 		openDatabase.onsuccess = (event) => {
 			let openedDatabase = event.target.result;
 
-			// Open a transaction and access the Library object store
+			// Open a transaction and access the collection and wishlist stores
 			let stores = openedDatabase.transaction(["Games wishlist", "Games library"], "readwrite");
 			let gamesWishlistStore = stores.objectStore("Games wishlist");
 			let gamesLibraryStore = stores.objectStore("Games library");
 
-			// Check if the entry is already in the database
+			// Check if the game is already in the wishlist
 			let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
 			checkGamesWishlistEntry.onsuccess = (event) => {
 				if(event.target.result === 0) {
-					// Add a new entry to the object store
+					// Add a new game to the wishlist
 					let objectStoreAdd = gamesWishlistStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
-						// Check if the same entry is in the database
+						// Check if the same game is in the collection
 						let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
 						checkGamesLibraryEntry.onsuccess = (event) => {
 							if(event.target.result !== 0) {
@@ -98,6 +100,10 @@ const GameCard = (props) => {
 								objectStoreDelete.onsuccess = (event) => {
 									// TODO: Add modal to indicate the addition worked
 									// TODO: Signify the item has also been removed from the library if it was in
+									if(window.location.pathname === "libraries") {
+										let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
+										props.setGamesCollection(filteredArray);
+									}
 								};
 								objectStoreDelete.onerror = (event) => {
 									// TODO: Signify the operation to remove from the wishlist failed
@@ -107,12 +113,14 @@ const GameCard = (props) => {
 					};
 				}
 				else {
-					// Remove the entry from the database
+					// Remove the game from the wishlist
 					let objectStoreDelete = gamesWishlistStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
 						// Update the state containing the game to remove it
-						let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
-						props.setGamesWishlist(filteredArray);
+						if(window.location.pathname === "/libraries") {
+							let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
+							props.setGamesWishlist(filteredArray);
+						}
 
 						// TODO: Add modal to indicate the addition failed
 					};
