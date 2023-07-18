@@ -5,10 +5,16 @@
 */
 
 import Link from "next/link";
+import {useState} from "react";
 
 import Button from "@/components/button/Button";
 
 const PlatformCard = (props) => {
+	const [isPopupOn, setIsPopupOn] = useState({
+		condition: false,
+		message: null
+	});
+
 	// Define the data to add to the database
 	const newEntry = {
 		id: props.id,
@@ -40,6 +46,9 @@ const PlatformCard = (props) => {
 					// Add a new platform to the collection
 					let objectStoreAdd = platformsLibraryStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
+						// Display the popup during 5 seconds
+						handlePopupDisplay("Added the platform to your collection");
+
 						// Check if the same platform is in the wishlist
 						let checkPlatformsWishlistEntry = platformsWishlistStore.count(props.id);
 						checkPlatformsWishlistEntry.onsuccess = (event) => {
@@ -47,13 +56,15 @@ const PlatformCard = (props) => {
 							if(event.target.result !== 0) {
 								let objectStoreDelete = platformsWishlistStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
-									// TODO: Add a modal to signify the entry has been added to the library
-									// TODO: Signify the item has been removed from the wishlist if added in the library
+									// Display the popup during 5 seconds
+									handlePopupDisplay("Removed the platform from your wishlist and added it to your collection");
 
-									// Update the state containing the platform to remove it
 									if(window.location.pathname === "/libraries") {
-										let filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
-										props.setPlatformsWishlist(filteredArray);
+										// Remove the card after 5 seconds
+										setTimeout(() => {
+											let filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
+											props.setPlatformsWishlist(filteredArray);
+										}, 5000);
 									}
 								};
 								objectStoreDelete.onerror = (event) => {
@@ -68,14 +79,20 @@ const PlatformCard = (props) => {
 					// Remove the platform from the collection
 					let objectStoreDelete = platformsLibraryStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
-						// Update the state containing the platform to remove it
-						if(window.location.pathname === "/libraries") {
-							let filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
-							props.setPlatformsCollection(filteredArray);
-						}
+						// Display the popup during 5 seconds
+						handlePopupDisplay("Removed the platform from your collection");
 
-						// TODO: Add modal to indicate the addition failed
+						if(window.location.pathname === "/libraries") {
+							// Remove the card after 5 seconds
+							setTimeout(() => {
+								let filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
+								props.setPlatformsCollection(filteredArray);
+							}, 5000);
+						}
 					};
+					objectStoreDelete.onerror = (event) => {
+						// TODO: Add modal to indicate the addition failed
+					}
 				}
 			};
 		};
@@ -102,6 +119,9 @@ const PlatformCard = (props) => {
 					// Add a new platform to the wishlist
 					let objectStoreAdd = platformsWishlistStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
+						// Display the popup during 5 seconds
+						handlePopupDisplay("Added the platform to your wishlist");
+
 						// Check if the same platform is in the collection
 						let checkPlatformsLibraryEntry = platformsLibraryStore.count(props.id);
 						checkPlatformsLibraryEntry.onsuccess = (event) => {
@@ -109,18 +129,22 @@ const PlatformCard = (props) => {
 							if(event.target.result !== 0) {
 								let objectStoreDelete = platformsLibraryStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
-									// TODO: Add a modal to signify the entry has been added to the wishlist
-									// TODO: Signify the entry has been removed from the library if it was in
+									// Display the popup during 5 seconds
+									handlePopupDisplay("Removed the platform from your collection and added it to your wishlist");
 
-									// Update the state containing the platform to remove it
 									if(window.location.pathname === '/libraries') {
-										let filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
-										props.setPlatformsCollection(filteredArray);
+										// Remove the card after 5 seconds
+										setTimeout(() => {
+											let filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
+											props.setPlatformsCollection(filteredArray);
+										}, 5000);
 									}
 								}
 							}
 						};
-						// TODO: Add modal to indicate the addition worked
+						checkPlatformsLibraryEntry.onerror = (event) => {
+							// TODO: Add modal to indicate the addition worked
+						}
 					};
 				}
 				// If it is...
@@ -128,14 +152,20 @@ const PlatformCard = (props) => {
 					// Remove the platform from the wishlist
 					let objectStoreDelete = platformsWishlistStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
-						// Update the state containing the platform to remove it
-						if(window.location.pathname === "/libraries") {
-							let filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
-							props.setPlatformsWishlist(filteredArray);
-						}
+						// Display the popup during 5 seconds
+						handlePopupDisplay("Removed the platform from your wishlist");
 
-						// TODO: Add modal to indicate the addition failed
+						if(window.location.pathname === "/libraries") {
+							// Remove the card after 5 seconds
+							setTimeout(() => {
+								let filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
+								props.setPlatformsWishlist(filteredArray);
+							}, 5000);
+						}
 					};
+					objectStoreDelete.onerror = (event) => {
+						// TODO: Add modal to indicate the addition failed
+					}
 				}
 			};
 		};
@@ -144,69 +174,94 @@ const PlatformCard = (props) => {
 		};
 	};
 
+	const handlePopupDisplay = (message) => {
+		setIsPopupOn({
+			condition: true,
+			message: message
+		});
+
+		setTimeout(() => {
+			setIsPopupOn({
+				condition: false,
+				message: null
+			});
+		}, 5000);
+	};
+
 	return(
 		<article>
-			<div>
-				<figure>
-					<img
-						src={props.imageSrc}
-						alt={props.imageAlt}
-						className={props.imageClass}
-					/>
-				</figure>
-				<h4 data-name={props.slug}>{props.platformName}</h4>
-			</div>
-
-			<menu>
-				<ul>
-					<li>
-						<Link
-							href={{
-								pathname: props.pathname,
-								query: {
-									id: props.id
-								}
-							}}
-							as={props.as}
-						>
-							Voir
-						</Link>
-					</li>
-					<li>
-						<Button
-							buttonType="button"
-							buttonAction={addToLibrary}
-							buttonClass=""
-						>
-							Library
-						</Button>
-					</li>
-					<li>
-						<Button
-							buttonType="button"
-							buttonAction={addToWishlist}
-							buttonClass=""
-						>
-							Wishlist
-						</Button>
-					</li>
-				</ul>
-			</menu>
-
-			{props.gamesCount || props.startYear || props.endYear
+			{isPopupOn.condition
 				? (
-					<dl>
-						<dt>Games count</dt>
-						<dd>{props.gamesCount ? props.gamesCount : "N/A"}</dd>
+					<>
+						<div>
+							<figure>
+								<img
+									src={props.imageSrc}
+									alt={props.imageAlt}
+									className={props.imageClass}
+								/>
+							</figure>
+							<h4 data-name={props.slug}>{props.platformName}</h4>
+						</div>
 
-						<dt>Start year</dt>
-						<dd>{props.startYear ? props.startYear : "N/A"}</dd>
+						<menu>
+							<ul>
+								<li>
+									<Link
+										href={{
+											pathname: props.pathname,
+											query: {
+												id: props.id
+											}
+										}}
+										as={props.as}
+									>
+										Voir
+									</Link>
+								</li>
+								<li>
+									<Button
+										buttonType="button"
+										buttonAction={addToLibrary}
+										buttonClass=""
+									>
+										Library
+									</Button>
+								</li>
+								<li>
+									<Button
+										buttonType="button"
+										buttonAction={addToWishlist}
+										buttonClass=""
+									>
+										Wishlist
+									</Button>
+								</li>
+							</ul>
+						</menu>
 
-						<dt>End year</dt>
-						<dd>{props.endYear ? props.endYear : "N/A"}</dd>
-					</dl>
+						{props.gamesCount || props.startYear || props.endYear
+							? (
+								<dl>
+									<dt>Games count</dt>
+									<dd>{props.gamesCount ? props.gamesCount : "N/A"}</dd>
+
+									<dt>Start year</dt>
+									<dd>{props.startYear ? props.startYear : "N/A"}</dd>
+
+									<dt>End year</dt>
+									<dd>{props.endYear ? props.endYear : "N/A"}</dd>
+								</dl>
+							)
+							: null
+						}
+					</>
 				)
-				: null
+				: (
+					<div>
+						<h4>{isPopupOn.message}</h4>
+					</div>
+				)
 			}
 		</article>
 	);
