@@ -216,7 +216,7 @@ const PlatformCard = (props) => {
 										}}
 										as={props.as}
 									>
-										Voir
+										View
 									</Link>
 								</li>
 								<li>
@@ -225,7 +225,7 @@ const PlatformCard = (props) => {
 										buttonAction={addToLibrary}
 										buttonClass=""
 									>
-										Library
+										Collection
 									</Button>
 								</li>
 								<li>

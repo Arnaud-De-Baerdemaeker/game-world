@@ -217,7 +217,7 @@ const GameCard = (props) => {
 										}}
 										as={props.as}
 									>
-										Voir
+										View
 									</Link>
 								</li>
 								<li>
@@ -226,7 +226,7 @@ const GameCard = (props) => {
 										buttonAction={addToLibrary}
 										buttonClass=""
 									>
-										Library
+										Collection
 									</Button>
 								</li>
 								<li>
