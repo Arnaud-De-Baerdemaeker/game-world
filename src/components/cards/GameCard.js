@@ -46,7 +46,8 @@ const GameCard = (props) => {
 					// Add a new game to the collection
 					let objectStoreAdd = gamesLibraryStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
-						handlePopupDisplay("Added game to your collection");
+						// Display the popup during 5 seconds
+						handlePopupDisplay("Added the game to your collection");
 
 						// Check if the same game is in the wishlist
 						let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
@@ -57,11 +58,10 @@ const GameCard = (props) => {
 								objectStoreDelete.onsuccess = (event) => {
 									if(window.location.pathname === "/libraries") {
 										// Display the popup during 5 seconds
-										handlePopupDisplay("Removed game from the wishlist and added it in the collection");
+										handlePopupDisplay("Removed the game from your wishlist and added it to your collection");
 
-										// Remove the card after a 5 seconds delay
+										// Remove the card after 5 seconds
 										setTimeout(() => {
-											// Update the state containing the game to remove it
 											let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
 											props.setGamesWishlist(filteredArray);
 										}, 5000);
@@ -79,21 +79,21 @@ const GameCard = (props) => {
 					// Remove the game from the collection
 					let objectStoreDelete = gamesLibraryStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
-						handlePopupDisplay("Removed game from collection");
+						// Display the popup during 5 seconds
+						handlePopupDisplay("Removed the game from your collection");
 
 						// Update the state containing the game to remove it
 						if(window.location.pathname === "/libraries") {
-							// Display the popup during 5 seconds
-							handlePopupDisplay("Removed game from the collection");
-
-							// Remove the card after a 5 seconds delay
+							// Remove the card after 5 seconds
 							setTimeout(() => {
 								let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
 								props.setGamesCollection(filteredArray);
 							}, 5000);
 						}
 					};
-					// TODO: Add modal to indicate the addition failed
+					objectStoreDelete.onerror = (event) => {
+						// TODO: Add modal to indicate the addition failed
+					}
 				}
 			};
 		};
@@ -120,7 +120,8 @@ const GameCard = (props) => {
 					// Add a new game to the wishlist
 					let objectStoreAdd = gamesWishlistStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
-						handlePopupDisplay("Added game to your wishlist");
+						// Display the popup during 5 seconds
+						handlePopupDisplay("Added the game to your wishlist");
 
 						// Check if the same game is in the collection
 						let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
@@ -129,13 +130,12 @@ const GameCard = (props) => {
 							if(event.target.result !== 0) {
 								let objectStoreDelete = gamesLibraryStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
-									if(window.location.pathname === "/libraries") {
-										// Display the popup during 5 seconds
-										handlePopupDisplay("Removed game from the wishlist and added it in the collection");
+									// Display the popup during 5 seconds
+									handlePopupDisplay("Removed the game from your collection and added it to your wishlist");
 
+									if(window.location.pathname === "/libraries") {
 										// Remove the card after a 5 seconds delay
 										setTimeout(() => {
-											// Update the state containing the game to remove it
 											let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
 											props.setGamesCollection(filteredArray);
 										}, 5000);
@@ -153,13 +153,12 @@ const GameCard = (props) => {
 					// Remove the game from the wishlist
 					let objectStoreDelete = gamesWishlistStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
-						if(window.location.pathname === "/libraries") {
-							// Display the popup during 5 seconds
-							handlePopupDisplay("Removed game from wishlist");
+						// Display the popup during 5 seconds
+						handlePopupDisplay("Removed the game from your wishlist");
 
+						if(window.location.pathname === "/libraries") {
 							// Remove the card after 5 seconds
 							setTimeout(() => {
-								// Update the state containing the game to remove it
 								let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
 								props.setGamesWishlist(filteredArray);
 							}, 5000);
