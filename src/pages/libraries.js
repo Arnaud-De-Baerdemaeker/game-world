@@ -10,6 +10,7 @@ import {useState, useEffect} from "react";
 import Menu from "@/components/menu/Menu";
 import GameCard from "@/components/cards/GameCard";
 import PlatformCard from "@/components/cards/PlatformCard";
+import Footer from "@/components/footer/Footer";
 
 export default function Libraries() {
 	const [isOnCollectionTab, setIsOnCollectionTab] = useState(true);
@@ -146,6 +147,10 @@ export default function Libraries() {
 												// gamePlatforms={entry.gamePlatforms}
 												// gameRelease={entry.gameRelease}
 												// gameGenres={entry.gameGenres}
+												gamesCollection={gamesCollection}
+												setGamesCollection={setGamesCollection}
+												gamesWishlist={gamesWishlist}
+												setGamesWishlist={setGamesWishlist}
 											/>
 										))
 										: <p>You have not added any games to your collection yet</p>
@@ -172,6 +177,10 @@ export default function Libraries() {
 												// gamesCount={entry.gamesCount}
 												// startYear={entry.startYear}
 												// endYear={entry.endYear}
+												platformsCollection={platformsCollection}
+												setPlatformsCollection={setPlatformsCollection}
+												platformsWishlist={platformsWishlist}
+												setPlatformsWishlist={setPlatformsWishlist}
 											/>
 										))
 										: <p>You have not added any platform to your collection yet</p>
@@ -207,6 +216,10 @@ export default function Libraries() {
 												// gamePlatforms={entry.gamePlatforms}
 												// gameRelease={entry.gameRelease}
 												// gameGenres={entry.gameGenres}
+												gamesCollection={gamesCollection}
+												setGamesCollection={setGamesCollection}
+												gamesWishlist={gamesWishlist}
+												setGamesWishlist={setGamesWishlist}
 											/>
 										))
 										: <p>You have no games in your wishlist</p>
@@ -233,6 +246,10 @@ export default function Libraries() {
 												// gamesCount={entry.gamesCount}
 												// startYear={entry.startYear}
 												// endYear={entry.endYear}
+												platformsCollection={platformsCollection}
+												setPlatformsCollection={setPlatformsCollection}
+												platformsWishlist={platformsWishlist}
+												setPlatformsWishlist={setPlatformsWishlist}
 											/>
 										))
 										: <p>You have no platforms in your wishlist</p>
@@ -243,6 +260,7 @@ export default function Libraries() {
 					)
 				}
 			</main>
+			<Footer />
 		</>
 	);
 }
