@@ -12,6 +12,7 @@ import SearchField from "@/components/searchField/SearchField";
 import Button from "@/components/button/Button";
 import SearchResults from "@/components/searchResults/SearchResults";
 import LatestReleasesResults from "@/components/latestReleasesResults/LatestReleasesResults";
+import Footer from "@/components/footer/Footer";
 
 import {getLatestReleases} from "@/api/games/getLatestReleases";
 import {searchGames} from "@/api/games/searchGames";
@@ -181,6 +182,7 @@ const Home = (props) => {
 					/>
 				}
 			</main>
+			<Footer />
 		</>
 	);
 }

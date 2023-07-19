@@ -10,6 +10,7 @@ import {useState, useEffect} from "react";
 import Menu from "@/components/menu/Menu";
 import PlatformCard from "@/components/cards/PlatformCard";
 import LoadMore from "@/components/loadMore/LoadMore";
+import Footer from "@/components/footer/Footer";
 
 import {getPlatforms} from "@/api/platforms/getPlatforms";
 
@@ -54,7 +55,6 @@ const Platforms = (props) => {
 								as={`/platform/${entry.slug}`}
 								imageSrc={entry.image_background}
 								imageAlt=""
-								imageClass=""
 								platformName={entry.name}
 								gamesCount={entry.games_count}
 								startYear={entry.year_start}
@@ -97,6 +97,7 @@ const Platforms = (props) => {
 					}
 				/>
 			</main>
+			<Footer />
 		</>
 	);
 };

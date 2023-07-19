@@ -11,6 +11,7 @@ import Menu from "@/components/menu/Menu";
 import Header from "@/components/header/Header";
 import GameCard from "@/components/cards/GameCard";
 import LoadMore from "@/components/loadMore/LoadMore";
+import Footer from "@/components/footer/Footer";
 
 import {getDeveloperDetails} from "@/api/developers/getDeveloperDetails";
 import {getGamesFromDeveloper} from "@/api/games/getGamesFromDeveloper";
@@ -125,6 +126,7 @@ const Developer = (props) => {
 					}
 				/>
 			</main>
+			<Footer />
 		</>
 	);
 };

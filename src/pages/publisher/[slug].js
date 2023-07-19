@@ -9,6 +9,7 @@ import {useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
 import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 import {getPublisherDetails} from "@/api/publishers/getPublisherDetails";
 
@@ -48,6 +49,7 @@ const Publisher = (props) => {
 			<main>
 				<div id="companyDescription"></div>
 			</main>
+			<Footer />
 		</>
 	);
 };

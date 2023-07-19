@@ -10,6 +10,7 @@ import {useState, useEffect} from "react";
 import Menu from "@/components/menu/Menu";
 import CompanyCard from "@/components/cards/CompanyCard";
 import LoadMore from "@/components/loadMore/LoadMore";
+import Footer from "@/components/footer/Footer";
 
 import {getPublishers} from "@/api/publishers/getPublishers";
 
@@ -92,6 +93,7 @@ const Publishers = (props) => {
 					}
 				/>
 			</main>
+			<Footer />
 		</>
 	);
 };
