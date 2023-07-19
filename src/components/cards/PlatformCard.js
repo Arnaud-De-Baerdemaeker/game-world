@@ -190,7 +190,7 @@ const PlatformCard = (props) => {
 
 	return(
 		<article>
-			{isPopupOn.condition
+			{!isPopupOn.condition
 				? (
 					<>
 						<div>
@@ -198,7 +198,7 @@ const PlatformCard = (props) => {
 								<img
 									src={props.imageSrc}
 									alt={props.imageAlt}
-									className={props.imageClass}
+									className=""
 								/>
 							</figure>
 							<h4 data-name={props.slug}>{props.platformName}</h4>
