@@ -6,7 +6,7 @@
 
 import Link from "next/link";
 
-import styles from "./Menu.module.css";
+import styles from "@/components/menu/Menu.module.scss";
 
 const Menu = () => {
 	const links = [
@@ -36,9 +36,9 @@ const Menu = () => {
 		},
 		{
 			listItemClass: styles.listItem,
-			href: "/libraries",
+			href: "/library",
 			linkClass: styles.link,
-			value: "My Libraries"
+			value: "My Library"
 		}
 	];
 
