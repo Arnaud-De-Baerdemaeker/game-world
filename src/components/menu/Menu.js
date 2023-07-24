@@ -6,6 +6,8 @@
 
 import Link from "next/link";
 
+import Button from "@/components/button/Button";
+
 import styles from "@/components/menu/Menu.module.scss";
 
 const Menu = () => {
@@ -44,7 +46,14 @@ const Menu = () => {
 
 	return(
 		<nav className={styles.block}>
-			<ul className={styles.list}>
+			<Button
+				buttonType="button"
+				buttonAction=""
+				buttonClass=""
+			>
+				Menu
+			</Button>
+			<menu className={styles.list}>
 				{links.map(entry => (
 					<li
 						key={entry.value}
@@ -58,7 +67,7 @@ const Menu = () => {
 						</Link>
 					</li>
 				))}
-			</ul>
+			</menu>
 		</nav>
 	);
 }
