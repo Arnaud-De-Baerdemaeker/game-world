@@ -8,12 +8,14 @@ import Head from "next/head";
 import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
+import Header from "@/components/header/Header";
 import SearchField from "@/components/searchField/SearchField";
 import Button from "@/components/button/Button";
 import SearchResults from "@/components/searchResults/SearchResults";
 import LatestReleasesResults from "@/components/latestReleasesResults/LatestReleasesResults";
 import Footer from "@/components/footer/Footer";
 
+import headerWallpaper from "@/images/gaming-header-wallpaper-1080p.jpg";
 import {getLatestReleases} from "@/api/games/getLatestReleases";
 import {searchGames} from "@/api/games/searchGames";
 
@@ -151,38 +153,47 @@ const Home = (props) => {
 				/>
 			</Head>
 			<Menu />
-			<main>
-				<SearchField
-					formAction={handleSearchQuery}
-					buttonReset={
-						<Button
-							buttonType="reset"
-							buttonClass=""
-							buttonAction={resetAll}
-						>
-							Clear search
-						</Button>
-					}
+			<div>
+				<Header
+					imageSrc={headerWallpaper}
+					imageAlt="Header wallpaper"
+					imageClass=""
+					mainTitle="Game World"
+					subTitle="Search and save your favorite games and platforms"
 				/>
-				{isSearchInUse
-					? <SearchResults
-						searchQuery={searchQuery}
-						searchResults={searchResults}
-						hasFirstCallMoreResults={hasFirstCallMoreResults}
-						setHasFirstCallMoreResults={setHasFirstCallMoreResults}
-						hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
-						setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
+				<main>
+					<SearchField
+						formAction={handleSearchQuery}
+						buttonReset={
+							<Button
+								buttonType="reset"
+								buttonClass=""
+								buttonAction={resetAll}
+							>
+								Clear search
+							</Button>
+						}
 					/>
-					: <LatestReleasesResults
-						latestReleases={props.latestReleases}
-						hasFirstCallMoreResults={hasFirstCallMoreResults}
-						setHasFirstCallMoreResults={setHasFirstCallMoreResults}
-						hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
-						setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
-					/>
-				}
-			</main>
-			<Footer />
+					{isSearchInUse
+						? <SearchResults
+							searchQuery={searchQuery}
+							searchResults={searchResults}
+							hasFirstCallMoreResults={hasFirstCallMoreResults}
+							setHasFirstCallMoreResults={setHasFirstCallMoreResults}
+							hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
+							setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
+						/>
+						: <LatestReleasesResults
+							latestReleases={props.latestReleases}
+							hasFirstCallMoreResults={hasFirstCallMoreResults}
+							setHasFirstCallMoreResults={setHasFirstCallMoreResults}
+							hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
+							setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
+						/>
+					}
+				</main>
+				<Footer />
+			</div>
 		</>
 	);
 }
