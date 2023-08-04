@@ -19,7 +19,8 @@ import headerWallpaper from "@/images/gaming-header-wallpaper-1080p.jpg";
 import {getLatestReleases} from "@/api/games/getLatestReleases";
 import {searchGames} from "@/api/games/searchGames";
 
-// import styles from "./Home.module.css";
+import homeStyles from "./Home.module.scss";
+import buttonStyles from "@/components/button/Button.module.scss";
 
 const Home = (props) => {
 	const [searchQuery, setSearchQuery] = useState(null);
@@ -27,6 +28,7 @@ const Home = (props) => {
 	const [isSearchInUse, setIsSearchInUse] = useState(false);
 	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
 	const [hasFollowingCallsMoreResults, setHasFollowingCallsMoreResults] = useState(null);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const handleSearchQuery = async (event) => {
 		event.preventDefault();
@@ -55,6 +57,10 @@ const Home = (props) => {
 		setSearchQuery(null);
 		setSearchResults(null);
 	}
+
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
 
 	useEffect(() => {
 		props.latestReleases.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
@@ -152,16 +158,22 @@ const Home = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
-			<div>
+			<div className={homeStyles.homePage}>
+				<Button
+					buttonType="button"
+					buttonAction={toggleMenu}
+					buttonClass={buttonStyles.button__menu}
+				>
+					Menu
+				</Button>
+				<Menu isMenuOpen={isMenuOpen} />
 				<Header
 					imageSrc={headerWallpaper}
 					imageAlt="Header wallpaper"
-					imageClass=""
 					mainTitle="Game World"
 					subTitle="Search and save your favorite games and platforms"
 				/>
-				<main>
+				<main className={homeStyles.homePage__mainContent}>
 					<SearchField
 						formAction={handleSearchQuery}
 						buttonReset={
