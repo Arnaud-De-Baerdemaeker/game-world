@@ -17,7 +17,7 @@ const SearchResults = (props) => {
 
 	return(
 		<>
-			<h2>Search results for ${props.searchQuery}</h2>
+			<h3>Search results for ${props.searchQuery}</h3>
 			<div>
 				{props.searchResults.results.length > 0
 					? props.searchResults.results.map(entry => (
