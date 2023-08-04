@@ -18,7 +18,7 @@ const Card = (props) => {
 			as={props.as}
 		>
 			<article>
-				<div>
+				<header>
 					<figure>
 						<img
 							src={props.imageSrc}
@@ -26,8 +26,8 @@ const Card = (props) => {
 							className={props.imageClass}
 						/>
 					</figure>
-					<h3>{props.companyName}</h3>
-				</div>
+					<h4>{props.companyName}</h4>
+				</header>
 
 				<dl>
 					<dt>Games count</dt>
