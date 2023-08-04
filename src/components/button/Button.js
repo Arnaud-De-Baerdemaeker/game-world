@@ -11,7 +11,7 @@ const Button = (props) => {
 			onClick={props.buttonAction ? props.buttonAction : null}
 			className={props.buttonClass}
 		>
-			{props.children}
+			{props.buttonValue}
 		</button>
 	);
 }
