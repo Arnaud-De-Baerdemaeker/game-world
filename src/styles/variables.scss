@@ -1,0 +1,51 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+// Colors
+$charcoal: rgb(59, 73, 84);
+$eerieBlack: rgb(26, 30, 31);
+$richBlack: rgb(1, 7, 11);
+$lemonChiffon: rgb(224, 224, 183);
+
+
+// Orientations
+$portrait: "(orientation: portrait)";
+$landscape: "(orientation: landscape)";
+
+
+// Screen types
+$mobile: "(hover: none)";
+$desktop: "(hover: hover)";
+
+
+// Breakpoints
+$bp-306: 306px;
+$bp-360: 360px;
+$bp-432: 432px;
+$bp-504: 504px;
+$bp-576: 576px;
+$bp-648: 648px;
+$bp-720: 720px;
+$bp-792: 792px;
+$bp-864: 864px;
+$bp-936: 936px;
+$bp-1008: 1008px;
+$bp-1080: 1080px;
+
+
+// Media queries
+$mq-w306-up: "(min-width: #{$bp-306})"; // 544px
+$mq-w360-up: "(min-width: #{$bp-360})"; // 640px
+$mq-w432-up: "(min-width: #{$bp-432})"; // 768px
+$mq-w504-up: "(min-width: #{$bp-504})"; // 896px
+$mq-w576-up: "(min-width: #{$bp-576})"; // 1024px
+$mq-w648-up: "(min-width: #{$bp-648})"; // 1152px
+$mq-w720-up: "(min-width: #{$bp-720})"; // 1280px
+$mq-w792-up: "(min-width: #{$bp-792})"; // 1408px
+$mq-w864-up: "(min-width: #{$bp-864})"; // 1536px
+$mq-w936-up: "(min-width: #{$bp-936})"; // 1664px
+$mq-w1008-up: "(min-width: #{$bp-1008})"; // 1792px
+$mq-w1080-up: "(min-width: #{$bp-1080})"; // 1920px
