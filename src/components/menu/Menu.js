@@ -6,54 +6,46 @@
 
 import Link from "next/link";
 
-import Button from "@/components/button/Button";
+import menuStyles from "@/components/menu/Menu.module.scss";
 
-import styles from "@/components/menu/Menu.module.scss";
-
-const Menu = () => {
+const Menu = (props) => {
 	const links = [
 		{
-			listItemClass: styles.listItem,
+			listItemClass: menuStyles.menu__listItem,
 			href: "/",
-			linkClass: styles.link,
+			linkClass: menuStyles.menu__link,
 			value: "Home"
 		},
 		{
-			listItemClass: styles.listItem,
+			listItemClass: menuStyles.menu__listItem,
 			href: "/publishers",
-			linkClass: styles.link,
+			linkClass: menuStyles.menu__link,
 			value: "Publishers"
 		},
 		{
-			listItemClass: styles.listItem,
+			listItemClass: menuStyles.menu__listItem,
 			href: "/developers",
-			linkClass: styles.link,
+			linkClass: menuStyles.menu__link,
 			value: "Developers"
 		},
 		{
-			listItemClass: styles.listItem,
+			listItemClass: menuStyles.menu__listItem,
 			href: "/platforms",
-			linkClass: styles.link,
+			linkClass: menuStyles.menu__link,
 			value: "Platforms"
 		},
 		{
-			listItemClass: styles.listItem,
+			listItemClass: menuStyles.menu__listItem,
 			href: "/library",
-			linkClass: styles.link,
+			linkClass: menuStyles.menu__link,
 			value: "My Library"
 		}
 	];
 
 	return(
-		<nav className={styles.block}>
-			<Button
-				buttonType="button"
-				buttonAction=""
-				buttonClass=""
-			>
-				Menu
-			</Button>
-			<menu className={styles.list}>
+		<nav className={props.isMenuOpen ? menuStyles["menu--open"] : menuStyles["menu--closed"]}>
+			<div></div>
+			<menu className={menuStyles.menu__list}>
 				{links.map(entry => (
 					<li
 						key={entry.value}
