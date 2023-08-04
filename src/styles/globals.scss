@@ -1,0 +1,51 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../styles/variables.scss";
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+*:focus {
+    outline: none;
+}
+
+body {
+    margin: 0;
+    color: $lemonChiffon;
+    font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6, figure, p, dl, dd {
+    margin: 0;
+}
+
+menu, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+}
+
+img {
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+}
