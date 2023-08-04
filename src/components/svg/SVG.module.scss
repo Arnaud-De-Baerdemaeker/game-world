@@ -62,4 +62,10 @@
 		width: 15px;
 		height: 15px;
 	}
+
+	&__complete {
+		stroke: $lemonChiffon;
+		stroke-width: 2px;
+		fill: none;
+	}
 }
