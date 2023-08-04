@@ -1,0 +1,132 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../../styles/variables.scss";
+
+.gameCard {
+	position: relative;
+	width: 100%;
+	max-width: 320px;
+	padding: 4px;
+	border-radius: 10px;
+	border-bottom-right-radius: 50px;
+	background: linear-gradient(0deg, $eerieBlack 0%, $charcoal 100%);
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+		row-gap: 20px;
+		height: 100%;
+		padding: 20px;
+		border: {
+			style: solid;
+			width: 2px;
+			color: $lemonChiffon;
+			radius: calc(10px - 2px);
+		}
+		border-bottom-right-radius: 46px;
+	}
+
+	&__header {
+		position: relative;
+	}
+
+	&__illustration {
+		width: 100%;
+		height: 100%;
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: inherit;
+			height: inherit;
+			background: radial-gradient(circle at center top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 90%);
+			border-radius: 5px;
+		}
+	}
+
+	&__image {
+		width: inherit;
+		height: inherit;
+		aspect-ratio: 1 / 1;
+		object-fit: cover;
+		border-radius: 5px;
+	}
+
+	&__title {
+		position: absolute;
+		bottom: 30px;
+		width: 100%;
+		padding: {
+			right: 10px;
+			left: 10px;
+		}
+		text-align: center;
+	}
+
+	&__menu {
+		display: flex;
+		justify-content: center;
+		column-gap: 20px;
+	}
+
+	&__listItem {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+	}
+
+	&__view {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $lemonChiffon;
+			radius: 40px;
+		}
+		-webkit-tap-highlight-color: transparent;
+		transition-property: background-color box-shadow;
+		transition-duration: 0.5s;
+
+		&:focus {
+			box-shadow: 0 0 10px 7.5px $lemonChiffon;
+		}
+
+		@media screen {
+			@media #{$mobile} {
+				&:active {
+					background-color: $lemonChiffon;
+				}
+			}
+
+			@media #{$desktop} {
+				&:hover {
+					background-color: $lemonChiffon;
+				}
+			}
+		}
+	}
+
+	&__informations {
+		display: flex;
+		column-gap: 20px;
+	}
+
+	&__platforms {
+		width: 50%;
+	}
+
+	&__release {
+		@extend .gameCard__platforms;
+	}
+}
