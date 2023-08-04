@@ -54,7 +54,8 @@ const Genre = (props) => {
 				imageSrc={props.genreDetails.image_background}
 				imageAlt={`"${props.genreDetails.name}" cover image`}
 				imageClass=""
-				title={<h2>{props.genreDetails.name}</h2>}
+				mainTitle={props.genreDetails.name}
+				subTitle=""
 			/>
 			<main>
 				<div id="genreDescription"></div>
