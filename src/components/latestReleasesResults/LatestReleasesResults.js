@@ -11,14 +11,16 @@ import LoadMore from "@/components/loadMore/LoadMore";
 
 import {getLatestReleases} from "@/api/games/getLatestReleases";
 
+import latestReleasesStyles from "@/components/latestReleasesResults/LatestReleases.module.scss";
+
 const LatestReleasesResults = (props) => {
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 
 	return(
 		<>
-			<h2>Latest releases</h2>
-			<div>
+			<h3 className={latestReleasesStyles.latestReleases__title}>Latest releases</h3>
+			<div className={latestReleasesStyles.latestReleases__container}>
 				{props.latestReleases.results.length > 0
 					? props.latestReleases.results.map(entry => (
 						<GameCard
