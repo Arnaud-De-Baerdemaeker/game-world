@@ -624,7 +624,7 @@ const GameCard = (props) => {
 												svgClass={isAddedToCollection ? svgStyles["svg__collection--checked"] : svgStyles.svg__collection}
 											/>
 										}
-										buttonClass={buttonStyles.button__gameCardAction}
+										buttonClass={isAddedToCollection ? buttonStyles["button__gameCardAction--checked"] : buttonStyles.button__gameCardAction}
 									/>
 								</li>
 								<li className={gameCardStyles.gameCard__listItem}>
@@ -639,7 +639,7 @@ const GameCard = (props) => {
 												svgClass={isAddedToWishlist ? svgStyles["svg__wishlist--checked"] : svgStyles.svg__wishlist}
 											/>
 										}
-										buttonClass={buttonStyles.button__gameCardAction}
+										buttonClass={isAddedToWishlist ? buttonStyles["button__gameCardAction--checked"] : buttonStyles.button__gameCardAction}
 									/>
 								</li>
 							</menu>
@@ -664,15 +664,15 @@ const GameCard = (props) => {
 														</dd>
 													))}
 												</div>
-												: <dd>N/A</dd>
+												: <dd className={gameCardStyles.gameCard__platformsItems}>N/A</dd>
 											}
 										</div>
 
 										<div className={gameCardStyles.gameCard__release}>
 											<dt className={gameCardStyles.gameCard__releaseTitle}>Release date</dt>
 											{props.gameRelease
-												? <dd>{props.gameRelease}</dd>
-												: <dd>N/A</dd>
+												? <dd className={gameCardStyles.gameCard__releaseDate}>{props.gameRelease}</dd>
+												: <dd className={gameCardStyles.gameCard__releaseDate}>N/A</dd>
 											}
 										</div>
 
