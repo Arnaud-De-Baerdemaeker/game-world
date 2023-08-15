@@ -7,6 +7,22 @@
 @import "../../styles/variables.scss";
 
 .svg {
+	&__menu {
+		fill: $cadetGray;
+		transition: {
+			property: fill;
+			duration: 0.5s;
+		}
+
+		&--open {
+			@extend .svg__menu;
+		}
+
+		&--closed {
+			@extend .svg__menu;
+		}
+	}
+
 	&__view {
 		stroke: $cadetGray;
 		stroke-width: 2px;
@@ -14,14 +30,6 @@
 		transition: {
 			property: stroke;
 			duration: 0.5s;
-		}
-
-		@media screen {
-			@media #{$desktop} {
-				&:hover {
-					stroke: $lemonChiffon;
-				}
-			}
 		}
 	}
 
@@ -32,14 +40,6 @@
 		transition: {
 			property: fill;
 			duration: 0.5s;
-		};
-
-		@media screen {
-			@media #{$desktop} {
-				&:hover {
-					fill: $lemonChiffon;
-				}
-			}
 		}
 
 		&--checked {
