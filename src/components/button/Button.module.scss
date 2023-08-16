@@ -25,8 +25,8 @@
 		box-shadow: 0 0 10px 5px $eerieBlack;
 		-webkit-tap-highlight-color: transparent;
 		transition: {
-			property: box-shadow, border-color, fill;
-			duration: 0.2s;
+			property: box-shadow, border-color, stroke;
+			duration: 0.5s;
 		}
 
 		&:focus-visible {
@@ -34,7 +34,7 @@
 			border-color: $lemonChiffon;
 
 			svg {
-				fill: $lemonChiffon;
+				stroke: $lemonChiffon;
 			}
 		}
 
@@ -43,7 +43,7 @@
 			box-shadow: 0 0 10px 8px $lemonChiffon;
 
 			svg {
-				fill: $lemonChiffon;
+				stroke: $lemonChiffon;
 			}
 		}
 
@@ -53,7 +53,7 @@
 					border-color: $lemonChiffon;
 
 					svg {
-						fill: $lemonChiffon;
+						stroke: $lemonChiffon;
 					}
 				}
 			}
