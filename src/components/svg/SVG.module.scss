@@ -5,21 +5,70 @@
 */
 
 @import "../../styles/variables.scss";
+@import "../../styles/keyframes.scss";
 
 .svg {
 	&__menu {
-		fill: $cadetGray;
+		stroke: $cadetGray;
+		stroke-width: 2px;
+		stroke-linecap: round;
 		transition: {
-			property: fill;
+			property: stroke;
 			duration: 0.5s;
 		}
+	}
+
+	&__topLine {
+		width: 100%;
+		height: 100%;
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+		transform-box: fill-box;
+		transform-origin: center;
 
 		&--open {
-			@extend .svg__menu;
+			@extend .svg__topLine;
+			animation-name: topLineToCross;
 		}
 
 		&--closed {
-			@extend .svg__menu;
+			@extend .svg__topLine;
+			animation-name: topLineToHamburger;
+		}
+	}
+
+	&__middleLine {
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+		transform-box: fill-box;
+		transform-origin: center;
+
+		&--open {
+			@extend .svg__middleLine;
+			animation-name: middleLineToCross;
+		}
+
+		&--closed {
+			@extend .svg__middleLine;
+			animation-name: middleLineToHamburger;
+			
+		}
+	}
+
+	&__bottomLine {
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+		transform-box: fill-box;
+		transform-origin: center;
+
+		&--open {
+			@extend .svg__bottomLine;
+			animation-name: bottomLineToCross;
+		}
+
+		&--closed {
+			@extend .svg__bottomLine;
+			animation-name: bottomLineToHamburger;
 		}
 	}
 
