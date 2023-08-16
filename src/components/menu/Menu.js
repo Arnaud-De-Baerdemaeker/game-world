@@ -44,7 +44,6 @@ const Menu = (props) => {
 
 	return(
 		<nav className={props.isMenuOpen ? menuStyles["menu--open"] : menuStyles["menu--closed"]}>
-			<div></div>
 			<menu className={menuStyles.menu__list}>
 				{links.map(entry => (
 					<li
