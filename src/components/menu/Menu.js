@@ -45,7 +45,7 @@ const Menu = (props) => {
 					return(
 						<li
 							key={entry.value}
-							className={isActive ? menuStyles["menu__listItem--active"] : menuStyles.menu__listItem}
+							className={menuStyles.menu__listItem}
 						>
 							<Link
 								href={entry.href}
