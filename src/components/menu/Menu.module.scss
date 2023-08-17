@@ -36,131 +36,14 @@
 		row-gap: 25px;
 
 		&Item {
-			position: relative;
 			width: 140px;
-			border-radius: 50px;
 			transition-property: box-shadow;
 			transition-duration: 0.5s;
-
-			&:before {
-				content: "";
-				position: absolute;
-				top: calc(50% - 1px);
-				left: -100%;
-				width: 100%;
-				height: 2px;
-				background-color: $cadetGray;
-				border-radius: 10px;
-				opacity: 0;
-				transition: {
-					property: opacity, background-color, box-shadow;
-					duration: 0.5s;
-				}
-
-				&:focus-visible {
-					box-shadow: 0 0 1px 8px $lemonChiffon;
-				}
-
-				&:active {
-					box-shadow: 0 0 10px 8px $lemonChiffon;
-				}
-			}
-
-			&:after {
-				content: "";
-				position: absolute;
-				top: calc(50% - 1px);
-				right: -100%;
-				width: 100%;
-				height: 2px;
-				background-color: $cadetGray;
-				border-radius: 10px;
-				opacity: 0;
-				transition-property: opacity, background-color, box-shadow;
-				transition-duration: 0.5s;
-
-				&:focus-visible {
-					box-shadow: 0 0 1px 8px $lemonChiffon;
-				}
-
-				&:active {
-					box-shadow: 0 0 10px 8px $lemonChiffon;
-				}
-			}
-
-			&:focus-visible {
-				box-shadow: 0 0 1px 8px $lemonChiffon;
-
-				&:before {
-					box-shadow: 0 0 1px 8px $lemonChiffon;
-				}
-
-				&:after {
-					box-shadow: 0 0 1px 8px $lemonChiffon;
-				}
-			}
-
-			&:active {
-				box-shadow: 0 0 10px 8px $lemonChiffon;
-
-				&:before {
-					box-shadow: 0 0 10px 8px $lemonChiffon;
-				}
-
-				&:after {
-					box-shadow: 0 0 10px 8px $lemonChiffon;
-				}
-			}
-
-			@media screen {
-				@media #{$desktop} {
-					&:hover {
-						border-color: $lemonChiffon;
-
-						&:before {
-							background-color: $lemonChiffon;
-							opacity: 1;
-						}
-
-						&:after {
-							background-color: $lemonChiffon;
-							opacity: 1;
-						}
-					}
-				}
-			}
-
-			&--active {
-				@extend .menu__listItem;
-				border-radius: 50px;
-				outline: {
-					style: solid;
-					width: 1px;
-					color: $cadetGray;
-				}
-				transition-property: outline-color, box-shadow;
-				transition-duration: 0.5s;
-
-				&:focus-visible {
-					box-shadow: 0 0 1px 8px $lemonChiffon;
-				}
-	
-				&:active {
-					box-shadow: 0 0 10px 8px $lemonChiffon;
-				}
-
-				@media screen {
-					@media #{$desktop} {
-						&:hover {
-							outline-color: $lemonChiffon;
-						}
-					}
-				}
-			}
 		}
 	}
 
 	&__link {
+		position: relative;
 		display: block;
 		width: 100%;
 		height: 100%;
@@ -168,7 +51,7 @@
 		font-size: 20px;
 		text-align: center;
 		transition: {
-			property: $lemonChiffon;
+			property: color;
 			duration: 0.5s;
 		}
 
@@ -202,6 +85,26 @@
 			transition-duration: 0.5s;
 		}
 
+		&:focus-visible {
+			&:before {
+				box-shadow: 0 0 1px 8px $lemonChiffon;
+			}
+
+			&:after {
+				box-shadow: 0 0 1px 8px $lemonChiffon;
+			}
+		}
+
+		&:active {
+			&:before {
+				box-shadow: 0 0 10px 8px $lemonChiffon;
+			}
+
+			&:after {
+				box-shadow: 0 0 10px 8px $lemonChiffon;
+			}
+		}
+
 		@media screen {
 			@media #{$desktop} {
 				&:hover {
@@ -222,7 +125,6 @@
 
 		&--active {
 			@extend .menu__link;
-
 		}
 	}
 }
