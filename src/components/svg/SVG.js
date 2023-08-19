@@ -8,11 +8,11 @@ const SVG = (props) => {
 	return(
 		<svg
 			id={props.svgId}
-			viewBox={props.svgViewbox}
+			viewBox={props.svgViewBox}
 			xmlns="http://www.w3.org/2000/svg"
 			className={props.svgClass}
 		>
-			{props.svgCoordinates}
+			{props.children}
 		</svg>
 	);
 };
