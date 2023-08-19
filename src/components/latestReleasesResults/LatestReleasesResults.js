@@ -37,7 +37,7 @@ const LatestReleasesResults = (props) => {
 							imageAlt=""
 							imageClass=""
 							gameName={entry.name}
-							gamePlatforms={entry.platforms}
+							gameParentPlatforms={entry.parent_platforms}
 							gameRelease={entry.released}
 							gameGenres={entry.genres}
 						/>
@@ -60,7 +60,7 @@ const LatestReleasesResults = (props) => {
 							imageAlt=""
 							imageClass=""
 							gameName={entry.name}
-							gamePlatforms={entry.platforms}
+							gameParentPlatforms={entry.parent_platforms}
 							gameRelease={entry.released}
 							gameGenres={entry.genres}
 						/>
