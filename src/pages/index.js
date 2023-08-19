@@ -13,9 +13,9 @@ import SearchField from "@/components/searchField/SearchField";
 import Button from "@/components/button/Button";
 import SearchResults from "@/components/searchResults/SearchResults";
 import LatestReleasesResults from "@/components/latestReleasesResults/LatestReleasesResults";
+import Icon from "@/components/icon/Icon";
 import Footer from "@/components/footer/Footer";
 
-import headerWallpaper from "@/images/gaming-header-wallpaper-1080p.jpg";
 import {getLatestReleases} from "@/api/games/getLatestReleases";
 import {searchGames} from "@/api/games/searchGames";
 
@@ -164,12 +164,13 @@ const Home = (props) => {
 					buttonAction={toggleMenu}
 					buttonClass={buttonStyles.button__menu}
 				>
-					Menu
+					<Icon
+						icon="menu"
+						isMenuOpen={isMenuOpen}
+					/>
 				</Button>
 				<Menu isMenuOpen={isMenuOpen} />
 				<Header
-					imageSrc={headerWallpaper}
-					imageAlt="Header wallpaper"
 					mainTitle="Game World"
 					subTitle="Search and save your favorite games and platforms"
 				/>
