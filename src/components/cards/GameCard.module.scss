@@ -5,6 +5,7 @@
 */
 
 @import "../../styles/variables.scss";
+@import "../../styles/keyframes.scss";
 
 .gameCard {
 	position: relative;
@@ -106,7 +107,11 @@
 
 		&:focus-visible {
 			border-color: $lemonChiffon;
-			box-shadow: 0 0 1px 8px $lemonChiffon;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
 
 			svg {
 				stroke: $lemonChiffon;
@@ -153,8 +158,8 @@
 
 		&List {
 			display: inherit;
-			flex-direction: column;
-			row-gap: 2px;
+			flex-wrap: wrap;
+			column-gap: 5px;
 		}
 
 		&Items {
@@ -163,8 +168,6 @@
 			font-size: 14px;
 		}
 	}
-
-
 
 	&__release {
 		@extend .gameCard__platforms;

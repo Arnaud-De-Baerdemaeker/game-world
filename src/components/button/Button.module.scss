@@ -5,6 +5,7 @@
 */
 
 @import "../../styles/variables.scss";
+@import "../../styles/keyframes.scss";
 
 .button {
 	&__menu {
@@ -30,8 +31,12 @@
 		}
 
 		&:focus-visible {
-			box-shadow: 0 0 1px 8px $lemonChiffon;
 			border-color: $lemonChiffon;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
 
 			svg {
 				stroke: $lemonChiffon;
@@ -78,7 +83,11 @@
 		}
 
 		&:focus-visible {
-			box-shadow: 0 0 1px 8px $lemonChiffon;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
 			border-color: $lemonChiffon;
 
 			svg {
