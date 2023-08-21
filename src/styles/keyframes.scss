@@ -96,3 +96,19 @@
 		transform: translateY(0);
 	}
 }
+
+
+// Focus animation
+@keyframes focusAnimation {
+	0% {
+		box-shadow: 0 0 10px 5px $eerieBlack;
+	}
+
+	50% {
+		box-shadow: 0 0 1px 7px $lemonChiffon;
+	}
+
+	100% {
+		box-shadow: 0 0 10px 5px $eerieBlack;
+	}
+}
