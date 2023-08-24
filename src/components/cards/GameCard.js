@@ -265,7 +265,10 @@ const GameCard = (props) => {
 					? (
 						<>
 							<menu className={gameCardStyles.gameCard__menu}>
-								<li className={gameCardStyles.gameCard__listItem}>
+								<li
+									title="View the game's details"
+									className={gameCardStyles.gameCard__listItem}
+								>
 									<Link
 										href={{
 											pathname: props.pathname,
@@ -279,7 +282,10 @@ const GameCard = (props) => {
 										<Icon icon="view" />
 									</Link>
 								</li>
-								<li className={gameCardStyles.gameCard__listItem}>
+								<li
+									title="Add the game to your library"
+									className={gameCardStyles.gameCard__listItem}
+								>
 									<Button
 										buttonType="button"
 										buttonAction={addToLibrary}
@@ -291,7 +297,10 @@ const GameCard = (props) => {
 										/>
 									</Button>
 								</li>
-								<li className={gameCardStyles.gameCard__listItem}>
+								<li
+									title="Add the game to your wishlist"
+									className={gameCardStyles.gameCard__listItem}
+								>
 									<Button
 										buttonType="button"
 										buttonAction={addToWishlist}
