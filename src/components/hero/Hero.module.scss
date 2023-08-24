@@ -15,6 +15,17 @@
 		right: 10px;
 		left: 10px;
 	}
+	background:
+		url("../../images/tile.svg"),
+		radial-gradient(circle at center, transparent 25%, $cadetGray 75%, transparent 100%)
+	;
+	background: {
+		color: $eerieBlack;
+		repeat: no-repeat;
+		size: auto 100vh;
+		position: 50% 50%;
+		attachment: fixed;
+	}
 
 	&__group {
 		display: inherit;
