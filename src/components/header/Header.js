@@ -4,15 +4,28 @@
 	Arnaud De Baerdemaeker
 */
 
+import Button from "../button/Button";
+import Icon from "../icon/Icon";
+
 import headerStyles from "@/components/header/Header.module.scss";
+import buttonStyles from "@/components/button/Button.module.scss";
 
 const Header = (props) => {
 	return(
 		<header className={headerStyles.header}>
-			<hgroup className={headerStyles.header__titles}>
-				<h1>{props.mainTitle}</h1>
-				<p>{props.subTitle}</p>
-			</hgroup>
+			<div className={headerStyles.header__container}>
+				<Button
+					buttonType="button"
+					buttonAction={props.toggleMenu}
+					buttonClass={buttonStyles.button__menu}
+				>
+					<Icon
+						icon="menu"
+						isMenuOpen={props.isMenuOpen}
+					/>
+				</Button>
+				<h1 className={headerStyles.header__title}>Game World</h1>
+			</div>
 		</header>
 	);
 };
