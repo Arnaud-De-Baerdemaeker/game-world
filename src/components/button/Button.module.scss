@@ -9,12 +9,10 @@
 
 .button {
 	&__menu {
-		position: fixed;
-		top: 15px;
-		left: 15px;
-		z-index: 2;
-		width: 50px;
-		height: 50px;
+		position: relative;
+		z-index: 3;
+		width: 40px;
+		height: 40px;
 		border: {
 			style: solid;
 			width: 1px;
@@ -23,7 +21,7 @@
 		}
 		color: $cadetGray;
 		background-color: $eerieBlack;
-		box-shadow: 0 0 10px 5px $eerieBlack;
+		box-shadow: 0 0 2px $eerieBlack;
 		-webkit-tap-highlight-color: transparent;
 		transition: {
 			property: box-shadow, border-color, stroke;
