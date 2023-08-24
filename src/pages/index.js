@@ -9,18 +9,17 @@ import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
 import Header from "@/components/header/Header";
+import Hero from "@/components/hero/Hero";
 import SearchField from "@/components/searchField/SearchField";
 import Button from "@/components/button/Button";
 import SearchResults from "@/components/searchResults/SearchResults";
 import LatestReleasesResults from "@/components/latestReleasesResults/LatestReleasesResults";
-import Icon from "@/components/icon/Icon";
 import Footer from "@/components/footer/Footer";
 
 import {getLatestReleases} from "@/api/games/getLatestReleases";
 import {searchGames} from "@/api/games/searchGames";
 
 import homeStyles from "./Home.module.scss";
-import buttonStyles from "@/components/button/Button.module.scss";
 
 const Home = (props) => {
 	const [searchQuery, setSearchQuery] = useState(null);
@@ -159,20 +158,14 @@ const Home = (props) => {
 				/>
 			</Head>
 			<div className={homeStyles.homePage}>
-				<Button
-					buttonType="button"
-					buttonAction={toggleMenu}
-					buttonClass={buttonStyles.button__menu}
-				>
-					<Icon
-						icon="menu"
-						isMenuOpen={isMenuOpen}
-					/>
-				</Button>
-				<Menu isMenuOpen={isMenuOpen} />
 				<Header
-					mainTitle="Game World"
-					subTitle="Search and save your favorite games and platforms"
+					isMenuOpen={isMenuOpen}
+					toggleMenu={toggleMenu}
+				/>
+				<Menu isMenuOpen={isMenuOpen} />
+				<Hero
+					title="Explore, Save, Wish"
+					catchword="Browsing your favorite games and platforms is as simple as it can be"
 				/>
 				<main className={homeStyles.homePage__mainContent}>
 					<SearchField
