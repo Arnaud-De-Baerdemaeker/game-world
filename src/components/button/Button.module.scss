@@ -76,7 +76,7 @@
 		-webkit-tap-highlight-color: transparent;
 		box-shadow: 0 0 10px 5px $eerieBlack;
 		transition: {
-			property: box-shadow, border-color, fill;
+			property: box-shadow, border-color, fill, stroke;
 			duration: 0.5s;
 		}
 
@@ -90,6 +90,7 @@
 
 			svg {
 				fill: $lemonChiffon;
+				stroke: $lemonChiffon;
 			}
 		}
 
@@ -104,7 +105,7 @@
 					border-color: $lemonChiffon;
 
 					svg {
-						fill: $lemonChiffon;
+						stroke: $lemonChiffon;
 					}
 				}
 			}
@@ -112,8 +113,47 @@
 
 		&--checked {
 			@extend .button__gameCardAction;
-			border-color: $lemonChiffon;
-			background-color: $lemonChiffon;
+
+			@media screen {
+				@media #{$desktop} {
+					&:hover {
+						border-color: $lemonChiffon;
+
+						svg {
+							fill: $lemonChiffon;
+						}
+					}
+				}
+			}
 		}
+	}
+
+	&__submit {
+		font-family: $jost;
+		font-weight: 600;
+		width: 100px;
+		height: 30px;
+		background-color: $lemonChiffon;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $lemonChiffon;
+			radius: 30px;
+		}
+		color: $eerieBlack;
+	}
+
+	&__clear {
+		font-family: $jost;
+		font-weight: 600;
+		width: 100px;
+		height: 30px;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $cadetGray;
+			radius: 30px;
+		}
+		color: $cadetGray;
 	}
 }

@@ -84,15 +84,14 @@
 
 	&__collection {
 		@extend .svg__view;
-		stroke-width: unset;
-		fill: $cadetGray;
 		transition: {
-			property: fill;
+			property: fill, stroke;
 			duration: 0.5s;
 		}
 
 		&--checked {
-			fill: $eerieBlack;
+			@extend .svg__collection;
+			fill: $cadetGray;
 		}
 	}
 
