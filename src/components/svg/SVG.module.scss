@@ -77,17 +77,13 @@
 		stroke-width: 2px;
 		fill: none;
 		transition: {
-			property: stroke;
+			property: stroke, fill;
 			duration: 0.5s;
 		}
 	}
 
 	&__collection {
 		@extend .svg__view;
-		transition: {
-			property: fill, stroke;
-			duration: 0.5s;
-		}
 
 		&--checked {
 			@extend .svg__collection;
