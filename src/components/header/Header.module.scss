@@ -20,6 +20,7 @@
 	border-radius: 60px;
 	background: radial-gradient(ellipse at center 170%, $cadetGray 0%, $eerieBlack 75%);
 	background-color: $eerieBlack;
+	box-shadow: 0 0 10px 5px $eerieBlack;
 
 	&__container {
 		display: flex;
