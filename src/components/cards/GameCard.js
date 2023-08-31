@@ -241,8 +241,12 @@ const GameCard = (props) => {
 
 	return(
 		<article className={gameCardStyles.gameCard}>
-			<div className={gameCardStyles.gameCard__container}>
-				<header className={gameCardStyles.gameCard__header}>
+			<ActionComplete
+				message={isPopupOn.message}
+				isPopupOn={isPopupOn}
+			/>
+			<div className={gameCardStyles.gameCard__container} >
+				<header>
 					<figure className={gameCardStyles.gameCard__illustration}>
 						<Image
 							src={props.imageSrc}
@@ -253,6 +257,57 @@ const GameCard = (props) => {
 							className={gameCardStyles.gameCard__image}
 						/>
 					</figure>
+
+					<menu className={gameCardStyles.gameCard__menu}>
+						<li
+							title="View the game's details"
+							className={gameCardStyles.gameCard__listItem}
+						>
+							<Link
+								href={{
+									pathname: props.pathname,
+									query: {
+										id: props.id
+									}
+								}}
+								as={props.as}
+								className={gameCardStyles.gameCard__view}
+							>
+								<Icon icon="view" />
+							</Link>
+						</li>
+						<li
+							title="Add the game to your library"
+							className={gameCardStyles.gameCard__listItem}
+						>
+							<Button
+								buttonType="button"
+								buttonAction={addToLibrary}
+								buttonClass={isAddedToCollection ? buttonStyles["button__gameCardAction--checked"] : buttonStyles.button__gameCardAction}
+							>
+								<Icon
+									icon="collection"
+									isAddedToCollection={isAddedToCollection}
+								/>
+							</Button>
+						</li>
+						<li
+							title="Add the game to your wishlist"
+							className={gameCardStyles.gameCard__listItem}
+						>
+							<Button
+								buttonType="button"
+								buttonAction={addToWishlist}
+								buttonClass={isAddedToWishlist ? buttonStyles["button__gameCardAction--checked"] : buttonStyles.button__gameCardAction}
+							>
+								<Icon
+									icon="wishlist"
+									isAddedToWishlist={isAddedToWishlist}
+								/>
+							</Button>
+						</li>
+					</menu>
+
 					<h4
 						data-name={props.slug}
 						className={gameCardStyles.gameCard__title}
@@ -261,116 +316,41 @@ const GameCard = (props) => {
 					</h4>
 				</header>
 
-				{!isPopupOn.condition
+				{props.gameParentPlatforms || props.gameRelease || props.gameGenres
 					? (
-						<>
-							<menu className={gameCardStyles.gameCard__menu}>
-								<li
-									title="View the game's details"
-									className={gameCardStyles.gameCard__listItem}
-								>
-									<Link
-										href={{
-											pathname: props.pathname,
-											query: {
-												id: props.id
-											}
-										}}
-										as={props.as}
-										className={gameCardStyles.gameCard__view}
-									>
-										<Icon icon="view" />
-									</Link>
-								</li>
-								<li
-									title="Add the game to your library"
-									className={gameCardStyles.gameCard__listItem}
-								>
-									<Button
-										buttonType="button"
-										buttonAction={addToLibrary}
-										buttonClass={isAddedToCollection ? buttonStyles["button__gameCardAction--checked"] : buttonStyles.button__gameCardAction}
-									>
-										<Icon
-											icon="collection"
-											isAddedToCollection={isAddedToCollection}
-										/>
-									</Button>
-								</li>
-								<li
-									title="Add the game to your wishlist"
-									className={gameCardStyles.gameCard__listItem}
-								>
-									<Button
-										buttonType="button"
-										buttonAction={addToWishlist}
-										buttonClass={isAddedToWishlist ? buttonStyles["button__gameCardAction--checked"] : buttonStyles.button__gameCardAction}
-									>
-										<Icon
-											icon="wishlist"
-											isAddedToWishlist={isAddedToWishlist}
-										/>
-									</Button>
-								</li>
-							</menu>
+						<dl className={gameCardStyles.gameCard__informations}>
+							<div className={gameCardStyles.gameCard__platforms}>
+								{props.gameParentPlatforms.length == 1
+									? <dt className={gameCardStyles.gameCard__platformsTitle}>Platform</dt>
+									: <dt className={gameCardStyles.gameCard__platformsTitle}>Platforms</dt>
+								}
 
-							{props.gameParentPlatforms || props.gameRelease || props.gameGenres
-								? (
-									<dl className={gameCardStyles.gameCard__informations}>
-										<div className={gameCardStyles.gameCard__platforms}>
-											{props.gameParentPlatforms.length == 1
-												? <dt className={gameCardStyles.gameCard__platformsTitle}>Platform</dt>
-												: <dt className={gameCardStyles.gameCard__platformsTitle}>Platforms</dt>
-											}
-											{props.gameParentPlatforms.length > 0
-												? <div className={gameCardStyles.gameCard__platformsList}>
-													{props.gameParentPlatforms.map(item => (
-														<dd
-															key={item.platform.id}
-															data-platform={item.platform.slug}
-															className={gameCardStyles.gameCard__platformsItems}
-														>
-															<Icon icon={item.platform.slug} />
-														</dd>
-													))}
-												</div>
-												: <dd className={gameCardStyles.gameCard__platformsItems}>N/A</dd>
-											}
-										</div>
+								{props.gameParentPlatforms.length > 0
+									? <div className={gameCardStyles.gameCard__platformsList}>
+										{props.gameParentPlatforms.map(item => (
+											<dd
+												key={item.platform.id}
+												data-platform={item.platform.slug}
+												className={gameCardStyles.gameCard__platformsItems}
+											>
+												<Icon icon={item.platform.slug} />
+											</dd>
+										))}
+									</div>
+									: <dd className={gameCardStyles.gameCard__platformsItems}>N/A</dd>
+								}
+							</div>
 
-										<div className={gameCardStyles.gameCard__release}>
-											<dt className={gameCardStyles.gameCard__releaseTitle}>Release date</dt>
-											{props.gameRelease
-												? <dd className={gameCardStyles.gameCard__releaseDate}>{props.gameRelease}</dd>
-												: <dd className={gameCardStyles.gameCard__releaseDate}>N/A</dd>
-											}
-										</div>
-
-										{/* <div>
-											<dt>Genres</dt>
-											{props.gameGenres.length > 0
-												? <>
-													{props.gameGenres.map(item => (
-														<dd
-															key={item.id}
-															data-genre={item.slug}
-														>
-															{item.name}
-														</dd>
-													))}
-												</>
-												: <dd>N/A</dd>
-											}
-										</div> */}
-									</dl>
-								)
-								: null
-							}
-						</>
+							<div className={gameCardStyles.gameCard__release}>
+								<dt className={gameCardStyles.gameCard__releaseTitle}>Release date</dt>
+								{props.gameRelease
+									? <dd className={gameCardStyles.gameCard__releaseDate}>{props.gameRelease}</dd>
+									: <dd className={gameCardStyles.gameCard__releaseDate}>N/A</dd>
+								}
+							</div>
+						</dl>
 					)
-					: (
-						<ActionComplete message={isPopupOn.message} />
-					)
+					: null
 				}
 			</div>
 		</article>
