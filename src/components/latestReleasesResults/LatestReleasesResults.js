@@ -18,8 +18,8 @@ const LatestReleasesResults = (props) => {
 	const [moreResults, setMoreResults] = useState([]);
 
 	return(
-		<>
-			<h3 className={latestReleasesStyles.latestReleases__title}>Latest releases</h3>
+		<section className={latestReleasesStyles.latestReleases}>
+			<h3 className={latestReleasesStyles.latestReleases__title}>Latest Releases</h3>
 			<div className={latestReleasesStyles.latestReleases__container}>
 				{props.latestReleases.results.length > 0
 					? props.latestReleases.results.map(entry => (
@@ -44,6 +44,7 @@ const LatestReleasesResults = (props) => {
 					))
 					: <p>No results were returned</p>
 				}
+
 				{moreResults.length != 0
 					? moreResults.map(entry => (
 						<GameCard
@@ -67,21 +68,22 @@ const LatestReleasesResults = (props) => {
 					))
 					: null
 				}
+
+				<LoadMore
+					nextPage={nextPage}
+					setNextPage={setNextPage}
+					moreResults={moreResults}
+					setMoreResults={setMoreResults}
+					setHasFirstCallMoreResults={props.setHasFirstCallMoreResults}
+					setHasFollowingCallsMoreResults={props.setHasFollowingCallsMoreResults}
+					apiCall={getLatestReleases}
+					next={props.hasFirstCallMoreResults || props.hasFollowingCallsMoreResults
+						? true
+						: false
+					}
+				/>
 			</div>
-			<LoadMore
-				nextPage={nextPage}
-				setNextPage={setNextPage}
-				moreResults={moreResults}
-				setMoreResults={setMoreResults}
-				setHasFirstCallMoreResults={props.setHasFirstCallMoreResults}
-				setHasFollowingCallsMoreResults={props.setHasFollowingCallsMoreResults}
-				apiCall={getLatestReleases}
-				next={props.hasFirstCallMoreResults || props.hasFollowingCallsMoreResults
-					? true
-					: false
-				}
-			/>
-		</>
+		</section>
 	);
 };
 
