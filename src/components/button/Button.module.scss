@@ -24,8 +24,8 @@
 		box-shadow: 0 0 2px $eerieBlack;
 		-webkit-tap-highlight-color: transparent;
 		transition: {
-			property: box-shadow, border-color, stroke;
-			duration: 0.5s;
+			property: box-shadow, border-color, stroke, transform;
+			duration: 0.5s, 0.5s, 0.5s, 0.1s;
 		}
 
 		&:focus-visible {
@@ -42,12 +42,7 @@
 		}
 
 		&:active {
-			border-color: $lemonChiffon;
-			box-shadow: 0 0 10px 8px $lemonChiffon;
-
-			svg {
-				stroke: $lemonChiffon;
-			}
+			transform: scale(0.95);
 		}
 
 		@media screen {
@@ -76,8 +71,8 @@
 		-webkit-tap-highlight-color: transparent;
 		box-shadow: 0 0 10px 5px $eerieBlack;
 		transition: {
-			property: box-shadow, border-color, fill, stroke;
-			duration: 0.5s;
+			property: border-color, fill, stroke, transform;
+			duration: 0.5s, 0.5s, 0.5s, 0.1s;
 		}
 
 		&:focus-visible {
@@ -94,8 +89,7 @@
 		}
 
 		&:active {
-			border-color: $lemonChiffon;
-			box-shadow: 0 0 10px 8px $lemonChiffon;
+			transform: scale(0.95);
 		}
 
 		@media screen {
@@ -113,6 +107,12 @@
 		&--checked {
 			@extend .button__gameCardAction;
 
+			&:focus-visible {
+				svg {
+					fill: $lemonChiffon;
+				}
+			}
+
 			@media screen {
 				@media #{$desktop} {
 					&:hover {
@@ -128,18 +128,46 @@
 	}
 
 	&__submit {
-		font-family: $jost;
-		font-weight: 600;
+		font: {
+			family: $jost;
+			weight: 600;
+		}
 		width: 100px;
 		height: 30px;
-		background-color: $lemonChiffon;
 		border: {
 			style: solid;
 			width: 1px;
-			color: $lemonChiffon;
+			color: $cadetGray;
 			radius: 30px;
 		}
 		color: $eerieBlack;
+		background-color: $cadetGray;
+		box-shadow: 0 0 10px 0 $eerieBlack;
+		transition: {
+			property: background-color, border-color, transform;
+			duration: 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					background-color: $lemonChiffon;
+					border-color: $lemonChiffon;
+				}
+			}
+		}
 	}
 
 	&__clear {
@@ -154,5 +182,76 @@
 			radius: 30px;
 		}
 		color: $cadetGray;
+		background-color: $eerieBlack;
+		box-shadow: 0 0 10px 0 $eerieBlack;
+		transition: {
+			property: border-color, color, transform;
+			duration: 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			border-color: $lemonChiffon;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					border-color: $lemonChiffon;
+					color: $lemonChiffon;
+				}
+			}
+		}
+	}
+
+	&__load {
+		font: {
+			family: $jost;
+			weight: 600;
+		}
+		width: 140px;
+		height: 30px;
+		color: $eerieBlack;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $cadetGray;
+			radius: 30px;
+		}
+		background-color: $cadetGray;
+		box-shadow: 0 0 10px 0 $eerieBlack;
+		transition: {
+			property: background-color, border-color, transform;
+			duration: 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					background-color: $lemonChiffon;
+					border-color: $lemonChiffon;
+				}
+			}
+		}
 	}
 }

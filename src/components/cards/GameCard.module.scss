@@ -94,8 +94,8 @@
 		-webkit-tap-highlight-color: transparent;
 		box-shadow: 0 0 10px 5px $eerieBlack;
 		transition: {
-			property: border-color, box-shadow, stroke;
-			duration: 0.5s;
+			property: border-color, stroke, transform;
+			duration: 0.5s, 0.5s, 0.1s;
 		}
 
 		&:focus-visible {
@@ -112,12 +112,7 @@
 		}
 
 		&:active {
-			border-color: $lemonChiffon;
-			box-shadow: 0 0 10px 8px $lemonChiffon;
-
-			svg {
-				stroke: $lemonChiffon;
-			}
+			transform: scale(0.95);
 		}
 
 		@media screen {
