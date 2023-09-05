@@ -6,6 +6,8 @@
 
 import Button from "@/components/button/Button";
 
+import buttonStyles from "@/components/button/Button.module.scss";
+
 const LoadMore = (props) => {
 	if(props.resultsCount == 0) {
 		return(
@@ -50,7 +52,7 @@ const LoadMore = (props) => {
 						}
 					}
 				}
-				buttonClass=""
+				buttonClass={buttonStyles.button__load}
 			>
 				Show more results
 			</Button>
