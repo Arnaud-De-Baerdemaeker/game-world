@@ -101,14 +101,29 @@
 // Focus animation
 @keyframes focusAnimation {
 	0% {
-		box-shadow: 0 0 10px 5px $eerieBlack;
+		outline: {
+			style: solid;
+			width: 5px;
+			color: transparent;
+			offset: 5px;
+		}
 	}
 
 	50% {
-		box-shadow: 0 0 1px 7px $lemonChiffon;
+		outline: {
+			style: solid;
+			width: 5px;
+			color: $lemonChiffon;
+			offset: 5px;
+		}
 	}
 
 	100% {
-		box-shadow: 0 0 10px 5px $eerieBlack;
+		outline: {
+			style: solid;
+			width: 5px;
+			color: transparent;
+			offset: 5px;
+		}
 	}
 }
