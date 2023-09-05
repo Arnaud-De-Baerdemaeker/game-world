@@ -14,13 +14,13 @@
 	&__container {
 		display: flex;
 		flex-direction: column;
-		row-gap: 10px;
+		row-gap: 20px;
 		padding: 20px;
 		border: {
 			style: solid;
 			width: 2px;
 			color: $cadetGray;
-			radius: calc(10px - 2px);
+			radius: 8px;
 		}
 	}
 
@@ -49,6 +49,7 @@
 
 	&__buttons {
 		display: inherit;
-		column-gap: 20px;
+		justify-content: space-between;
+		column-gap: 10px;
 	}
 }
