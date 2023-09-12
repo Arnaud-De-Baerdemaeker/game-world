@@ -4,6 +4,8 @@
 	Arnaud De Baerdemaeker
 */
 
+import Link from "next/link";
+
 import Button from "../button/Button";
 import Icon from "../icon/Icon";
 
@@ -24,7 +26,14 @@ const Header = (props) => {
 						isMenuOpen={props.isMenuOpen}
 					/>
 				</Button>
-				<h1 className={headerStyles.header__title}>Game World</h1>
+				<h1 className={headerStyles.header__title}>
+					<Link
+						href="/"
+						className={headerStyles.header__link}
+					>
+						Game World
+					</Link>
+				</h1>
 			</div>
 		</header>
 	);
