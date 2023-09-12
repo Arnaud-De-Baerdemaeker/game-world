@@ -5,6 +5,7 @@
 */
 
 @import "../../styles/variables.scss";
+@import "../../styles/keyframes.scss";
 
 .header {
 	position: fixed;
@@ -42,8 +43,33 @@
 			family: $audiowide;
 			size: 22px;
 		}
-		color: $cadetGray;
 		text-transform: uppercase;
 		word-spacing: 2px;
+	}
+
+	&__link {
+		display: inline-block;
+		color: $cadetGray;
+		border-radius: 50px;
+		transition-property: color, transform;
+		transition-duration: 0.5s, 0.1s;
+
+		&:focus-visible {
+			animation-name: focusAnimation;
+			animation-duration: 2s;
+			animation-iteration-count: infinite;
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					color: $lemonChiffon;
+				}
+			}
+		}
 	}
 }
