@@ -98,32 +98,47 @@
 }
 
 
-// Focus animation
+// Focus animations
 @keyframes focusAnimation {
 	0% {
 		outline: {
 			style: solid;
-			width: 5px;
+			width: 4px;
 			color: transparent;
-			offset: 5px;
+			offset: 3px;
 		}
 	}
 
 	50% {
 		outline: {
 			style: solid;
-			width: 5px;
+			width: 4px;
 			color: $lemonChiffon;
-			offset: 5px;
+			offset: 3px;
 		}
 	}
 
 	100% {
 		outline: {
 			style: solid;
-			width: 5px;
+			width: 4px;
 			color: transparent;
-			offset: 5px;
+			offset: 3px;
 		}
+	}
+}
+
+@keyframes linksFocusAnimation {
+	0% {
+		background-color: transparent;
+	}
+
+	50% {
+		background-color: $lemonChiffon;
+		color: $eerieBlack;
+	}
+
+	100% {
+		background-color: transparent;
 	}
 }
