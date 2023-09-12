@@ -157,49 +157,39 @@ const Home = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<div className={homeStyles.homePage}>
-				<Header
-					isMenuOpen={isMenuOpen}
-					toggleMenu={toggleMenu}
+			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title="Explore, Save, Wish"
+				catchword="Browsing your favorite games and platforms is as simple as it can be"
+			/>
+			<main className={homeStyles.home}>
+				<SearchField
+					formAction={handleSearchQuery}
+					resetAll={resetAll}
 				/>
-				<Menu isMenuOpen={isMenuOpen} />
-				<Hero
-					title="Explore, Save, Wish"
-					catchword="Browsing your favorite games and platforms is as simple as it can be"
-				/>
-				<main className={homeStyles.homePage__mainContent}>
-					<SearchField
-						formAction={handleSearchQuery}
-						buttonReset={
-							<Button
-								buttonType="reset"
-								buttonClass=""
-								buttonAction={resetAll}
-							>
-								Clear search
-							</Button>
-						}
+				{isSearchInUse
+					? <SearchResults
+						searchQuery={searchQuery}
+						searchResults={searchResults}
+						hasFirstCallMoreResults={hasFirstCallMoreResults}
+						setHasFirstCallMoreResults={setHasFirstCallMoreResults}
+						hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
+						setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
 					/>
-					{isSearchInUse
-						? <SearchResults
-							searchQuery={searchQuery}
-							searchResults={searchResults}
-							hasFirstCallMoreResults={hasFirstCallMoreResults}
-							setHasFirstCallMoreResults={setHasFirstCallMoreResults}
-							hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
-							setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
-						/>
-						: <LatestReleasesResults
-							latestReleases={props.latestReleases}
-							hasFirstCallMoreResults={hasFirstCallMoreResults}
-							setHasFirstCallMoreResults={setHasFirstCallMoreResults}
-							hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
-							setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
-						/>
-					}
-				</main>
-				<Footer />
-			</div>
+					: <LatestReleasesResults
+						latestReleases={props.latestReleases}
+						hasFirstCallMoreResults={hasFirstCallMoreResults}
+						setHasFirstCallMoreResults={setHasFirstCallMoreResults}
+						hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
+						setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
+					/>
+				}
+			</main>
+			<Footer />
 		</>
 	);
 }
