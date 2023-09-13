@@ -248,14 +248,17 @@ const GameCard = (props) => {
 			<div className={gameCardStyles.gameCard__container} >
 				<header>
 					<figure className={gameCardStyles.gameCard__illustration}>
-						<Image
-							src={props.imageSrc}
-							alt={props.imageAlt}
-							responsive="true"
-							width={5000}
-							height={5000}
-							className={gameCardStyles.gameCard__image}
-						/>
+						{props.imageSrc
+							? <Image
+								src={props.imageSrc}
+								alt={props.imageAlt}
+								responsive="true"
+								width={500}
+								height={500}
+								className={gameCardStyles.gameCard__image}
+							/>
+							: null
+						}
 					</figure>
 
 					<menu className={gameCardStyles.gameCard__menu}>
