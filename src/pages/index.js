@@ -171,6 +171,7 @@ const Home = (props) => {
 					formAction={handleSearchQuery}
 					resetAll={resetAll}
 				/>
+
 				{isSearchInUse
 					? <SearchResults
 						searchQuery={searchQuery}
