@@ -7,6 +7,9 @@
 import Head from "next/head";
 import {useState, useEffect} from "react";
 
+import useToggler from "../hooks/useToggler";
+
+import Header from "@/components/header/Header";
 import Menu from "@/components/menu/Menu";
 import CompanyCard from "@/components/cards/CompanyCard";
 import LoadMore from "@/components/loadMore/LoadMore";
@@ -15,6 +18,7 @@ import Footer from "@/components/footer/Footer";
 import {getPublishers} from "@/api/publishers/getPublishers";
 
 const Publishers = (props) => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
@@ -41,7 +45,11 @@ const Publishers = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
+			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
 			<main>
 				<h2>Publishers</h2>
 				<div>
