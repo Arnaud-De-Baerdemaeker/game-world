@@ -6,6 +6,8 @@
 
 import Link from "next/link";
 
+import companyCardStyles from "@/components/cards/CompanyCard.module.scss";
+
 const Card = (props) => {
 	return(
 		<Link
@@ -16,23 +18,25 @@ const Card = (props) => {
 				}
 			}}
 			as={props.as}
+			className={companyCardStyles.companyCard__link}
 		>
-			<article>
-				<header>
-					<figure>
-						<img
-							src={props.imageSrc}
-							alt={props.imageAlt}
-							className={props.imageClass}
-						/>
-					</figure>
-					<h4>{props.companyName}</h4>
-				</header>
+			<article className={companyCardStyles.companyCard__card}>
+				<div className={companyCardStyles.companyCard__container}>
+					<img
+						src={props.imageSrc}
+						alt={props.imageAlt}
+						className={companyCardStyles.companyCard__image}
+					/>
 
-				<dl>
-					<dt>Games count</dt>
-					<dd>{props.companyGames ? props.companyGames : "N/A"}</dd>
-				</dl>
+					<header className={companyCardStyles.companyCard__header}>
+						<h4 className={companyCardStyles.companyCard__title}>{props.companyName}</h4>
+					</header>
+
+					<dl className={companyCardStyles.companyCard__gamesCount}>
+						<dt className={companyCardStyles.companyCard__label}>Games count</dt>
+						<dd className={companyCardStyles.companyCard__value}>{props.companyGames ? props.companyGames : "N/A"}</dd>
+					</dl>
+				</div>
 			</article>
 		</Link>
 	);
