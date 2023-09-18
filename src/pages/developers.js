@@ -55,7 +55,7 @@ const Developers = (props) => {
 			<Menu isMenuOpen={isMenuOpen} />
 			<Hero
 				title="Developers"
-				catchword=""
+				catchword="Have a look on the developers in the industry and their creations"
 			/>
 			<main className={developersStyles.developers}>
 				<div className={developersStyles.developers__container}>
