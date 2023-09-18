@@ -67,7 +67,7 @@ const Publishers = (props) => {
 								pathname={`/publisher/[slug]`}
 								as={`/publisher/${entry.slug}`}
 								imageSrc={entry.image_background}
-								imageAlt=""
+								imageAlt={`${entry.name} cover image`}
 								companyName={entry.name}
 								companyGames={entry.games_count}
 							/>
@@ -84,7 +84,7 @@ const Publishers = (props) => {
 								pathname={`/publisher/[slug]`}
 								as={`/publisher/${entry.slug}`}
 								imageSrc={entry.image_background}
-								imageAlt=""
+								imageAlt={`${entry.name} cover image`}
 								companyName={entry.name}
 								companyGames={entry.games_count}
 							/>
