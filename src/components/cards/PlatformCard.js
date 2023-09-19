@@ -5,9 +5,14 @@
 */
 
 import Link from "next/link";
+import Image from "next/image";
 import {useState} from "react";
 
+import ActionComplete from "@/components/actionComplete/ActionComplete";
 import Button from "@/components/button/Button";
+import Icon from "../icon/Icon";
+
+import platformCardStyles from "@/components/cards/PlatformCard.module.scss";
 
 const PlatformCard = (props) => {
 	const [isPopupOn, setIsPopupOn] = useState({
@@ -189,80 +194,105 @@ const PlatformCard = (props) => {
 	};
 
 	return(
-		<article>
-			{!isPopupOn.condition
-				? (
-					<>
-						<div>
-							<figure>
-								<img
-									src={props.imageSrc}
-									alt={props.imageAlt}
-									className=""
-								/>
-							</figure>
-							<h4 data-name={props.slug}>{props.platformName}</h4>
-						</div>
+		<article className={platformCardStyles.platformCard}>
+			<ActionComplete
+				isPopupOn={isPopupOn}
+				message={isPopupOn.message}
+			/>
+			<div className={platformCardStyles.platformCard__container}>
+				{props.imageSrc
+					? <Image
+						src={props.imageSrc}
+						alt={props.imageAlt}
+						responsive="true"
+						width={500}
+						height={500}
+						className={platformCardStyles.platformCard__image}
+					/>
+					: null
+				}
 
-						<menu>
-							<ul>
-								<li>
-									<Link
-										href={{
-											pathname: props.pathname,
-											query: {
-												id: props.id
-											}
-										}}
-										as={props.as}
-									>
-										View
-									</Link>
-								</li>
-								<li>
-									<Button
-										buttonType="button"
-										buttonAction={addToLibrary}
-										buttonClass=""
-									>
-										Collection
-									</Button>
-								</li>
-								<li>
-									<Button
-										buttonType="button"
-										buttonAction={addToWishlist}
-										buttonClass=""
-									>
-										Wishlist
-									</Button>
-								</li>
-							</ul>
-						</menu>
+				<header className={platformCardStyles.platformCard__header}>
+					<h4
+						data-name={props.slug}
+						className={platformCardStyles.platformCard__title}
+					>
+						{props.platformName}
+					</h4>
+				</header>
 
-						{props.gamesCount || props.startYear || props.endYear
-							? (
-								<dl>
-									<dt>Games count</dt>
-									<dd>{props.gamesCount ? props.gamesCount : "N/A"}</dd>
+				{props.gamesCount || props.startYear || props.endYear
+					? (
+						<dl className={platformCardStyles.platformCard__informations}>
+							<div className={platformCardStyles.platformCard__dataSection}>
+								<dt className={platformCardStyles.platformCard__label}>Games</dt>
+								<dd className={platformCardStyles.platformCard__value}>{props.gamesCount ? props.gamesCount : "N/A"}</dd>
+							</div>
 
-									<dt>Start year</dt>
-									<dd>{props.startYear ? props.startYear : "N/A"}</dd>
+							<div className={platformCardStyles.platformCard__dataSection}>
+								<dt className={platformCardStyles.platformCard__label}>Start year</dt>
+								<dd className={platformCardStyles.platformCard__value}>{props.startYear ? props.startYear : "N/A"}</dd>
+							</div>
 
-									<dt>End year</dt>
-									<dd>{props.endYear ? props.endYear : "N/A"}</dd>
-								</dl>
-							)
-							: null
-						}
-					</>
-				)
-				: (
-					<div>
-						<h4>{isPopupOn.message}</h4>
-					</div>
-				)
-			}
+							<div className={platformCardStyles.platformCard__dataSection}>
+								<dt className={platformCardStyles.platformCard__label}>End year</dt>
+								<dd className={platformCardStyles.platformCard__value}>{props.endYear ? props.endYear : "N/A"}</dd>
+							</div>
+						</dl>
+					)
+					: null
+				}
+
+				<menu className={platformCardStyles.platformCard__menu}>
+					<li
+						title="View the game's details"
+						className={platformCardStyles.platformCard__listItem}
+					>
+						<Link
+							href={{
+								pathname: props.pathname,
+								query: {
+									id: props.id
+								}
+							}}
+							as={props.as}
+							className={platformCardStyles.platformCard__view}
+						>
+							<Icon icon="view" />
+						</Link>
+					</li>
+					<li
+						title="Add the game to your library"
+						className={platformCardStyles.platformCard__listItem}
+					>
+						<Button
+							buttonType="button"
+							buttonAction={addToLibrary}
+							// buttonClass={isAddedToCollection ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
+						>
+							<Icon
+								icon="collection"
+								// isAddedToCollection={isAddedToCollection}
+							/>
+						</Button>
+					</li>
+					<li
+						title="Add the game to your wishlist"
+						className={platformCardStyles.platformCard__listItem}
+					>
+						<Button
+							buttonType="button"
+							buttonAction={addToWishlist}
+							// buttonClass={isAddedToCollection ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
+						>
+							<Icon
+								icon="wishlist"
+								// isAddedToWishlist={isAddedToWishlist}
+							/>
+						</Button>
+					</li>
+				</menu>
+			</div>
 		</article>
 	);
 };
