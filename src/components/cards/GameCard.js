@@ -8,9 +8,9 @@ import Link from "next/link";
 import Image from "next/image";
 import {useState, useEffect} from "react";
 
+import ActionComplete from "../actionComplete/ActionComplete";
 import Button from "../button/Button";
 import Icon from "../icon/Icon";
-import ActionComplete from "../actionComplete/ActionComplete";
 
 import gameCardStyles from "./GameCard.module.scss";
 import buttonStyles from "../button/Button.module.scss";
@@ -242,8 +242,8 @@ const GameCard = (props) => {
 	return(
 		<article className={gameCardStyles.gameCard}>
 			<ActionComplete
-				message={isPopupOn.message}
 				isPopupOn={isPopupOn}
+				message={isPopupOn.message}
 			/>
 			<div className={gameCardStyles.gameCard__container} >
 				<header>
@@ -286,7 +286,7 @@ const GameCard = (props) => {
 							<Button
 								buttonType="button"
 								buttonAction={addToLibrary}
-								buttonClass={isAddedToCollection ? buttonStyles["button__gameCardAction--checked"] : buttonStyles.button__gameCardAction}
+								buttonClass={isAddedToCollection ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
 							>
 								<Icon
 									icon="collection"
@@ -301,7 +301,7 @@ const GameCard = (props) => {
 							<Button
 								buttonType="button"
 								buttonAction={addToWishlist}
-								buttonClass={isAddedToWishlist ? buttonStyles["button__gameCardAction--checked"] : buttonStyles.button__gameCardAction}
+								buttonClass={isAddedToWishlist ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
 							>
 								<Icon
 									icon="wishlist"
