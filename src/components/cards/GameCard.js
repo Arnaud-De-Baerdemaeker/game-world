@@ -208,15 +208,15 @@ const GameCard = (props) => {
 	useEffect(() => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the collection and wishlist store
-			let stores = openedDatabase.transaction(["Games library", "Games wishlist"], "readonly");
-			let gamesLibraryStore = stores.objectStore("Games library");
-			let gamesWishlistStore = stores.objectStore("Games wishlist");
+			const stores = openedDatabase.transaction(["Games library", "Games wishlist"], "readonly");
+			const gamesLibraryStore = stores.objectStore("Games library");
+			const gamesWishlistStore = stores.objectStore("Games wishlist");
 
 			// Check if the entry is already in the collection
-			let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
+			const checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
 			checkGamesLibraryEntry.onsuccess = (event) => {
 				if(event.target.result > 0) {
 					setIsAddedToCollection(true);
@@ -227,7 +227,7 @@ const GameCard = (props) => {
 			}
 
 			// Check if the entry is already in the wishlist
-			let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
+			const checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
 			checkGamesWishlistEntry.onsuccess = (event) => {
 				if(event.target.result > 0) {
 					setIsAddedToWishlist(true);
@@ -237,7 +237,7 @@ const GameCard = (props) => {
 				}
 			}
 		}
-	});
+	}, []);
 
 	return(
 		<article className={gameCardStyles.gameCard}>
