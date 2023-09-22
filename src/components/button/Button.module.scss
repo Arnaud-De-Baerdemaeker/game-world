@@ -116,8 +116,6 @@
 			@media screen {
 				@media #{$desktop} {
 					&:hover {
-						border-color: $lemonChiffon;
-
 						svg {
 							fill: $lemonChiffon;
 						}
