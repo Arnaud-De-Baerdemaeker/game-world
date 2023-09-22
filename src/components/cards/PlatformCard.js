@@ -6,19 +6,22 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 import ActionComplete from "@/components/actionComplete/ActionComplete";
 import Button from "@/components/button/Button";
-import Icon from "../icon/Icon";
+import Icon from "@/components/icon/Icon";
 
 import platformCardStyles from "@/components/cards/PlatformCard.module.scss";
+import buttonStyles from "@/components/button/Button.module.scss";
 
 const PlatformCard = (props) => {
 	const [isPopupOn, setIsPopupOn] = useState({
 		condition: false,
 		message: null
 	});
+	const [isAddedToCollection, setIsAddedToCollection] = useState(false);
+	const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
 
 	// Define the data to add to the database
 	const newEntry = {
@@ -36,38 +39,41 @@ const PlatformCard = (props) => {
 	const addToLibrary = () => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the collection and wishlist stores
-			let stores = openedDatabase.transaction(["Platforms library", "Platforms wishlist"], "readwrite");
-			let platformsLibraryStore = stores.objectStore("Platforms library");
-			let platformsWishlistStore = stores.objectStore("Platforms wishlist");
+			const stores = openedDatabase.transaction(["Platforms library", "Platforms wishlist"], "readwrite");
+			const platformsLibraryStore = stores.objectStore("Platforms library");
+			const platformsWishlistStore = stores.objectStore("Platforms wishlist");
 
 			// Check if the platform is already in the collection
-			let checkPlatformsLibraryEntry = platformsLibraryStore.count(props.id);
+			const checkPlatformsLibraryEntry = platformsLibraryStore.count(props.id);
 			checkPlatformsLibraryEntry.onsuccess = (event) => {
 				// If it's not...
 				if(event.target.result === 0) {
 					// Add a new platform to the collection
-					let objectStoreAdd = platformsLibraryStore.add(newEntry);
+					const objectStoreAdd = platformsLibraryStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Added the platform to your collection");
+						setIsAddedToCollection(true);
 
 						// Check if the same platform is in the wishlist
-						let checkPlatformsWishlistEntry = platformsWishlistStore.count(props.id);
+						const checkPlatformsWishlistEntry = platformsWishlistStore.count(props.id);
 						checkPlatformsWishlistEntry.onsuccess = (event) => {
 							// If it is...
 							if(event.target.result !== 0) {
-								let objectStoreDelete = platformsWishlistStore.delete(props.id);
+								const objectStoreDelete = platformsWishlistStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
 									// Display the popup during 5 seconds
 									handlePopupDisplay("Removed the platform from your wishlist and added it to your collection");
+									setIsAddedToWishlist(false);
+									setIsAddedToCollection(true);
 
 									if(window.location.pathname === "/libraries") {
 										// Remove the card after 5 seconds
 										setTimeout(() => {
-											let filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
+											const filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
 											props.setPlatformsWishlist(filteredArray);
 										}, 5000);
 									}
@@ -82,15 +88,16 @@ const PlatformCard = (props) => {
 				// If it is...
 				else {
 					// Remove the platform from the collection
-					let objectStoreDelete = platformsLibraryStore.delete(props.id);
+					const objectStoreDelete = platformsLibraryStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Removed the platform from your collection");
+						setIsAddedToCollection(false);
 
 						if(window.location.pathname === "/libraries") {
 							// Remove the card after 5 seconds
 							setTimeout(() => {
-								let filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
+								const filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
 								props.setPlatformsCollection(filteredArray);
 							}, 5000);
 						}
@@ -109,38 +116,41 @@ const PlatformCard = (props) => {
 	const addToWishlist = () => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the collection and wishlist stores
-			let stores = openedDatabase.transaction(["Platforms wishlist", "Platforms library"], "readwrite");
-			let platformsWishlistStore = stores.objectStore("Platforms wishlist");
-			let platformsLibraryStore = stores.objectStore("Platforms library");
+			const stores = openedDatabase.transaction(["Platforms wishlist", "Platforms library"], "readwrite");
+			const platformsWishlistStore = stores.objectStore("Platforms wishlist");
+			const platformsLibraryStore = stores.objectStore("Platforms library");
 
 			// Check if the platform is already in the wishlist
-			let checkPlatformsWishlistEntry = platformsWishlistStore.count(props.id);
+			const checkPlatformsWishlistEntry = platformsWishlistStore.count(props.id);
 			checkPlatformsWishlistEntry.onsuccess = (event) => {
 				// If it's not...
 				if(event.target.result === 0) {
 					// Add a new platform to the wishlist
-					let objectStoreAdd = platformsWishlistStore.add(newEntry);
+					const objectStoreAdd = platformsWishlistStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Added the platform to your wishlist");
+						setIsAddedToWishlist(true);
 
 						// Check if the same platform is in the collection
-						let checkPlatformsLibraryEntry = platformsLibraryStore.count(props.id);
+						const checkPlatformsLibraryEntry = platformsLibraryStore.count(props.id);
 						checkPlatformsLibraryEntry.onsuccess = (event) => {
 							// If it is...
 							if(event.target.result !== 0) {
-								let objectStoreDelete = platformsLibraryStore.delete(props.id);
+								const objectStoreDelete = platformsLibraryStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
 									// Display the popup during 5 seconds
 									handlePopupDisplay("Removed the platform from your collection and added it to your wishlist");
+									setIsAddedToCollection(false);
+									setIsAddedToWishlist(true);
 
 									if(window.location.pathname === '/libraries') {
 										// Remove the card after 5 seconds
 										setTimeout(() => {
-											let filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
+											const filteredArray = props.platformsCollection.filter(entry => entry.id !== props.id);
 											props.setPlatformsCollection(filteredArray);
 										}, 5000);
 									}
@@ -155,15 +165,16 @@ const PlatformCard = (props) => {
 				// If it is...
 				else {
 					// Remove the platform from the wishlist
-					let objectStoreDelete = platformsWishlistStore.delete(props.id);
+					const objectStoreDelete = platformsWishlistStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Removed the platform from your wishlist");
+						setIsAddedToWishlist(false);
 
 						if(window.location.pathname === "/libraries") {
 							// Remove the card after 5 seconds
 							setTimeout(() => {
-								let filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
+								const filteredArray = props.platformsWishlist.filter(entry => entry.id !== props.id);
 								props.setPlatformsWishlist(filteredArray);
 							}, 5000);
 						}
@@ -192,6 +203,40 @@ const PlatformCard = (props) => {
 			});
 		}, 5000);
 	};
+
+	useEffect(() => {
+		const openDatabase = window.indexedDB.open("game-world-database", 1);
+		openDatabase.onsuccess = (event) => {
+			const openedDatabase = event.target.result;
+
+			// Open a transaction and access the collection and wishlist store
+			const stores = openedDatabase.transaction(["Platforms library", "Platforms wishlist"], "readonly");
+			const platformsLibraryStore = stores.objectStore("Platforms library");
+			const platformsWishlistStore = stores.objectStore("Platforms wishlist");
+
+			// Check if the entry is already in the collection
+			const checkPlatformsLibraryEntry = platformsLibraryStore.count(props.id);
+			checkPlatformsLibraryEntry.onsuccess = (event) => {
+				if(event.target.result > 0) {
+					setIsAddedToCollection(true);
+				}
+				else {
+					setIsAddedToCollection(false);
+				}
+			}
+
+			// Check if the entry is already in the wishlist
+			const checkPlatformsWishlistEntry = platformsWishlistStore.count(props.id);
+			checkPlatformsWishlistEntry.onsuccess = (event) => {
+				if(event.target.result > 0) {
+					setIsAddedToWishlist(true);
+				}
+				else {
+					setIsAddedToWishlist(false);
+				}
+			}
+		}
+	}, []);
 
 	return(
 		<article className={platformCardStyles.platformCard}>
@@ -268,11 +313,11 @@ const PlatformCard = (props) => {
 						<Button
 							buttonType="button"
 							buttonAction={addToLibrary}
-							// buttonClass={isAddedToCollection ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
+							buttonClass={isAddedToCollection ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
 						>
 							<Icon
 								icon="collection"
-								// isAddedToCollection={isAddedToCollection}
+								isAddedToCollection={isAddedToCollection}
 							/>
 						</Button>
 					</li>
@@ -283,11 +328,11 @@ const PlatformCard = (props) => {
 						<Button
 							buttonType="button"
 							buttonAction={addToWishlist}
-							// buttonClass={isAddedToCollection ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
+							buttonClass={isAddedToWishlist ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
 						>
 							<Icon
 								icon="wishlist"
-								// isAddedToWishlist={isAddedToWishlist}
+								isAddedToWishlist={isAddedToWishlist}
 							/>
 						</Button>
 					</li>
