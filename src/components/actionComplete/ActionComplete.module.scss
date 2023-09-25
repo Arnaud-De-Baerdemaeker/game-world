@@ -14,25 +14,56 @@
 	left: 0;
 	z-index: 3;
 	padding: 4px;
-	border-radius: 10px;
-	border-bottom-right-radius: 50px;
 	background: radial-gradient(circle at 50% 121.5px, $charcoal 50%, $eerieBlack 100%);
 	transition: {
 		property: opacity, transform;
 		duration: 0.5s;
 	}
 
-	&--visible {
+	&--gameCard {
 		@extend .actionComplete;
-		opacity: 1;
-		transform: scale(1);
+		border-radius: 10px;
+		border-bottom-right-radius: 50px;
+
+		&Visible {
+			@extend .actionComplete--gameCard;
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		&Hidden {
+			@extend .actionComplete--gameCard;
+			opacity: 0;
+			transform: scale(0);
+			pointer-events: none;
+		}
 	}
 
-	&--hidden {
+	&--platformCard {
 		@extend .actionComplete;
-		opacity: 0;
-		transform: scale(0);
-		pointer-events: none;
+		border: {
+			top: {
+				left-radius: 10px;
+				right-radius: 50px;
+			}
+			bottom: {
+				left-radius: 50px;
+				right-radius: 10px;
+			}
+		}
+
+		&Visible {
+			@extend .actionComplete--platformCard;
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		&Hidden {
+			@extend .actionComplete--platformCard;
+			opacity: 0;
+			transform: scale(0);
+			pointer-events: none;
+		}
 	}
 
 	&__container {
@@ -47,9 +78,27 @@
 			style: solid;
 			width: 2px;
 			color: $lemonChiffon;
-			radius: 8px;
 		}
-		border-bottom-right-radius: 46px;
+
+		&--gameCard {
+			@extend .actionComplete__container;
+			border-radius: 8px;
+			border-bottom-right-radius: 46px;
+		}
+
+		&--platformCard {
+			@extend .actionComplete__container;
+			border: {
+				top: {
+					left-radius: 6px;
+					right-radius: 46px;
+				}
+				bottom: {
+					left-radius: 46px;
+					right-radius: 6px;
+				}
+			}
+		}
 	}
 
 	&__icon {
