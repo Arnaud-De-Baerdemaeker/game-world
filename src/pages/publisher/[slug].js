@@ -44,7 +44,8 @@ const Publisher = (props) => {
 				imageSrc={props.publisherDetails.image_background}
 				imageAlt={`"${props.publisherDetails.name}" cover image`}
 				imageClass=""
-				title={<h2>{props.publisherDetails.name}</h2>}
+				mainTitle={props.publisherDetails.name}
+				subTitle=""
 			/>
 			<main>
 				<div id="companyDescription"></div>

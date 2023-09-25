@@ -37,7 +37,8 @@ const Game = (props) => {
 				imageSrc={props.gameDetails.background_image}
 				imageAlt={`"${props.gameDetails.name}" cover image`}
 				imageClass=""
-				title={<h2>{props.gameDetails.name}</h2>}
+				mainTitle={props.gameDetails.name}
+				subTitle=""
 			/>
 			<main>
 				<section>
@@ -97,7 +98,7 @@ const Game = (props) => {
 						: <h3>Genres</h3>
 					}
 					{props.gameDetails.genres.length > 0
-						? <ul>
+						? <menu>
 							{props.gameDetails.genres.map(entry => (
 								<li key={entry.id}>
 									<Link
@@ -113,7 +114,7 @@ const Game = (props) => {
 									</Link>
 								</li>
 							))}
-						</ul>
+						</menu>
 						: <p>TBA</p>
 					}
 

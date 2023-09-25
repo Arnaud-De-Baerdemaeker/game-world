@@ -11,14 +11,16 @@ import LoadMore from "@/components/loadMore/LoadMore";
 
 import {getLatestReleases} from "@/api/games/getLatestReleases";
 
+import latestReleasesStyles from "@/components/latestReleasesResults/LatestReleases.module.scss";
+
 const LatestReleasesResults = (props) => {
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 
 	return(
-		<>
-			<h2>Latest releases</h2>
-			<div>
+		<section className={latestReleasesStyles.latestReleases}>
+			<h3 className={latestReleasesStyles.latestReleases__title}>Latest Releases</h3>
+			<div className={latestReleasesStyles.latestReleases__container}>
 				{props.latestReleases.results.length > 0
 					? props.latestReleases.results.map(entry => (
 						<GameCard
@@ -27,21 +29,19 @@ const LatestReleasesResults = (props) => {
 							slug={entry.slug}
 							pathname={`/game/[slug]`}
 							as={`/game/${entry.slug}`}
-							dominantColor={entry.dominant_color}
-							saturatedColor={entry.saturated_color}
 							shortScreenshots={entry.short_screenshorts}
 							tags={entry.tags}
 							imageSrc={entry.background_image}
-							imageAlt=""
-							imageClass=""
+							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
-							gamePlatforms={entry.platforms}
+							gameParentPlatforms={entry.parent_platforms}
 							gameRelease={entry.released}
 							gameGenres={entry.genres}
 						/>
 					))
 					: <p>No results were returned</p>
 				}
+
 				{moreResults.length != 0
 					? moreResults.map(entry => (
 						<GameCard
@@ -50,36 +50,34 @@ const LatestReleasesResults = (props) => {
 							slug={entry.slug}
 							pathname={`/game/[slug]`}
 							as={`/game/${entry.slug}`}
-							dominantColor={entry.dominant_color}
-							saturatedColor={entry.saturated_color}
 							shortScreenshots={entry.short_screenshorts}
 							tags={entry.tags}
 							imageSrc={entry.background_image}
-							imageAlt=""
-							imageClass=""
+							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
-							gamePlatforms={entry.platforms}
+							gameParentPlatforms={entry.parent_platforms}
 							gameRelease={entry.released}
 							gameGenres={entry.genres}
 						/>
 					))
 					: null
 				}
+
+				<LoadMore
+					nextPage={nextPage}
+					setNextPage={setNextPage}
+					moreResults={moreResults}
+					setMoreResults={setMoreResults}
+					setHasFirstCallMoreResults={props.setHasFirstCallMoreResults}
+					setHasFollowingCallsMoreResults={props.setHasFollowingCallsMoreResults}
+					apiCall={getLatestReleases}
+					next={props.hasFirstCallMoreResults || props.hasFollowingCallsMoreResults
+						? true
+						: false
+					}
+				/>
 			</div>
-			<LoadMore
-				nextPage={nextPage}
-				setNextPage={setNextPage}
-				moreResults={moreResults}
-				setMoreResults={setMoreResults}
-				setHasFirstCallMoreResults={props.setHasFirstCallMoreResults}
-				setHasFollowingCallsMoreResults={props.setHasFollowingCallsMoreResults}
-				apiCall={getLatestReleases}
-				next={props.hasFirstCallMoreResults || props.hasFollowingCallsMoreResults
-					? true
-					: false
-				}
-			/>
-		</>
+		</section>
 	);
 };
 

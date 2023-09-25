@@ -1,0 +1,32 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../styles/variables.scss";
+
+.home {
+	display: flex;
+	flex-direction: column;
+	row-gap: 40px;
+	width: 100%;
+	height: 100%;
+	padding: {
+		top: 50px;
+		right: 10px;
+		bottom: 50px;
+		left: 10px;
+	}
+	background:
+		url("../images/tile.svg"),
+		radial-gradient(circle at top left, $cadetGray 0%, transparent 50%),
+		radial-gradient(circle at bottom right, $cadetGray 0%, transparent 50%)
+	;
+	background: {
+		color: $eerieBlack;
+		size: auto 100vh;
+		position: 50% 50%;
+		attachment: fixed;
+	}
+}

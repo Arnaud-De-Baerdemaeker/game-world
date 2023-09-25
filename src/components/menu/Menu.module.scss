@@ -1,0 +1,154 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../../styles/variables.scss";
+@import "../../styles/keyframes.scss";
+
+.menu {
+	position: fixed;
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background-color: $eerieBlack;
+	transition: {
+		property: transform, opacity;
+		duration: 0.5s;
+	}
+
+	&--open {
+		@extend .menu;
+		transform: translateX(0);
+		opacity: 1;
+	}
+
+	&--closed {
+		@extend .menu;
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		row-gap: 25px;
+
+		&Item {
+			width: 200px;
+			height: 50px;
+			transition: {
+				property: box-shadow;
+				duration: 0.5s;
+			}
+		}
+	}
+
+	&__link {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		color: $cadetGray;
+		font-size: 25px;
+		text-align: center;
+		border-radius: 50px;
+		transition: {
+			property: color, background-color;
+			duration: 0.5s;
+		}
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: calc(50% - 5px);
+			left: 10px;
+			width: 10px;
+			height: 10px;
+			background-color: $cadetGray;
+			border-radius: 10px;
+			opacity: 0;
+			transition: {
+				property: opacity, background-color;
+				duration: 0.5s;
+			}
+		}
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: calc(50% - 5px);
+			right: 10px;
+			width: 10px;
+			height: 10px;
+			background-color: $cadetGray;
+			border-radius: 10px;
+			opacity: 0;
+			transition: {
+				property: opacity, background-color;
+				duration: 0.5s;
+			}
+		}
+
+		&:focus-visible {
+			color: $lemonChiffon;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+
+			&:before {
+				background-color: $lemonChiffon;
+			}
+
+			&:after {
+				background-color: $lemonChiffon;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					color: $lemonChiffon;
+				}
+			}
+		}
+
+		&--active {
+			@extend .menu__link;
+
+			&:before {
+				opacity: 1;
+			}
+
+			&:after {
+				opacity: 1;
+			}
+
+			@media screen {
+				@media #{$desktop} {
+					&:hover {
+						&:before {
+							background-color: $lemonChiffon;
+						}
+
+						&:after {
+							background-color: $lemonChiffon;
+						}
+					}
+				}
+			}
+		}
+	}
+}

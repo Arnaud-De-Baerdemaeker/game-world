@@ -54,7 +54,8 @@ const Platform = (props) => {
 				imageSrc={props.platformDetails.image_background}
 				imageAlt={`"${props.platformDetails.name}" cover image`}
 				imageClass=""
-				title={<h2>{props.platformDetails.name}</h2>}
+				mainTitle={props.platformDetails.name}
+				subTitle=""
 			/>
 			<main>
 				<div id="platformDescription"></div>

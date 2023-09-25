@@ -1,0 +1,257 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../../styles/variables.scss";
+@import "../../styles/keyframes.scss";
+
+.button {
+	&__menu {
+		position: relative;
+		z-index: 3;
+		width: 40px;
+		height: 40px;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $cadetGray;
+			radius: 40px;
+		}
+		color: $cadetGray;
+		background-color: $eerieBlack;
+		box-shadow: 0 0 2px $eerieBlack;
+		-webkit-tap-highlight-color: transparent;
+		transition: {
+			property: box-shadow, border-color, stroke, transform;
+			duration: 0.5s, 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			border-color: $lemonChiffon;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+
+			svg {
+				stroke: $lemonChiffon;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					border-color: $lemonChiffon;
+
+					svg {
+						stroke: $lemonChiffon;
+					}
+				}
+			}
+		}
+	}
+
+	&__gameCardAction {
+		width: 100%;
+		height: 100%;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $cadetGray;
+			radius: 40px;
+		}
+		background-color: $eerieBlack;
+		-webkit-tap-highlight-color: transparent;
+		box-shadow: 0 0 10px 5px $eerieBlack;
+		transition: {
+			property: border-color, fill, stroke, transform;
+			duration: 0.5s, 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+			border-color: $lemonChiffon;
+
+			svg {
+				stroke: $lemonChiffon;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					border-color: $lemonChiffon;
+
+					svg {
+						stroke: $lemonChiffon;
+					}
+				}
+			}
+		}
+
+		&--checked {
+			@extend .button__gameCardAction;
+
+			&:focus-visible {
+				svg {
+					fill: $lemonChiffon;
+				}
+			}
+
+			@media screen {
+				@media #{$desktop} {
+					&:hover {
+						border-color: $lemonChiffon;
+
+						svg {
+							fill: $lemonChiffon;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&__submit {
+		font: {
+			family: $jost;
+			weight: 600;
+		}
+		width: 100px;
+		height: 30px;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $cadetGray;
+			radius: 30px;
+		}
+		color: $eerieBlack;
+		background-color: $cadetGray;
+		box-shadow: 0 0 10px 0 $eerieBlack;
+		transition: {
+			property: background-color, border-color, transform;
+			duration: 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					background-color: $lemonChiffon;
+					border-color: $lemonChiffon;
+				}
+			}
+		}
+	}
+
+	&__clear {
+		font-family: $jost;
+		font-weight: 600;
+		width: 100px;
+		height: 30px;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $cadetGray;
+			radius: 30px;
+		}
+		color: $cadetGray;
+		background-color: $eerieBlack;
+		box-shadow: 0 0 10px 0 $eerieBlack;
+		transition: {
+			property: border-color, color, transform;
+			duration: 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			border-color: $lemonChiffon;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					border-color: $lemonChiffon;
+					color: $lemonChiffon;
+				}
+			}
+		}
+	}
+
+	&__load {
+		font: {
+			family: $jost;
+			weight: 600;
+		}
+		width: 140px;
+		height: 30px;
+		color: $eerieBlack;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $cadetGray;
+			radius: 30px;
+		}
+		background-color: $cadetGray;
+		box-shadow: 0 0 10px 0 $eerieBlack;
+		transition: {
+			property: background-color, border-color, transform;
+			duration: 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					background-color: $lemonChiffon;
+					border-color: $lemonChiffon;
+				}
+			}
+		}
+	}
+}

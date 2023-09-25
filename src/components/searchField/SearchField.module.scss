@@ -1,0 +1,55 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../../styles/variables.scss";
+
+.searchField {
+	background-color: $charcoal;
+	padding: 4px;
+	border-radius: 10px;
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+		row-gap: 20px;
+		padding: 20px;
+		border: {
+			style: solid;
+			width: 2px;
+			color: $cadetGray;
+			radius: 8px;
+		}
+	}
+
+	&__field {
+		display: inherit;
+		flex-direction: inherit;
+		border-radius: 10px;
+		padding: 10px;
+		background-color: $eerieBlack;
+	}
+
+	&__label {
+		font-size: 13px;
+		color: $cadetGray;
+	}
+
+	&__input {
+		font-family: $jost;
+		font-size: 15px;
+		height: 30px;
+		border: none;
+		border-radius: 30px;
+		background-color: transparent;
+		color: $lemonChiffon;
+	}
+
+	&__buttons {
+		display: inherit;
+		justify-content: space-between;
+		column-gap: 10px;
+	}
+}

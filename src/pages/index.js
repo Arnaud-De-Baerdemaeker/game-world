@@ -9,17 +9,17 @@ import {useState, useEffect} from "react";
 
 import Menu from "@/components/menu/Menu";
 import Header from "@/components/header/Header";
+import Hero from "@/components/hero/Hero";
 import SearchField from "@/components/searchField/SearchField";
 import Button from "@/components/button/Button";
 import SearchResults from "@/components/searchResults/SearchResults";
 import LatestReleasesResults from "@/components/latestReleasesResults/LatestReleasesResults";
 import Footer from "@/components/footer/Footer";
 
-import headerWallpaper from "@/images/gaming-header-wallpaper-1080p.jpg";
 import {getLatestReleases} from "@/api/games/getLatestReleases";
 import {searchGames} from "@/api/games/searchGames";
 
-// import styles from "./Home.module.css";
+import homeStyles from "./Home.module.scss";
 
 const Home = (props) => {
 	const [searchQuery, setSearchQuery] = useState(null);
@@ -27,6 +27,7 @@ const Home = (props) => {
 	const [isSearchInUse, setIsSearchInUse] = useState(false);
 	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
 	const [hasFollowingCallsMoreResults, setHasFollowingCallsMoreResults] = useState(null);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const handleSearchQuery = async (event) => {
 		event.preventDefault();
@@ -55,6 +56,10 @@ const Home = (props) => {
 		setSearchQuery(null);
 		setSearchResults(null);
 	}
+
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
 
 	useEffect(() => {
 		props.latestReleases.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
@@ -152,48 +157,39 @@ const Home = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
-			<div>
-				<Header
-					imageSrc={headerWallpaper}
-					imageAlt="Header wallpaper"
-					imageClass=""
-					mainTitle="Game World"
-					subTitle="Search and save your favorite games and platforms"
+			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title="Explore, Save, Wish"
+				catchword="Browsing your favorite games and platforms is as simple as it can be"
+			/>
+			<main className={homeStyles.home}>
+				<SearchField
+					formAction={handleSearchQuery}
+					resetAll={resetAll}
 				/>
-				<main>
-					<SearchField
-						formAction={handleSearchQuery}
-						buttonReset={
-							<Button
-								buttonType="reset"
-								buttonClass=""
-								buttonAction={resetAll}
-							>
-								Clear search
-							</Button>
-						}
+				{isSearchInUse
+					? <SearchResults
+						searchQuery={searchQuery}
+						searchResults={searchResults}
+						hasFirstCallMoreResults={hasFirstCallMoreResults}
+						setHasFirstCallMoreResults={setHasFirstCallMoreResults}
+						hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
+						setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
 					/>
-					{isSearchInUse
-						? <SearchResults
-							searchQuery={searchQuery}
-							searchResults={searchResults}
-							hasFirstCallMoreResults={hasFirstCallMoreResults}
-							setHasFirstCallMoreResults={setHasFirstCallMoreResults}
-							hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
-							setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
-						/>
-						: <LatestReleasesResults
-							latestReleases={props.latestReleases}
-							hasFirstCallMoreResults={hasFirstCallMoreResults}
-							setHasFirstCallMoreResults={setHasFirstCallMoreResults}
-							hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
-							setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
-						/>
-					}
-				</main>
-				<Footer />
-			</div>
+					: <LatestReleasesResults
+						latestReleases={props.latestReleases}
+						hasFirstCallMoreResults={hasFirstCallMoreResults}
+						setHasFirstCallMoreResults={setHasFirstCallMoreResults}
+						hasFollowingCallsMoreResults={hasFollowingCallsMoreResults}
+						setHasFollowingCallsMoreResults={setHasFollowingCallsMoreResults}
+					/>
+				}
+			</main>
+			<Footer />
 		</>
 	);
 }

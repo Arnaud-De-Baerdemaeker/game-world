@@ -1,0 +1,144 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+// Menu icon animation
+@keyframes topLineToCross {
+	0% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(9px);
+	}
+
+	100% {
+		transform: translateY(9px) rotateZ(45deg);
+	}
+}
+
+@keyframes middleLineToCross {
+	0% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	52% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes bottomLineToCross {
+	0% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(-9px);
+	}
+
+	100% {
+		transform: translateY(-9px) rotateZ(-45deg);
+	}
+}
+
+@keyframes topLineToHamburger {
+	0% {
+		transform: translateY(9px) rotateZ(45deg);
+	}
+
+	50% {
+		transform: translateY(9px);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
+}
+
+@keyframes middleLineToHamburger {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 0;
+	}
+
+	52% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes bottomLineToHamburger {
+	0% {
+		transform: translateY(-9px) rotateZ(-45deg);
+	}
+
+	50% {
+		transform: translateY(-9px);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
+}
+
+
+// Focus animations
+@keyframes focusAnimation {
+	0% {
+		outline: {
+			style: solid;
+			width: 4px;
+			color: transparent;
+			offset: 3px;
+		}
+	}
+
+	50% {
+		outline: {
+			style: solid;
+			width: 4px;
+			color: $lemonChiffon;
+			offset: 3px;
+		}
+	}
+
+	100% {
+		outline: {
+			style: solid;
+			width: 4px;
+			color: transparent;
+			offset: 3px;
+		}
+	}
+}
+
+@keyframes linksFocusAnimation {
+	0% {
+		background-color: transparent;
+	}
+
+	50% {
+		background-color: $lemonChiffon;
+		color: $eerieBlack;
+	}
+
+	100% {
+		background-color: transparent;
+	}
+}

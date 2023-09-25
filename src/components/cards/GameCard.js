@@ -5,15 +5,23 @@
 */
 
 import Link from "next/link";
-import {useState} from "react";
+import Image from "next/image";
+import {useState, useEffect} from "react";
 
-import Button from "@/components/button/Button";
+import ActionComplete from "../actionComplete/ActionComplete";
+import Button from "../button/Button";
+import Icon from "../icon/Icon";
+
+import gameCardStyles from "./GameCard.module.scss";
+import buttonStyles from "../button/Button.module.scss";
 
 const GameCard = (props) => {
 	const [isPopupOn, setIsPopupOn] = useState({
 		condition: false,
 		message: null
 	});
+	const [isAddedToCollection, setIsAddedToCollection] = useState(false);
+	const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
 
 	// Define the data to add to the database
 	const newEntry = {
@@ -48,6 +56,7 @@ const GameCard = (props) => {
 					objectStoreAdd.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Added the game to your collection");
+						setIsAddedToCollection(true);
 
 						// Check if the same game is in the wishlist
 						let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
@@ -59,6 +68,8 @@ const GameCard = (props) => {
 									if(window.location.pathname === "/libraries") {
 										// Display the popup during 5 seconds
 										handlePopupDisplay("Removed the game from your wishlist and added it to your collection");
+										setIsAddedToWishlist(false);
+										setIsAddedToCollection(true);
 
 										// Remove the card after 5 seconds
 										setTimeout(() => {
@@ -81,6 +92,7 @@ const GameCard = (props) => {
 					objectStoreDelete.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Removed the game from your collection");
+						setIsAddedToCollection(false);
 
 						// Update the state containing the game to remove it
 						if(window.location.pathname === "/libraries") {
@@ -122,6 +134,7 @@ const GameCard = (props) => {
 					objectStoreAdd.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Added the game to your wishlist");
+						setIsAddedToWishlist(true);
 
 						// Check if the same game is in the collection
 						let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
@@ -132,6 +145,8 @@ const GameCard = (props) => {
 								objectStoreDelete.onsuccess = (event) => {
 									// Display the popup during 5 seconds
 									handlePopupDisplay("Removed the game from your collection and added it to your wishlist");
+									setIsAddedToCollection(false);
+									setIsAddedToWishlist(true);
 
 									if(window.location.pathname === "/libraries") {
 										// Remove the card after a 5 seconds delay
@@ -155,6 +170,7 @@ const GameCard = (props) => {
 					objectStoreDelete.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Removed the game from your wishlist");
+						setIsAddedToCollection(false);
 
 						if(window.location.pathname === "/libraries") {
 							// Remove the card after 5 seconds
@@ -189,108 +205,157 @@ const GameCard = (props) => {
 		}, 5000);
 	};
 
+	useEffect(() => {
+		const openDatabase = window.indexedDB.open("game-world-database", 1);
+		openDatabase.onsuccess = (event) => {
+			let openedDatabase = event.target.result;
+
+			// Open a transaction and access the collection and wishlist store
+			let stores = openedDatabase.transaction(["Games library", "Games wishlist"], "readonly");
+			let gamesLibraryStore = stores.objectStore("Games library");
+			let gamesWishlistStore = stores.objectStore("Games wishlist");
+
+			// Check if the entry is already in the collection
+			let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
+			checkGamesLibraryEntry.onsuccess = (event) => {
+				if(event.target.result > 0) {
+					setIsAddedToCollection(true);
+				}
+				else {
+					setIsAddedToCollection(false);
+				}
+			}
+
+			// Check if the entry is already in the wishlist
+			let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
+			checkGamesWishlistEntry.onsuccess = (event) => {
+				if(event.target.result > 0) {
+					setIsAddedToWishlist(true);
+				}
+				else {
+					setIsAddedToWishlist(false);
+				}
+			}
+		}
+	});
+
 	return(
-		<article>
-			{!isPopupOn.condition
-				? (
-					<>
-						<div>
-							<figure>
-								<img
-									src={props.imageSrc}
-									alt={props.imageAlt}
-									className={props.imageClass}
-								/>
-							</figure>
-							<h4 data-name={props.slug}>{props.gameName}</h4>
-						</div>
-
-						<menu>
-							<ul>
-								<li>
-									<Link
-										href={{
-											pathname: props.pathname,
-											query: {
-												id: props.id
-											}
-										}}
-										as={props.as}
-									>
-										View
-									</Link>
-								</li>
-								<li>
-									<Button
-										buttonType="button"
-										buttonAction={addToLibrary}
-										buttonClass=""
-									>
-										Collection
-									</Button>
-								</li>
-								<li>
-									<Button
-										buttonType="button"
-										buttonAction={addToWishlist}
-										buttonClass=""
-									>
-										Wishlist
-									</Button>
-								</li>
-							</ul>
-						</menu>
-
-						{props.gamePlatforms || props.gameRelease || props.gameGenres
-							? (
-								<dl>
-									<dt>Platforms</dt>
-									{props.gamePlatforms.length > 0
-										? <>
-											{props.gamePlatforms.map(item => (
-												<dd
-													key={item.platform.id}
-													data-platform={item.platform.slug}
-												>
-													{item.platform.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-
-									<dt>Release</dt>
-									{props.gameRelease
-										? <dd>{props.gameRelease}</dd>
-										: <dd>N/A</dd>
-									}
-
-									<dt>Genres</dt>
-									{props.gameGenres.length > 0
-										? <>
-											{props.gameGenres.map(item => (
-												<dd
-													key={item.id}
-													data-genre={item.slug}
-												>
-													{item.name}
-												</dd>
-											))}
-										</>
-										: <dd>N/A</dd>
-									}
-								</dl>
-							)
+		<article className={gameCardStyles.gameCard}>
+			<ActionComplete
+				isPopupOn={isPopupOn}
+				message={isPopupOn.message}
+			/>
+			<div className={gameCardStyles.gameCard__container} >
+				<header>
+					<figure className={gameCardStyles.gameCard__illustration}>
+						{props.imageSrc
+							? <Image
+								src={props.imageSrc}
+								alt={props.imageAlt}
+								responsive="true"
+								width={500}
+								height={500}
+								className={gameCardStyles.gameCard__image}
+							/>
 							: null
 						}
-					</>
-				)
-				: (
-					<div>
-						<h4>{isPopupOn.message}</h4>
-					</div>
-				)
-			}
+					</figure>
+
+					<menu className={gameCardStyles.gameCard__menu}>
+						<li
+							title="View the game's details"
+							className={gameCardStyles.gameCard__listItem}
+						>
+							<Link
+								href={{
+									pathname: props.pathname,
+									query: {
+										id: props.id
+									}
+								}}
+								as={props.as}
+								className={gameCardStyles.gameCard__view}
+							>
+								<Icon icon="view" />
+							</Link>
+						</li>
+						<li
+							title="Add the game to your library"
+							className={gameCardStyles.gameCard__listItem}
+						>
+							<Button
+								buttonType="button"
+								buttonAction={addToLibrary}
+								buttonClass={isAddedToCollection ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
+							>
+								<Icon
+									icon="collection"
+									isAddedToCollection={isAddedToCollection}
+								/>
+							</Button>
+						</li>
+						<li
+							title="Add the game to your wishlist"
+							className={gameCardStyles.gameCard__listItem}
+						>
+							<Button
+								buttonType="button"
+								buttonAction={addToWishlist}
+								buttonClass={isAddedToWishlist ? buttonStyles["button__cardAction--checked"] : buttonStyles.button__cardAction}
+							>
+								<Icon
+									icon="wishlist"
+									isAddedToWishlist={isAddedToWishlist}
+								/>
+							</Button>
+						</li>
+					</menu>
+
+					<h4
+						data-name={props.slug}
+						className={gameCardStyles.gameCard__title}
+					>
+						{props.gameName}
+					</h4>
+				</header>
+
+				{props.gameParentPlatforms || props.gameRelease || props.gameGenres
+					? (
+						<dl className={gameCardStyles.gameCard__informations}>
+							<div className={gameCardStyles.gameCard__platforms}>
+								{props.gameParentPlatforms.length == 1
+									? <dt className={gameCardStyles.gameCard__platformsTitle}>Platform</dt>
+									: <dt className={gameCardStyles.gameCard__platformsTitle}>Platforms</dt>
+								}
+
+								{props.gameParentPlatforms.length > 0
+									? <div className={gameCardStyles.gameCard__platformsList}>
+										{props.gameParentPlatforms.map(item => (
+											<dd
+												key={item.platform.id}
+												data-platform={item.platform.slug}
+												className={gameCardStyles.gameCard__platformsItems}
+											>
+												<Icon icon={item.platform.slug} />
+											</dd>
+										))}
+									</div>
+									: <dd className={gameCardStyles.gameCard__platformsItems}>N/A</dd>
+								}
+							</div>
+
+							<div className={gameCardStyles.gameCard__release}>
+								<dt className={gameCardStyles.gameCard__releaseTitle}>Release date</dt>
+								{props.gameRelease
+									? <dd className={gameCardStyles.gameCard__releaseDate}>{props.gameRelease}</dd>
+									: <dd className={gameCardStyles.gameCard__releaseDate}>N/A</dd>
+								}
+							</div>
+						</dl>
+					)
+					: null
+				}
+			</div>
 		</article>
 	);
 };

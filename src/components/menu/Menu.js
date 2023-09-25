@@ -4,69 +4,58 @@
 	Arnaud De Baerdemaeker
 */
 
+import {usePathname} from "next/navigation";
+
 import Link from "next/link";
 
-import Button from "@/components/button/Button";
+import menuStyles from "@/components/menu/Menu.module.scss";
 
-import styles from "@/components/menu/Menu.module.scss";
+const Menu = (props) => {
+	const pathname = usePathname();
 
-const Menu = () => {
 	const links = [
 		{
-			listItemClass: styles.listItem,
 			href: "/",
-			linkClass: styles.link,
 			value: "Home"
 		},
 		{
-			listItemClass: styles.listItem,
 			href: "/publishers",
-			linkClass: styles.link,
 			value: "Publishers"
 		},
 		{
-			listItemClass: styles.listItem,
 			href: "/developers",
-			linkClass: styles.link,
 			value: "Developers"
 		},
 		{
-			listItemClass: styles.listItem,
 			href: "/platforms",
-			linkClass: styles.link,
 			value: "Platforms"
 		},
 		{
-			listItemClass: styles.listItem,
 			href: "/library",
-			linkClass: styles.link,
 			value: "My Library"
 		}
 	];
 
 	return(
-		<nav className={styles.block}>
-			<Button
-				buttonType="button"
-				buttonAction=""
-				buttonClass=""
-			>
-				Menu
-			</Button>
-			<menu className={styles.list}>
-				{links.map(entry => (
-					<li
-						key={entry.value}
-						className={entry.listItemClass}
-					>
-						<Link
-							href={entry.href}
-							className={entry.linkClass}
+		<nav className={props.isMenuOpen ? menuStyles["menu--open"] : menuStyles["menu--closed"]}>
+			<menu className={menuStyles.menu__list}>
+				{links.map(entry => {
+					const isActive = pathname === entry.href;
+
+					return(
+						<li
+							key={entry.value}
+							className={menuStyles.menu__listItem}
 						>
-							{entry.value}
-						</Link>
-					</li>
-				))}
+							<Link
+								href={entry.href}
+								className={isActive ? menuStyles["menu__link--active"] : menuStyles.menu__link}
+							>
+								{entry.value}
+							</Link>
+						</li>
+					);
+				})}
 			</menu>
 		</nav>
 	);
