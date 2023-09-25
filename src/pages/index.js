@@ -11,7 +11,6 @@ import Menu from "@/components/menu/Menu";
 import Header from "@/components/header/Header";
 import Hero from "@/components/hero/Hero";
 import SearchField from "@/components/searchField/SearchField";
-import Button from "@/components/button/Button";
 import SearchResults from "@/components/searchResults/SearchResults";
 import LatestReleasesResults from "@/components/latestReleasesResults/LatestReleasesResults";
 import Footer from "@/components/footer/Footer";
@@ -65,22 +64,20 @@ const Home = (props) => {
 		props.latestReleases.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
 
 		// Check if the browser supports IndexedDB
-		if(!('indexedDB' in window)) {
+		if(!("indexedDB" in window)) {
 			alert("This browser doesn't support IndexedDB.");
 			return;
 		}
 
 		// Initialize the database if necessary
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
-		openDatabase.onupgradeneeded = (event) => {
-			let database = openDatabase.result;
 
-			database.onerror = (event) => {
-				alert("Error while loading the database");
-			};
+		openDatabase.onupgradeneeded = (event) => {
+			const database = event.target.result;
+			console.log(event);
 
 			// Create the Games library object store
-			let createGamesLibrary = database.createObjectStore("Games library", {keyPath: "id"});
+			const createGamesLibrary = database.createObjectStore("Games library", {keyPath: "id"});
 
 			// Define the indexes of the Games library
 			createGamesLibrary.createIndex("id", "id", {unique: true});
@@ -95,7 +92,7 @@ const Home = (props) => {
 
 
 			// Create the Games wishlist object store
-			let createGamesWishlist = database.createObjectStore("Games wishlist", {keyPath: "id"});
+			const createGamesWishlist = database.createObjectStore("Games wishlist", {keyPath: "id"});
 
 			// Define the indexes of the Games wishlist
 			createGamesWishlist.createIndex("id", "id", {unique: true});
@@ -110,7 +107,7 @@ const Home = (props) => {
 
 
 			// Create the Platforms library object store
-			let createPlatformsLibrary = database.createObjectStore("Platforms library", {keyPath: "id"});
+			const createPlatformsLibrary = database.createObjectStore("Platforms library", {keyPath: "id"});
 
 			// Define the indexes of the Platforms library
 			createPlatformsLibrary.createIndex("id", "id", {unique: true});
@@ -125,7 +122,7 @@ const Home = (props) => {
 
 
 			// Create the Platforms wishlist
-			let createPlatformsWishlist = database.createObjectStore("Platforms wishlist", {keyPath: "id"});
+			const createPlatformsWishlist = database.createObjectStore("Platforms wishlist", {keyPath: "id"});
 
 			//Define the indexes of the Platform wishlist
 			createPlatformsWishlist.createIndex("id", "id", {unique: true});
@@ -138,6 +135,14 @@ const Home = (props) => {
 			createPlatformsWishlist.createIndex("startYear", "startYear");
 			createPlatformsWishlist.createIndex("endYear", "endYear", {multiEntry: true});
 		};
+
+		openDatabase.onerror = (event) => {
+			console.error("L'utilisation d'IndexedDB ne semble pas possible. Les fonctions de sauvegarde dans la librairie ne seront pas disponibles.");
+		}
+
+		openDatabase.onsuccess = (event) => {
+			console.log("La base de données locale a bien été créée/ouverte. Vous pouvez l'utiliser pour enregistrer des objets dans votre librairie.");
+		}
 	}, []);
 
 	return(

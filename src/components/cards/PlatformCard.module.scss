@@ -1,0 +1,166 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../../styles/variables.scss";
+@import "../../styles/keyframes.scss";
+
+.platformCard {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	max-width: 320px;
+	background-color: $charcoal;
+	padding: 4px;
+	border: {
+		top: {
+			left-radius: 10px;
+			right-radius: 50px;
+		}
+		bottom: {
+			left-radius: 50px;
+			right-radius: 10px;
+		}
+	}
+
+	&__container {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		row-gap: 50px;
+		width: 100%;
+		height: 100%;
+		padding: {
+			right: 20px;
+			left: 20px;
+		}
+		border: {
+			style: solid;
+			width: 2px;
+			color: $lemonChiffon;
+			top: {
+				left-radius: 6px;
+				right-radius: 46px;
+			}
+			bottom: {
+				left-radius: 46px;
+				right-radius: 6px;
+			}
+		}
+		overflow: hidden;
+	}
+
+	&__image {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 0;
+		width: 100%;
+		height: 100%;
+		aspect-ratio: 1 / 1;
+		object-fit: cover;
+		filter: brightness(0.4);
+		border-radius: 3px;
+	}
+
+	&__header {
+		position: relative;
+		z-index: 1;
+	}
+
+	&__title {
+		font-size: 28px;
+		text-align: center;
+	}
+
+	&__informations {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		justify-content: center;
+		column-gap: 20px;
+		text-align: center;
+	}
+
+	&__dataSection {
+		width: calc(100% / 3);
+	}
+
+	&__label {
+		font-size: 13px;
+	}
+
+	&__value {
+		font-size: 14px;
+	}
+
+	&__menu {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		justify-content: center;
+		column-gap: 20px;
+	}
+
+	&__listItem {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+	}
+
+	&__view {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		border: {
+			style: solid;
+			width: 1px;
+			color: $cadetGray;
+			radius: 40px;
+		}
+		background-color: $eerieBlack;
+		-webkit-tap-highlight-color: transparent;
+		box-shadow: 0 0 10px 5px $eerieBlack;
+		transition: {
+			property: border-color, stroke, transform;
+			duration: 0.5s, 0.5s, 0.1s;
+		}
+
+		&:focus-visible {
+			border-color: $lemonChiffon;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
+
+			svg {
+				stroke: $lemonChiffon;
+			}
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		@media screen {
+			@media #{$desktop} {
+				&:hover {
+					border-color: $lemonChiffon;
+
+					svg {
+						stroke: $lemonChiffon;
+					}
+				}
+			}
+		}
+	}
+}

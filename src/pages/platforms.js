@@ -7,14 +7,21 @@
 import Head from "next/head";
 import {useState, useEffect} from "react";
 
+import useToggler from "@/hooks/useToggler";
+
+import Header from "@/components/header/Header";
 import Menu from "@/components/menu/Menu";
+import Hero from "@/components/hero/Hero";
 import PlatformCard from "@/components/cards/PlatformCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 import Footer from "@/components/footer/Footer";
 
 import {getPlatforms} from "@/api/platforms/getPlatforms";
 
+import platformsStyles from "@/pages/Platforms.module.scss";
+
 const Platforms = (props) => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
@@ -41,10 +48,17 @@ const Platforms = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
-			<main>
-				<h2>Platforms</h2>
-				<div>
+			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title="Platforms"
+				catchword="Have a look on the platforms that rythm the industry"
+			/>
+			<main className={platformsStyles.platforms}>
+				<div className={platformsStyles.platforms__container}>
 					{props.platforms.results.length > 0
 						? props.platforms.results.map(entry => (
 							<PlatformCard
@@ -54,7 +68,7 @@ const Platforms = (props) => {
 								pathname="/platform/[slug]"
 								as={`/platform/${entry.slug}`}
 								imageSrc={entry.image_background}
-								imageAlt=""
+								imageAlt={`${entry.name} cover image`}
 								platformName={entry.name}
 								gamesCount={entry.games_count}
 								startYear={entry.year_start}
@@ -72,8 +86,7 @@ const Platforms = (props) => {
 								pathname="/platform/[slug]"
 								as={`/platform/${entry.slug}`}
 								imageSrc={entry.image_background}
-								imageAlt=""
-								imageClass=""
+								imageAlt={`${entry.name} cover image`}
 								platformName={entry.name}
 								gamesCount={entry.games_count}
 								startYear={entry.year_start}
