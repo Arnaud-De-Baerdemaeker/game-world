@@ -11,8 +11,8 @@ import svgStyles from "@/components/svg/SVG.module.scss";
 
 const ActionComplete = (props) => {
 	return(
-		<div className={props.isPopupOn.condition ? actionCompleteStyles["actionComplete--visible"] : actionCompleteStyles["actionComplete--hidden"]}>
-			<div className={actionCompleteStyles.actionComplete__container}>
+		<div className={actionCompleteStyles[props.isPopupOn.class]}>
+			<div className={actionCompleteStyles[props.isPopupOn.containerClass]}>
 				<figure className={actionCompleteStyles.actionComplete__icon}>
 					<SVG
 						svgViewBox="-5 -5 60 60"
@@ -24,7 +24,7 @@ const ActionComplete = (props) => {
 						/>
 					</SVG>
 				</figure>
-				<h5 className={actionCompleteStyles.actionComplete__title}>{props.message}</h5>
+				<h5 className={actionCompleteStyles.actionComplete__title}>{props.isPopupOn.message}</h5>
 			</div>
 		</div>
 	);
