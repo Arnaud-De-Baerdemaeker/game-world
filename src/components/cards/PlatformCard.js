@@ -18,7 +18,9 @@ import buttonStyles from "@/components/button/Button.module.scss";
 const PlatformCard = (props) => {
 	const [isPopupOn, setIsPopupOn] = useState({
 		condition: false,
-		message: null
+		message: null,
+		class: "actionComplete--platformCardHidden",
+		containerClass: "actionComplete__container--platformCard"
 	});
 	const [isAddedToCollection, setIsAddedToCollection] = useState(false);
 	const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
@@ -193,13 +195,17 @@ const PlatformCard = (props) => {
 	const handlePopupDisplay = (message) => {
 		setIsPopupOn({
 			condition: true,
-			message: message
+			message: message,
+			class: "actionComplete--platformCardVisible",
+			containerClass: "actionComplete__container--platformCard"
 		});
 
 		setTimeout(() => {
 			setIsPopupOn({
 				condition: false,
-				message: null
+				message: null,
+				class: "actionComplete--platformCardHidden",
+				containerClass: "actionComplete__container--platformCard"
 			});
 		}, 5000);
 	};
@@ -240,10 +246,7 @@ const PlatformCard = (props) => {
 
 	return(
 		<article className={platformCardStyles.platformCard}>
-			<ActionComplete
-				isPopupOn={isPopupOn}
-				message={isPopupOn.message}
-			/>
+			<ActionComplete isPopupOn={isPopupOn} />
 			<div className={platformCardStyles.platformCard__container}>
 				{props.imageSrc
 					? <Image
