@@ -14,7 +14,16 @@
 	max-width: 320px;
 	background-color: $charcoal;
 	padding: 4px;
-	border-radius: 10px;
+	border: {
+		top: {
+			left-radius: 10px;
+			right-radius: 50px;
+		}
+		bottom: {
+			left-radius: 50px;
+			right-radius: 10px;
+		}
+	}
 
 	&__container {
 		position: relative;
@@ -32,7 +41,14 @@
 			style: solid;
 			width: 2px;
 			color: $lemonChiffon;
-			radius: 6px;
+			top: {
+				left-radius: 6px;
+				right-radius: 46px;
+			}
+			bottom: {
+				left-radius: 46px;
+				right-radius: 6px;
+			}
 		}
 		overflow: hidden;
 	}
