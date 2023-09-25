@@ -12,7 +12,7 @@ import GameCard from "@/components/cards/GameCard";
 import PlatformCard from "@/components/cards/PlatformCard";
 import Footer from "@/components/footer/Footer";
 
-export default function Libraries() {
+const Library = () => {
 	const [isOnCollectionTab, setIsOnCollectionTab] = useState(true);
 	const [gamesCollection, setGamesCollection] = useState([]);
 	const [platformsCollection, setPlatformsCollection] = useState([]);
@@ -264,3 +264,5 @@ export default function Libraries() {
 		</>
 	);
 }
+
+export default Library;

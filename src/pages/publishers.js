@@ -7,14 +7,21 @@
 import Head from "next/head";
 import {useState, useEffect} from "react";
 
+import useToggler from "../hooks/useToggler";
+
+import Header from "@/components/header/Header";
 import Menu from "@/components/menu/Menu";
+import Hero from "@/components/hero/Hero";
 import CompanyCard from "@/components/cards/CompanyCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 import Footer from "@/components/footer/Footer";
 
 import {getPublishers} from "@/api/publishers/getPublishers";
 
+import publishersStyles from "@/pages/Publishers.module.scss";
+
 const Publishers = (props) => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
@@ -41,10 +48,17 @@ const Publishers = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
-			<main>
-				<h2>Publishers</h2>
-				<div>
+			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title="Publishers"
+				catchword="Have a look on the publishers in the industry and the games they offer"
+			/>
+			<main className={publishersStyles.publishers}>
+				<div className={publishersStyles.publishers__container}>
 					{props.publishers.results.length > 0
 						? props.publishers.results.map(entry => (
 							<CompanyCard
@@ -53,14 +67,14 @@ const Publishers = (props) => {
 								pathname={`/publisher/[slug]`}
 								as={`/publisher/${entry.slug}`}
 								imageSrc={entry.image_background}
-								imageAlt=""
-								imageClass=""
+								imageAlt={`${entry.name} cover image`}
 								companyName={entry.name}
 								companyGames={entry.games_count}
 							/>
 						))
 						: <p>No results were returned</p>
 					}
+
 					{moreResults.length != 0
 						? moreResults.map(entry => (
 							<CompanyCard
@@ -70,8 +84,7 @@ const Publishers = (props) => {
 								pathname={`/publisher/[slug]`}
 								as={`/publisher/${entry.slug}`}
 								imageSrc={entry.image_background}
-								imageAlt=""
-								imageClass=""
+								imageAlt={`${entry.name} cover image`}
 								companyName={entry.name}
 								companyGames={entry.games_count}
 							/>
@@ -79,6 +92,7 @@ const Publishers = (props) => {
 						: null
 					}
 				</div>
+
 				<LoadMore
 					nextPage={nextPage}
 					setNextPage={setNextPage}
