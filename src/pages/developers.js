@@ -7,14 +7,21 @@
 import Head from "next/head";
 import {useState, useEffect} from "react";
 
+import useToggler from "@/hooks/useToggler";
+
+import Header from "@/components/header/Header";
 import Menu from "@/components/menu/Menu";
+import Hero from "@/components/hero/Hero";
 import CompanyCard from "@/components/cards/CompanyCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 import Footer from "@/components/footer/Footer";
 
 import {getDevelopers} from "@/api/developers/getDevelopers";
 
+import developersStyles from "@/pages/Developers.module.scss";
+
 const Developers = (props) => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
@@ -41,10 +48,17 @@ const Developers = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
-			<main>
-				<h2>Developers</h2>
-				<div>
+			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title="Developers"
+				catchword="Have a look on the developers in the industry and their creations"
+			/>
+			<main className={developersStyles.developers}>
+				<div className={developersStyles.developers__container}>
 					{props.developers.results.length > 0
 						? props.developers.results.map(entry => (
 							<CompanyCard
@@ -53,8 +67,7 @@ const Developers = (props) => {
 								pathname={`/developer/[slug]`}
 								as={`/developer/${entry.slug}`}
 								imageSrc={entry.image_background}
-								imageAlt=""
-								imageClass=""
+								imageAlt={`${entry.name} cover image`}
 								companyName={entry.name}
 								companyGames={entry.games_count}
 							/>
@@ -69,8 +82,7 @@ const Developers = (props) => {
 								pathname={`/publisher/[slug]`}
 								as={`/publisher/${entry.slug}`}
 								imageSrc={entry.image_background}
-								imageAlt=""
-								imageClass=""
+								imageAlt={`${entry.name} cover image`}
 								companyName={entry.name}
 								companyGames={entry.games_count}
 							/>
