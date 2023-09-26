@@ -17,8 +17,9 @@ import buttonStyles from "@/components/button/Button.module.scss";
 
 const GameCard = (props) => {
 	const [isPopupOn, setIsPopupOn] = useState({
-		condition: false,
-		message: null
+		message: null,
+		class: "actionComplete--gameCardHidden",
+		containerClass: "actionComplete__container--gameCard"
 	});
 	const [isAddedToCollection, setIsAddedToCollection] = useState(false);
 	const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
@@ -193,14 +194,16 @@ const GameCard = (props) => {
 
 	const handlePopupDisplay = (message) => {
 		setIsPopupOn({
-			condition: true,
-			message: message
+			message: message,
+			class: "actionComplete--gameCardVisible",
+			containerClass: "actionComplete__container--gameCard"
 		});
 
 		setTimeout(() => {
 			setIsPopupOn({
-				condition: false,
-				message: null
+				message: null,
+				class: "actionComplete--gameCardHidden",
+				containerClass: "actionComplete__container--gameCard"
 			});
 		}, 5000);
 	};
@@ -241,10 +244,7 @@ const GameCard = (props) => {
 
 	return(
 		<article className={gameCardStyles.gameCard}>
-			<ActionComplete
-				isPopupOn={isPopupOn}
-				message={isPopupOn.message}
-			/>
+			<ActionComplete isPopupOn={isPopupOn} />
 			<div className={gameCardStyles.gameCard__container} >
 				<header>
 					<figure className={gameCardStyles.gameCard__illustration}>
