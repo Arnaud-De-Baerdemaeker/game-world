@@ -7,12 +7,17 @@
 import Head from "next/head";
 import {useState, useEffect} from "react";
 
+import useToggler from "@/hooks/useToggler";
+
+import Header from "@/components/header/Header";
+import Hero from "@/components/hero/Hero";
 import Menu from "@/components/menu/Menu";
 import GameCard from "@/components/cards/GameCard";
 import PlatformCard from "@/components/cards/PlatformCard";
 import Footer from "@/components/footer/Footer";
 
 const Library = () => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
 	const [isOnCollectionTab, setIsOnCollectionTab] = useState(true);
 	const [gamesCollection, setGamesCollection] = useState([]);
 	const [platformsCollection, setPlatformsCollection] = useState([]);
@@ -102,7 +107,15 @@ const Library = () => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
+			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title="My library"
+				catchword="Find here all the games and platforms you own or desire"
+			/>
 			<main>
 				<ul>
 					<li
