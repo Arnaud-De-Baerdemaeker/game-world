@@ -17,7 +17,6 @@ import buttonStyles from "@/components/button/Button.module.scss";
 
 const PlatformCard = (props) => {
 	const [isPopupOn, setIsPopupOn] = useState({
-		condition: false,
 		message: null,
 		class: "actionComplete--platformCardHidden",
 		containerClass: "actionComplete__container--platformCard"
@@ -194,7 +193,6 @@ const PlatformCard = (props) => {
 
 	const handlePopupDisplay = (message) => {
 		setIsPopupOn({
-			condition: true,
 			message: message,
 			class: "actionComplete--platformCardVisible",
 			containerClass: "actionComplete__container--platformCard"
@@ -202,7 +200,6 @@ const PlatformCard = (props) => {
 
 		setTimeout(() => {
 			setIsPopupOn({
-				condition: false,
 				message: null,
 				class: "actionComplete--platformCardHidden",
 				containerClass: "actionComplete__container--platformCard"
