@@ -32,6 +32,7 @@ const GameCard = (props) => {
 		imageSrc: props.imageSrc,
 		imageAlt: props.imageAlt,
 		gameName: props.gameName,
+		gameParentPlatforms: props.gameParentPlatforms,
 		gamePlatforms: props.gamePlatforms,
 		gameRelease: props.gameRelease,
 		gameGenres: props.gameGenres
