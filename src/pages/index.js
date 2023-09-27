@@ -64,17 +64,16 @@ const Home = (props) => {
 		props.latestReleases.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
 
 		// Check if the browser supports IndexedDB
-		if(!("indexedDB" in window)) {
-			alert("This browser doesn't support IndexedDB.");
-			return;
-		}
+		// if(!("indexedDB" in window)) {
+		// 	alert("This browser doesn't support IndexedDB.");
+		// 	return;
+		// }
 
 		// Initialize the database if necessary
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 
 		openDatabase.onupgradeneeded = (event) => {
 			const database = event.target.result;
-			console.log(event);
 
 			// Create the Games library object store
 			const createGamesLibrary = database.createObjectStore("Games library", {keyPath: "id"});
@@ -86,6 +85,7 @@ const Home = (props) => {
 			createGamesLibrary.createIndex("imageSrc", "imageSrc");
 			createGamesLibrary.createIndex("imageAlt", "imageAlt");
 			createGamesLibrary.createIndex("gameName", "gameName");
+			createGamesLibrary.createIndex("gameParentPlatforms", "gameParentPlatforms", {multiEntry: true});
 			createGamesLibrary.createIndex("gamePlatforms", "gamePlatforms", {multiEntry: true});
 			createGamesLibrary.createIndex("gameRelease", "gameRelease");
 			createGamesLibrary.createIndex("gameGenres", "gameGenres", {multiEntry: true});
@@ -101,6 +101,7 @@ const Home = (props) => {
 			createGamesWishlist.createIndex("imageSrc", "imageSrc");
 			createGamesWishlist.createIndex("imageAlt", "imageAlt");
 			createGamesWishlist.createIndex("gameName", "gameName");
+			createGamesWishlist.createIndex("gameParentPlatforms", "gameParentPlatforms", {multiEntry: true});
 			createGamesWishlist.createIndex("gamePlatforms", "gamePlatforms", {multiEntry: true});
 			createGamesWishlist.createIndex("gameRelease", "gameRelease");
 			createGamesWishlist.createIndex("gameGenres", "gameGenres", {multiEntry: true});
