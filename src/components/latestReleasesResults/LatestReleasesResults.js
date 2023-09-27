@@ -35,6 +35,7 @@ const LatestReleasesResults = (props) => {
 							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
 							gameParentPlatforms={entry.parent_platforms}
+							gamePlatforms={entry.platforms}
 							gameRelease={entry.released}
 							gameGenres={entry.genres}
 						/>
@@ -56,6 +57,7 @@ const LatestReleasesResults = (props) => {
 							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
 							gameParentPlatforms={entry.parent_platforms}
+							gamePlatforms={entry.platforms}
 							gameRelease={entry.released}
 							gameGenres={entry.genres}
 						/>
