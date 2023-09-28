@@ -160,7 +160,7 @@ const Library = () => {
 											imageSrc={entry.imageSrc}
 											imageAlt={`${entry.name} cover image`}
 											gameName={entry.gameName}
-											gameParentPlatforms={entry.parent_platforms}
+											gameParentPlatforms={entry.gameParentPlatforms}
 											gameRelease={entry.gameRelease}
 											gamesCollection={gamesCollection}
 											setGamesCollection={setGamesCollection}
@@ -180,7 +180,7 @@ const Library = () => {
 											imageSrc={entry.imageSrc}
 											imageAlt={`${entry.name} cover image`}
 											gameName={entry.gameName}
-											gameParentPlatforms={entry.parent_platforms}
+											gameParentPlatforms={entry.gameParentPlatforms}
 											gameRelease={entry.gameRelease}
 											gamesCollection={gamesCollection}
 											setGamesCollection={setGamesCollection}
