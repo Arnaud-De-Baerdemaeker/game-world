@@ -252,4 +252,22 @@
 			}
 		}
 	}
+
+	&__tab {
+		width: 100%;
+		height: 100%;
+		font-family: $jost;
+		font-size: 16px;
+		color: $cadetGray;
+		border-radius: 2px;
+
+		&--active {
+			@extend .button__tab;
+			background-color: $charcoal;
+		}
+
+		&--inactive {
+			@extend .button__tab;
+		}
+	}
 }
