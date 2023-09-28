@@ -45,19 +45,19 @@ const Library = () => {
 	const getCollectionItems = () => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the Libraries object stores
-			let stores = openedDatabase.transaction(["Games library", "Platforms library"], "readonly");
-			let gamesLibraryStore = stores.objectStore("Games library");
-			let platformsLibraryStore = stores.objectStore("Platforms library");
+			const stores = openedDatabase.transaction(["Games library", "Platforms library"], "readonly");
+			const gamesLibraryStore = stores.objectStore("Games library");
+			const platformsLibraryStore = stores.objectStore("Platforms library");
 
-			let getAllFromGamesLibrary = gamesLibraryStore.getAll();
+			const getAllFromGamesLibrary = gamesLibraryStore.getAll();
 			getAllFromGamesLibrary.onsuccess = (event) => {
 				setGamesCollection(event.target.result);
 			};
 
-			let getAllFromPlatformsLibrary = platformsLibraryStore.getAll();
+			const getAllFromPlatformsLibrary = platformsLibraryStore.getAll();
 			getAllFromPlatformsLibrary.onsuccess = (event) => {
 				setPlatformsCollection(event.target.result);
 			};
@@ -67,19 +67,19 @@ const Library = () => {
 	const getWishlistItems = () => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the Wishlists object stores
-			let stores = openedDatabase.transaction(["Games wishlist", "Platforms wishlist"], "readonly");
-			let gamesWishlistStore = stores.objectStore("Games wishlist");
-			let platformsWishlistStore = stores.objectStore("Platforms wishlist");
+			const stores = openedDatabase.transaction(["Games wishlist", "Platforms wishlist"], "readonly");
+			const gamesWishlistStore = stores.objectStore("Games wishlist");
+			const platformsWishlistStore = stores.objectStore("Platforms wishlist");
 
-			let getAllFromGamesWishlist = gamesWishlistStore.getAll();
+			const getAllFromGamesWishlist = gamesWishlistStore.getAll();
 			getAllFromGamesWishlist.onsuccess = (event) => {
 				setGamesWishlist(event.target.result);
 			};
 
-			let getAllFromPlatformsLibrary = platformsWishlistStore.getAll();
+			const getAllFromPlatformsLibrary = platformsWishlistStore.getAll();
 			getAllFromPlatformsLibrary.onsuccess = (event) => {
 				setPlatformsWishlist(event.target.result);
 			};
@@ -157,15 +157,11 @@ const Library = () => {
 											slug={entry.slug}
 											pathname={"/game/[slug]"}
 											as={`/game/${entry.slug}`}
-											shortScreenshots={entry.short_screenshorts}
-											tags={entry.tags}
 											imageSrc={entry.imageSrc}
 											imageAlt={`${entry.name} cover image`}
 											gameName={entry.gameName}
 											gameParentPlatforms={entry.parent_platforms}
-											gamePlatforms={entry.platforms}
 											gameRelease={entry.gameRelease}
-											gameGenres={entry.gameGenres}
 											gamesCollection={gamesCollection}
 											setGamesCollection={setGamesCollection}
 											gamesWishlist={gamesWishlist}
@@ -181,14 +177,11 @@ const Library = () => {
 											slug={entry.slug}
 											pathname={"/game/[slug]"}
 											as={`/game/${entry.slug}`}
-											shortScreenshots={entry.short_screenshorts}
-											tags={entry.tags}
 											imageSrc={entry.imageSrc}
 											imageAlt={`${entry.name} cover image`}
 											gameName={entry.gameName}
 											gameParentPlatforms={entry.parent_platforms}
 											gameRelease={entry.gameRelease}
-											gameGenres={entry.gameGenres}
 											gamesCollection={gamesCollection}
 											setGamesCollection={setGamesCollection}
 											gamesWishlist={gamesWishlist}

@@ -27,18 +27,11 @@ const SearchResults = (props) => {
 							slug={entry.slug}
 							pathname={`/game/[slug]`}
 							as={`/game/${entry.slug}`}
-							dominantColor={entry.dominant_color}
-							saturatedColor={entry.saturated_color}
-							shortScreenshots={entry.short_screenshorts}
-							tags={entry.tags}
 							imageSrc={entry.background_image}
-							imageAlt=""
-							imageClass=""
+							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
 							gameParentPlatforms={entry.parent_platforms}
-							gamePlatforms={entry.platforms}
 							gameRelease={entry.released}
-							gameGenres={entry.genres}
 						/>
 					))
 					: null
@@ -51,18 +44,11 @@ const SearchResults = (props) => {
 							slug={entry.slug}
 							pathname={`/game/[slug]`}
 							as={`/game/${entry.slug}`}
-							dominantColor={entry.dominant_color}
-							saturatedColor={entry.saturated_color}
-							shortScreenshots={entry.short_screenshorts}
-							tags={entry.tags}
 							imageSrc={entry.background_image}
-							imageAlt=""
-							imageClass=""
+							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
 							gameParentPlatforms={entry.parent_platforms}
-							gamePlatforms={entry.platforms}
 							gameRelease={entry.released}
-							gameGenres={entry.genres}
 						/>
 					))
 					: null
