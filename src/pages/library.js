@@ -12,11 +12,13 @@ import useToggler from "@/hooks/useToggler";
 import Header from "@/components/header/Header";
 import Hero from "@/components/hero/Hero";
 import Menu from "@/components/menu/Menu";
+import Button from "@/components/button/Button";
 import GameCard from "@/components/cards/GameCard";
 import PlatformCard from "@/components/cards/PlatformCard";
 import Footer from "@/components/footer/Footer";
 
 import libraryStyles from "@/pages/Library.module.scss";
+import buttonStyles from "@/components/button/Button.module.scss";
 
 const Library = () => {
 	const [isMenuOpen, toggleMenu] = useToggler(false);
@@ -116,25 +118,39 @@ const Library = () => {
 			<Menu isMenuOpen={isMenuOpen} />
 			<Hero
 				title="Library"
-				catchword="Find here all the games and platforms you own or desire"
+				catchword="Find here all the games and platforms you saved"
 			/>
 			<main className={libraryStyles.library}>
-				<menu className={libraryStyles.library__tabs}>
-					<li
-						id="collection"
-						onClick={handleTabClicks}
-						className={libraryStyles.library__tab}
-					>
-						My collection
-					</li>
-					<li
-						id="wishlist"
-						onClick={handleTabClicks}
-						className={libraryStyles.library__tab}
-					>
-						My wishlist
-					</li>
-				</menu>
+				<div className={libraryStyles.library__tabsOuterContainer}>
+					<div className={libraryStyles.library__tabsInnerContainer}>
+						<menu className={libraryStyles.library__tabsMenu}>
+							<li
+								id="collection"
+								onClick={handleTabClicks}
+								className={libraryStyles.library__tab}
+							>
+								<Button
+									buttonType="button"
+									buttonClass={buttonStyles.button__tab}
+								>
+									My collection
+								</Button>
+							</li>
+							<li
+								id="wishlist"
+								onClick={handleTabClicks}
+								className={libraryStyles.library__tab}
+							>
+								<Button
+									buttonType="button"
+									buttonClass={buttonStyles.button__tab}
+								>
+									My wishlist
+								</Button>
+							</li>
+						</menu>
+					</div>
+				</div>
 
 				<section>
 					<h2>
