@@ -148,8 +148,8 @@ const Library = () => {
 					</div>
 				</div>
 
-				<section>
-					<h2>
+				<section className={libraryStyles.library__gallery}>
+					<h2 className={libraryStyles.library__title}>
 						{isOnCollectionTab
 							? "My collection"
 							: "My wishlist"
