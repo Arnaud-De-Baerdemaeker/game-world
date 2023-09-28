@@ -320,7 +320,7 @@ const GameCard = (props) => {
 					</h4>
 				</header>
 
-				{props.gameParentPlatforms || props.gameRelease || props.gameGenres
+				{props.gameParentPlatforms || props.gameRelease
 					? (
 						<dl className={gameCardStyles.gameCard__informations}>
 							<div className={gameCardStyles.gameCard__platforms}>
