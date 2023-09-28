@@ -29,15 +29,11 @@ const LatestReleasesResults = (props) => {
 							slug={entry.slug}
 							pathname={`/game/[slug]`}
 							as={`/game/${entry.slug}`}
-							shortScreenshots={entry.short_screenshorts}
-							tags={entry.tags}
 							imageSrc={entry.background_image}
 							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
 							gameParentPlatforms={entry.parent_platforms}
-							gamePlatforms={entry.platforms}
 							gameRelease={entry.released}
-							gameGenres={entry.genres}
 						/>
 					))
 					: <p>No results were returned</p>
@@ -51,15 +47,11 @@ const LatestReleasesResults = (props) => {
 							slug={entry.slug}
 							pathname={`/game/[slug]`}
 							as={`/game/${entry.slug}`}
-							shortScreenshots={entry.short_screenshorts}
-							tags={entry.tags}
 							imageSrc={entry.background_image}
 							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
 							gameParentPlatforms={entry.parent_platforms}
-							gamePlatforms={entry.platforms}
 							gameRelease={entry.released}
-							gameGenres={entry.genres}
 						/>
 					))
 					: null
