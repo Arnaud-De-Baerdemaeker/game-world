@@ -124,26 +124,22 @@ const Library = () => {
 				<div className={libraryStyles.library__tabsOuterContainer}>
 					<div className={libraryStyles.library__tabsInnerContainer}>
 						<menu className={libraryStyles.library__tabsMenu}>
-							<li
-								id="collection"
-								onClick={handleTabClicks}
-								className={libraryStyles.library__tab}
-							>
+							<li className={libraryStyles.library__tab}>
 								<Button
 									buttonType="button"
-									buttonClass={buttonStyles.button__tab}
+									buttonId="collection"
+									buttonAction={handleTabClicks}
+									buttonClass={isOnCollectionTab ? buttonStyles["button__tab--active"] : buttonStyles["button__tab--inactive"]}
 								>
 									My collection
 								</Button>
 							</li>
-							<li
-								id="wishlist"
-								onClick={handleTabClicks}
-								className={libraryStyles.library__tab}
-							>
+							<li className={libraryStyles.library__tab}>
 								<Button
 									buttonType="button"
-									buttonClass={buttonStyles.button__tab}
+									buttonId="wishlist"
+									buttonAction={handleTabClicks}
+									buttonClass={isOnCollectionTab ? buttonStyles["button__tab--inactive"] : buttonStyles["button__tab--active"]}
 								>
 									My wishlist
 								</Button>
