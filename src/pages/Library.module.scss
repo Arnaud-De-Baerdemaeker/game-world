@@ -1,0 +1,114 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../styles/variables.scss";
+
+.library {
+	display: flex;
+	flex-direction: column;
+	row-gap: 40px;
+	width: 100%;
+	height: 100%;
+	padding: {
+		top: 50px;
+		right: 10px;
+		bottom: 50px;
+		left: 10px;
+	}
+	background:
+		url("../images/tile.svg"),
+		radial-gradient(circle at top left, $cadetGray 0%, transparent 50%),
+		radial-gradient(circle at bottom right, $cadetGray 0%, transparent 50%)
+	;
+	background: {
+		color: $eerieBlack;
+		size: auto 100vh;
+		position: 50% 50%;
+		attachment: fixed;
+	}
+
+	&__tabsOuterContainer {
+		background-color: $charcoal;
+		padding: 4px;
+		border-radius: 10px;
+	}
+
+	&__tabsInnerContainer {
+		border: {
+			style: solid;
+			width: 2px;
+			color: $cadetGray;
+			radius: 6px;
+		}
+		background-color: $eerieBlack;
+		border-radius: 6px;
+		padding: 4px;
+	}
+
+	&__tabsMenu {
+		display: flex;
+		justify-content: center;
+		column-gap: 4px;
+	}
+
+	&__tab {
+		width: 100%;
+		height: 40px;
+		text-align: center;
+	}
+
+	&__gallery {
+		display: flex;
+		flex-direction: column;
+		row-gap: 50px;
+	}
+
+	&__title {
+		position: relative;
+		align-self: center;
+		width: fit-content;
+		font-size: 28px;
+
+		&:after {
+			content: "";
+			position: absolute;
+			bottom: -7px;
+			left: 0;
+			width: 100%;
+			height: 4px;
+			border-radius: 4px;
+			background-color: $lemonChiffon;
+		}
+	}
+
+	&__games {
+		display: flex;
+		flex-direction: column;
+		row-gap: 20px;
+
+		&Title {
+			font-size: 25px;
+		}
+
+		&List {
+			display: inherit;
+			flex-direction: inherit;
+			row-gap: 20px;
+		}
+	}
+
+	&__platforms {
+		@extend .library__games;
+
+		&Title {
+			@extend .library__gamesTitle;
+		}
+
+		&List {
+			@extend .library__gamesList;
+		}
+	}
+}

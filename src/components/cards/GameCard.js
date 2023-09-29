@@ -32,6 +32,7 @@ const GameCard = (props) => {
 		imageSrc: props.imageSrc,
 		imageAlt: props.imageAlt,
 		gameName: props.gameName,
+		gameParentPlatforms: props.gameParentPlatforms,
 		gamePlatforms: props.gamePlatforms,
 		gameRelease: props.gameRelease,
 		gameGenres: props.gameGenres
@@ -319,7 +320,7 @@ const GameCard = (props) => {
 					</h4>
 				</header>
 
-				{props.gameParentPlatforms || props.gameRelease || props.gameGenres
+				{props.gameParentPlatforms || props.gameRelease
 					? (
 						<dl className={gameCardStyles.gameCard__informations}>
 							<div className={gameCardStyles.gameCard__platforms}>

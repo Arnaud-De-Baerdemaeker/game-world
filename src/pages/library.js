@@ -7,12 +7,21 @@
 import Head from "next/head";
 import {useState, useEffect} from "react";
 
+import useToggler from "@/hooks/useToggler";
+
+import Header from "@/components/header/Header";
+import Hero from "@/components/hero/Hero";
 import Menu from "@/components/menu/Menu";
+import Button from "@/components/button/Button";
 import GameCard from "@/components/cards/GameCard";
 import PlatformCard from "@/components/cards/PlatformCard";
 import Footer from "@/components/footer/Footer";
 
+import libraryStyles from "@/pages/Library.module.scss";
+import buttonStyles from "@/components/button/Button.module.scss";
+
 const Library = () => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
 	const [isOnCollectionTab, setIsOnCollectionTab] = useState(true);
 	const [gamesCollection, setGamesCollection] = useState([]);
 	const [platformsCollection, setPlatformsCollection] = useState([]);
@@ -38,19 +47,19 @@ const Library = () => {
 	const getCollectionItems = () => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the Libraries object stores
-			let stores = openedDatabase.transaction(["Games library", "Platforms library"], "readonly");
-			let gamesLibraryStore = stores.objectStore("Games library");
-			let platformsLibraryStore = stores.objectStore("Platforms library");
+			const stores = openedDatabase.transaction(["Games library", "Platforms library"], "readonly");
+			const gamesLibraryStore = stores.objectStore("Games library");
+			const platformsLibraryStore = stores.objectStore("Platforms library");
 
-			let getAllFromGamesLibrary = gamesLibraryStore.getAll();
+			const getAllFromGamesLibrary = gamesLibraryStore.getAll();
 			getAllFromGamesLibrary.onsuccess = (event) => {
 				setGamesCollection(event.target.result);
 			};
 
-			let getAllFromPlatformsLibrary = platformsLibraryStore.getAll();
+			const getAllFromPlatformsLibrary = platformsLibraryStore.getAll();
 			getAllFromPlatformsLibrary.onsuccess = (event) => {
 				setPlatformsCollection(event.target.result);
 			};
@@ -60,19 +69,19 @@ const Library = () => {
 	const getWishlistItems = () => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the Wishlists object stores
-			let stores = openedDatabase.transaction(["Games wishlist", "Platforms wishlist"], "readonly");
-			let gamesWishlistStore = stores.objectStore("Games wishlist");
-			let platformsWishlistStore = stores.objectStore("Platforms wishlist");
+			const stores = openedDatabase.transaction(["Games wishlist", "Platforms wishlist"], "readonly");
+			const gamesWishlistStore = stores.objectStore("Games wishlist");
+			const platformsWishlistStore = stores.objectStore("Platforms wishlist");
 
-			let getAllFromGamesWishlist = gamesWishlistStore.getAll();
+			const getAllFromGamesWishlist = gamesWishlistStore.getAll();
 			getAllFromGamesWishlist.onsuccess = (event) => {
 				setGamesWishlist(event.target.result);
 			};
 
-			let getAllFromPlatformsLibrary = platformsWishlistStore.getAll();
+			const getAllFromPlatformsLibrary = platformsWishlistStore.getAll();
 			getAllFromPlatformsLibrary.onsuccess = (event) => {
 				setPlatformsWishlist(event.target.result);
 			};
@@ -102,163 +111,154 @@ const Library = () => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
-			<main>
-				<ul>
-					<li
-						id="collection"
-						onClick={handleTabClicks}
-					>
-						My collection
-					</li>
-					<li
-						id="wishlist"
-						onClick={handleTabClicks}
-					>
-						My wishlist
-					</li>
-				</ul>
+			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title="Library"
+				catchword="Find here all the games and platforms you saved"
+			/>
+			<main className={libraryStyles.library}>
+				<div className={libraryStyles.library__tabsOuterContainer}>
+					<div className={libraryStyles.library__tabsInnerContainer}>
+						<menu className={libraryStyles.library__tabsMenu}>
+							<li className={libraryStyles.library__tab}>
+								<Button
+									buttonType="button"
+									buttonId="collection"
+									buttonAction={handleTabClicks}
+									buttonClass={isOnCollectionTab ? buttonStyles["button__tab--active"] : buttonStyles["button__tab--inactive"]}
+								>
+									My collection
+								</Button>
+							</li>
+							<li className={libraryStyles.library__tab}>
+								<Button
+									buttonType="button"
+									buttonId="wishlist"
+									buttonAction={handleTabClicks}
+									buttonClass={isOnCollectionTab ? buttonStyles["button__tab--inactive"] : buttonStyles["button__tab--active"]}
+								>
+									My wishlist
+								</Button>
+							</li>
+						</menu>
+					</div>
+				</div>
 
-				{isOnCollectionTab
-					? (
-						<section>
-							<h2>My collection</h2>
+				<section className={libraryStyles.library__gallery}>
+					<h2 className={libraryStyles.library__title}>
+						{isOnCollectionTab
+							? "My collection"
+							: "My wishlist"
+						}
+					</h2>
 
-							<section>
-								<h3>Games</h3>
+					<div className={libraryStyles.library__games}>
+						<h3 className={libraryStyles.library__gamesTitle}>Games</h3>
 
-								<div>
-									{gamesCollection.length > 0
-										? gamesCollection.map(entry => (
-											<GameCard
-												key={entry.id}
-												id={entry.id}
-												slug={entry.slug}
-												pathname={"/game/[slug]"}
-												as={`/game/${entry.slug}`}
-												// dominantColor={entry.dominant_color}
-												// saturatedColor={entry.saturated_color}
-												// shortScreenshots={entry.short_screenshorts}
-												// tags={entry.tags}
-												imageSrc={entry.imageSrc}
-												imageAlt={entry.imageAlt}
-												imageClass=""
-												gameName={entry.gameName}
-												// gamePlatforms={entry.gamePlatforms}
-												// gameRelease={entry.gameRelease}
-												// gameGenres={entry.gameGenres}
-												gamesCollection={gamesCollection}
-												setGamesCollection={setGamesCollection}
-												gamesWishlist={gamesWishlist}
-												setGamesWishlist={setGamesWishlist}
-											/>
-										))
-										: <p>You have not added any games to your collection yet</p>
-									}
-								</div>
-							</section>
+						<div className={libraryStyles.library__gamesList}>
+							{isOnCollectionTab
+								? gamesCollection.length > 0
+									? gamesCollection.map(entry => (
+										<GameCard
+											key={entry.id}
+											id={entry.id}
+											slug={entry.slug}
+											pathname={"/game/[slug]"}
+											as={`/game/${entry.slug}`}
+											imageSrc={entry.imageSrc}
+											imageAlt={`${entry.name} cover image`}
+											gameName={entry.gameName}
+											gameParentPlatforms={entry.gameParentPlatforms}
+											gameRelease={entry.gameRelease}
+											gamesCollection={gamesCollection}
+											setGamesCollection={setGamesCollection}
+											gamesWishlist={gamesWishlist}
+											setGamesWishlist={setGamesWishlist}
+										/>
+									))
+									: <p className={libraryStyles.library__noEntry}>You have not added any games to your collection yet</p>
+								: gamesWishlist.length > 0
+									? gamesWishlist.map(entry => (
+										<GameCard
+											key={entry.id}
+											id={entry.id}
+											slug={entry.slug}
+											pathname={"/game/[slug]"}
+											as={`/game/${entry.slug}`}
+											imageSrc={entry.imageSrc}
+											imageAlt={`${entry.name} cover image`}
+											gameName={entry.gameName}
+											gameParentPlatforms={entry.gameParentPlatforms}
+											gameRelease={entry.gameRelease}
+											gamesCollection={gamesCollection}
+											setGamesCollection={setGamesCollection}
+											gamesWishlist={gamesWishlist}
+											setGamesWishlist={setGamesWishlist}
+										/>
+									))
+									: <p className={libraryStyles.library__noEntry}>You have no games in your wishlist yet</p>
+							}
+						</div>
+					</div>
 
-							<section>
-								<h3>Platforms</h3>
+					<div className={libraryStyles.library__platforms}>
+						<h3 className={libraryStyles.library__platformsTitle}>Platforms</h3>
 
-								<div>
-									{platformsCollection.length > 0
-										? platformsCollection.map(entry => (
-											<PlatformCard
-												key={entry.id}
-												id={entry.id}
-												slug={entry.slug}
-												pathname={"/platform/[slug]"}
-												as={`/platform/${entry.slug}`}
-												imageSrc={entry.imageSrc}
-												imageAlt={entry.imageAlt}
-												imageClass=""
-												platformName={entry.platformName}
-												// gamesCount={entry.gamesCount}
-												// startYear={entry.startYear}
-												// endYear={entry.endYear}
-												platformsCollection={platformsCollection}
-												setPlatformsCollection={setPlatformsCollection}
-												platformsWishlist={platformsWishlist}
-												setPlatformsWishlist={setPlatformsWishlist}
-											/>
-										))
-										: <p>You have not added any platform to your collection yet</p>
-									}
-								</div>
-							</section>
-						</section>
-					)
-					: (
-						<section>
-							<h2>My wishlist</h2>
-
-							<section>
-								<h3>Games</h3>
-
-								<div>
-									{gamesWishlist.length > 0
-										? gamesWishlist.map(entry => (
-											<GameCard
-												key={entry.id}
-												id={entry.id}
-												slug={entry.slug}
-												pathname={"/game/[slug]"}
-												as={`/game/${entry.slug}`}
-												// dominantColor={entry.dominant_color}
-												// saturatedColor={entry.saturated_color}
-												// shortScreenshots={entry.short_screenshorts}
-												// tags={entry.tags}
-												imageSrc={entry.imageSrc}
-												imageAlt={entry.imageAlt}
-												imageClass=""
-												gameName={entry.gameName}
-												// gamePlatforms={entry.gamePlatforms}
-												// gameRelease={entry.gameRelease}
-												// gameGenres={entry.gameGenres}
-												gamesCollection={gamesCollection}
-												setGamesCollection={setGamesCollection}
-												gamesWishlist={gamesWishlist}
-												setGamesWishlist={setGamesWishlist}
-											/>
-										))
-										: <p>You have no games in your wishlist</p>
-									}
-								</div>
-							</section>
-
-							<section>
-								<h3>Platforms</h3>
-
-								<div>
-									{platformsWishlist.length > 0
-										? platformsWishlist.map(entry => (
-											<PlatformCard
-												key={entry.id}
-												id={entry.id}
-												slug={entry.slug}
-												pathname={"/platform/[slug]"}
-												as={`/platform/${entry.slug}`}
-												imageSrc={entry.imageSrc}
-												imageAlt={entry.imageAlt}
-												imageClass=""
-												platformName={entry.platformName}
-												// gamesCount={entry.gamesCount}
-												// startYear={entry.startYear}
-												// endYear={entry.endYear}
-												platformsCollection={platformsCollection}
-												setPlatformsCollection={setPlatformsCollection}
-												platformsWishlist={platformsWishlist}
-												setPlatformsWishlist={setPlatformsWishlist}
-											/>
-										))
-										: <p>You have no platforms in your wishlist</p>
-									}
-								</div>
-							</section>
-						</section>
-					)
-				}
+						<div className={libraryStyles.library__platformsList}>
+							{isOnCollectionTab
+								? (platformsCollection.length > 0
+									? platformsCollection.map(entry => (
+										<PlatformCard
+											key={entry.id}
+											id={entry.id}
+											slug={entry.slug}
+											pathname={"/platform/[slug]"}
+											as={`/platform/${entry.slug}`}
+											imageSrc={entry.imageSrc}
+											imageAlt={`${entry.name} cover image`}
+											platformName={entry.platformName}
+											gamesCount={entry.gamesCount}
+											startYear={entry.startYear}
+											endYear={entry.endYear}
+											platformsCollection={platformsCollection}
+											setPlatformsCollection={setPlatformsCollection}
+											platformsWishlist={platformsWishlist}
+											setPlatformsWishlist={setPlatformsWishlist}
+										/>
+									))
+									: <p className={libraryStyles.library__noEntry}>You have not added any platform to your collection yet</p>
+								)
+								: (
+									platformsWishlist.length > 0
+									? platformsWishlist.map(entry => (
+										<PlatformCard
+											key={entry.id}
+											id={entry.id}
+											slug={entry.slug}
+											pathname={"/platform/[slug]"}
+											as={`/platform/${entry.slug}`}
+											imageSrc={entry.imageSrc}
+											imageAlt={`${entry.name} cover image`}
+											platformName={entry.platformName}
+											gamesCount={entry.gamesCount}
+											startYear={entry.startYear}
+											endYear={entry.endYear}
+											platformsCollection={platformsCollection}
+											setPlatformsCollection={setPlatformsCollection}
+											platformsWishlist={platformsWishlist}
+											setPlatformsWishlist={setPlatformsWishlist}
+										/>
+									))
+									: <p className={libraryStyles.library__noEntry}>You have no platforms in your wishlist yet</p>
+								)
+							}
+						</div>
+					</div>
+				</section>
 			</main>
 			<Footer />
 		</>
