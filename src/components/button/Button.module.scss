@@ -58,7 +58,7 @@
 		}
 	}
 
-	&__gameCardAction {
+	&__cardAction {
 		width: 100%;
 		height: 100%;
 		border: {
@@ -105,7 +105,7 @@
 		}
 
 		&--checked {
-			@extend .button__gameCardAction;
+			@extend .button__cardAction;
 
 			&:focus-visible {
 				svg {
@@ -116,8 +116,6 @@
 			@media screen {
 				@media #{$desktop} {
 					&:hover {
-						border-color: $lemonChiffon;
-
 						svg {
 							fill: $lemonChiffon;
 						}
@@ -252,6 +250,24 @@
 					border-color: $lemonChiffon;
 				}
 			}
+		}
+	}
+
+	&__tab {
+		width: 100%;
+		height: 100%;
+		font-family: $jost;
+		font-size: 16px;
+		color: $cadetGray;
+		border-radius: 2px;
+
+		&--active {
+			@extend .button__tab;
+			background-color: $charcoal;
+		}
+
+		&--inactive {
+			@extend .button__tab;
 		}
 	}
 }

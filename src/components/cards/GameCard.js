@@ -8,17 +8,18 @@ import Link from "next/link";
 import Image from "next/image";
 import {useState, useEffect} from "react";
 
-import ActionComplete from "../actionComplete/ActionComplete";
-import Button from "../button/Button";
-import Icon from "../icon/Icon";
+import ActionComplete from "@/components/actionComplete/ActionComplete";
+import Button from "@/components/button/Button";
+import Icon from "@/components/icon/Icon";
 
-import gameCardStyles from "./GameCard.module.scss";
-import buttonStyles from "../button/Button.module.scss";
+import gameCardStyles from "@/components/cards/GameCard.module.scss";
+import buttonStyles from "@/components/button/Button.module.scss";
 
 const GameCard = (props) => {
 	const [isPopupOn, setIsPopupOn] = useState({
-		condition: false,
-		message: null
+		message: null,
+		class: "actionComplete--gameCardHidden",
+		containerClass: "actionComplete__container--gameCard"
 	});
 	const [isAddedToCollection, setIsAddedToCollection] = useState(false);
 	const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
@@ -31,6 +32,7 @@ const GameCard = (props) => {
 		imageSrc: props.imageSrc,
 		imageAlt: props.imageAlt,
 		gameName: props.gameName,
+		gameParentPlatforms: props.gameParentPlatforms,
 		gamePlatforms: props.gamePlatforms,
 		gameRelease: props.gameRelease,
 		gameGenres: props.gameGenres
@@ -39,31 +41,31 @@ const GameCard = (props) => {
 	const addToLibrary = () => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the collection and wishlist store
-			let stores = openedDatabase.transaction(["Games library", "Games wishlist"], "readwrite");
-			let gamesLibraryStore = stores.objectStore("Games library");
-			let gamesWishlistStore = stores.objectStore("Games wishlist");
+			const stores = openedDatabase.transaction(["Games library", "Games wishlist"], "readwrite");
+			const gamesLibraryStore = stores.objectStore("Games library");
+			const gamesWishlistStore = stores.objectStore("Games wishlist");
 
 			// Check if the entry is already in the collection
-			let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
+			const checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
 			checkGamesLibraryEntry.onsuccess = (event) => {
 				// If it's not...
 				if(event.target.result === 0) {
 					// Add a new game to the collection
-					let objectStoreAdd = gamesLibraryStore.add(newEntry);
+					const objectStoreAdd = gamesLibraryStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Added the game to your collection");
 						setIsAddedToCollection(true);
 
 						// Check if the same game is in the wishlist
-						let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
+						const checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
 						checkGamesWishlistEntry.onsuccess = (event) => {
 							// If it is...
 							if(event.target.result !== 0) {
-								let objectStoreDelete = gamesWishlistStore.delete(props.id);
+								const objectStoreDelete = gamesWishlistStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
 									if(window.location.pathname === "/libraries") {
 										// Display the popup during 5 seconds
@@ -73,7 +75,7 @@ const GameCard = (props) => {
 
 										// Remove the card after 5 seconds
 										setTimeout(() => {
-											let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
+											const filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
 											props.setGamesWishlist(filteredArray);
 										}, 5000);
 									}
@@ -88,7 +90,7 @@ const GameCard = (props) => {
 				// If it is...
 				else {
 					// Remove the game from the collection
-					let objectStoreDelete = gamesLibraryStore.delete(props.id);
+					const objectStoreDelete = gamesLibraryStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Removed the game from your collection");
@@ -98,7 +100,7 @@ const GameCard = (props) => {
 						if(window.location.pathname === "/libraries") {
 							// Remove the card after 5 seconds
 							setTimeout(() => {
-								let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
+								const filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
 								props.setGamesCollection(filteredArray);
 							}, 5000);
 						}
@@ -117,31 +119,31 @@ const GameCard = (props) => {
 	const addToWishlist = () => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the collection and wishlist stores
-			let stores = openedDatabase.transaction(["Games wishlist", "Games library"], "readwrite");
-			let gamesWishlistStore = stores.objectStore("Games wishlist");
-			let gamesLibraryStore = stores.objectStore("Games library");
+			const stores = openedDatabase.transaction(["Games wishlist", "Games library"], "readwrite");
+			const gamesWishlistStore = stores.objectStore("Games wishlist");
+			const gamesLibraryStore = stores.objectStore("Games library");
 
 			// Check if the game is already in the wishlist
-			let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
+			const checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
 			checkGamesWishlistEntry.onsuccess = (event) => {
 				// If it's not...
 				if(event.target.result === 0) {
 					// Add a new game to the wishlist
-					let objectStoreAdd = gamesWishlistStore.add(newEntry);
+					const objectStoreAdd = gamesWishlistStore.add(newEntry);
 					objectStoreAdd.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Added the game to your wishlist");
 						setIsAddedToWishlist(true);
 
 						// Check if the same game is in the collection
-						let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
+						const checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
 						checkGamesLibraryEntry.onsuccess = (event) => {
 							// If it is...
 							if(event.target.result !== 0) {
-								let objectStoreDelete = gamesLibraryStore.delete(props.id);
+								const objectStoreDelete = gamesLibraryStore.delete(props.id);
 								objectStoreDelete.onsuccess = (event) => {
 									// Display the popup during 5 seconds
 									handlePopupDisplay("Removed the game from your collection and added it to your wishlist");
@@ -151,7 +153,7 @@ const GameCard = (props) => {
 									if(window.location.pathname === "/libraries") {
 										// Remove the card after a 5 seconds delay
 										setTimeout(() => {
-											let filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
+											const filteredArray = props.gamesCollection.filter(entry => entry.id !== props.id);
 											props.setGamesCollection(filteredArray);
 										}, 5000);
 									}
@@ -166,16 +168,16 @@ const GameCard = (props) => {
 				// If it is...
 				else {
 					// Remove the game from the wishlist
-					let objectStoreDelete = gamesWishlistStore.delete(props.id);
+					const objectStoreDelete = gamesWishlistStore.delete(props.id);
 					objectStoreDelete.onsuccess = (event) => {
 						// Display the popup during 5 seconds
 						handlePopupDisplay("Removed the game from your wishlist");
-						setIsAddedToCollection(false);
+						setIsAddedToWishlist(false);
 
 						if(window.location.pathname === "/libraries") {
 							// Remove the card after 5 seconds
 							setTimeout(() => {
-								let filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
+								const filteredArray = props.gamesWishlist.filter(entry => entry.id !== props.id);
 								props.setGamesWishlist(filteredArray);
 							}, 5000);
 						}
@@ -193,14 +195,16 @@ const GameCard = (props) => {
 
 	const handlePopupDisplay = (message) => {
 		setIsPopupOn({
-			condition: true,
-			message: message
+			message: message,
+			class: "actionComplete--gameCardVisible",
+			containerClass: "actionComplete__container--gameCard"
 		});
 
 		setTimeout(() => {
 			setIsPopupOn({
-				condition: false,
-				message: null
+				message: null,
+				class: "actionComplete--gameCardHidden",
+				containerClass: "actionComplete__container--gameCard"
 			});
 		}, 5000);
 	};
@@ -208,15 +212,15 @@ const GameCard = (props) => {
 	useEffect(() => {
 		const openDatabase = window.indexedDB.open("game-world-database", 1);
 		openDatabase.onsuccess = (event) => {
-			let openedDatabase = event.target.result;
+			const openedDatabase = event.target.result;
 
 			// Open a transaction and access the collection and wishlist store
-			let stores = openedDatabase.transaction(["Games library", "Games wishlist"], "readonly");
-			let gamesLibraryStore = stores.objectStore("Games library");
-			let gamesWishlistStore = stores.objectStore("Games wishlist");
+			const stores = openedDatabase.transaction(["Games library", "Games wishlist"], "readonly");
+			const gamesLibraryStore = stores.objectStore("Games library");
+			const gamesWishlistStore = stores.objectStore("Games wishlist");
 
 			// Check if the entry is already in the collection
-			let checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
+			const checkGamesLibraryEntry = gamesLibraryStore.count(props.id);
 			checkGamesLibraryEntry.onsuccess = (event) => {
 				if(event.target.result > 0) {
 					setIsAddedToCollection(true);
@@ -227,7 +231,7 @@ const GameCard = (props) => {
 			}
 
 			// Check if the entry is already in the wishlist
-			let checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
+			const checkGamesWishlistEntry = gamesWishlistStore.count(props.id);
 			checkGamesWishlistEntry.onsuccess = (event) => {
 				if(event.target.result > 0) {
 					setIsAddedToWishlist(true);
@@ -237,14 +241,11 @@ const GameCard = (props) => {
 				}
 			}
 		}
-	});
+	}, []);
 
 	return(
 		<article className={gameCardStyles.gameCard}>
-			<ActionComplete
-				isPopupOn={isPopupOn}
-				message={isPopupOn.message}
-			/>
+			<ActionComplete isPopupOn={isPopupOn} />
 			<div className={gameCardStyles.gameCard__container} >
 				<header>
 					<figure className={gameCardStyles.gameCard__illustration}>
@@ -319,7 +320,7 @@ const GameCard = (props) => {
 					</h4>
 				</header>
 
-				{props.gameParentPlatforms || props.gameRelease || props.gameGenres
+				{props.gameParentPlatforms || props.gameRelease
 					? (
 						<dl className={gameCardStyles.gameCard__informations}>
 							<div className={gameCardStyles.gameCard__platforms}>

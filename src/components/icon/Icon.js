@@ -4,9 +4,9 @@
 	Arnaud De Baerdemaeker
 */
 
-import SVG from "../svg/SVG";
+import SVG from "@/components/svg/SVG";
 
-import svgStyles from "../svg/SVG.module.scss";
+import svgStyles from "@/components/svg/SVG.module.scss";
 
 const Icon = (props) => {
 	const icons = {
