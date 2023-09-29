@@ -9,12 +9,13 @@
 .latestReleases {
 	display: flex;
 	flex-direction: column;
-	row-gap: 30px;
+	row-gap: 50px;
 
 	&__title {
 		position: relative;
+		align-self: center;
 		width: fit-content;
-		font-size: 25px;
+		font-size: 28px;
 
 		&:after {
 			content: "";
@@ -31,7 +32,7 @@
 	&__container {
 		display: flex;
 		justify-content: center;
-		row-gap: 50px;
+		row-gap: 20px;
 		flex-wrap: wrap;
 	}
 }
