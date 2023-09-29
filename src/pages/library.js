@@ -156,10 +156,10 @@ const Library = () => {
 						}
 					</h2>
 
-					<div>
-						<h3>Games</h3>
+					<div className={libraryStyles.library__games}>
+						<h3 className={libraryStyles.library__gamesTitle}>Games</h3>
 
-						<div>
+						<div className={libraryStyles.library__gamesList}>
 							{isOnCollectionTab
 								? gamesCollection.length > 0
 									? gamesCollection.map(entry => (
@@ -180,7 +180,7 @@ const Library = () => {
 											setGamesWishlist={setGamesWishlist}
 										/>
 									))
-									: <p>You have not added any games to your collection yet</p>
+									: <p className={libraryStyles.library__noEntry}>You have not added any games to your collection yet</p>
 								: gamesWishlist.length > 0
 									? gamesWishlist.map(entry => (
 										<GameCard
@@ -200,17 +200,17 @@ const Library = () => {
 											setGamesWishlist={setGamesWishlist}
 										/>
 									))
-									: <p>You have no games in your wishlist yet</p>
+									: <p className={libraryStyles.library__noEntry}>You have no games in your wishlist yet</p>
 							}
 						</div>
 					</div>
 
-					<div>
-						<h3>Platforms</h3>
+					<div className={libraryStyles.library__platforms}>
+						<h3 className={libraryStyles.library__platformsTitle}>Platforms</h3>
 
-						<div>
+						<div className={libraryStyles.library__platformsList}>
 							{isOnCollectionTab
-								? platformsCollection.length > 0
+								? (platformsCollection.length > 0
 									? platformsCollection.map(entry => (
 										<PlatformCard
 											key={entry.id}
@@ -230,8 +230,10 @@ const Library = () => {
 											setPlatformsWishlist={setPlatformsWishlist}
 										/>
 									))
-									: <p>You have not added any platform to your collection yet</p>
-								: platformsWishlist.length > 0
+									: <p className={libraryStyles.library__noEntry}>You have not added any platform to your collection yet</p>
+								)
+								: (
+									platformsWishlist.length > 0
 									? platformsWishlist.map(entry => (
 										<PlatformCard
 											key={entry.id}
@@ -251,7 +253,8 @@ const Library = () => {
 											setPlatformsWishlist={setPlatformsWishlist}
 										/>
 									))
-									: <p>You have no platforms in your wishlist yet</p>
+									: <p className={libraryStyles.library__noEntry}>You have no platforms in your wishlist yet</p>
+								)
 							}
 						</div>
 					</div>
