@@ -7,14 +7,19 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import Menu from "@/components/menu/Menu";
+import useToggler from "@/hooks/useToggler";
+
 import Header from "@/components/header/Header";
+import Menu from "@/components/menu/Menu";
+import Hero from "@/components/hero/Hero";
 import Footer from "@/components/footer/Footer";
 
 import {getGameDetails} from "@/api/games/getGameDetails";
 import {getGameScreenshots} from "@/api/games/getGameScreenshots";
 
 const Game = (props) => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
+
 	return(
 		<>
 			<Head>
@@ -32,13 +37,16 @@ const Game = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
 			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title={props.gameDetails.name}
+				catchword={props.gameDetails.publishers}
 				imageSrc={props.gameDetails.background_image}
-				imageAlt={`"${props.gameDetails.name}" cover image`}
-				imageClass=""
-				mainTitle={props.gameDetails.name}
-				subTitle=""
+				imageAlt={`${props.gameDetails.name} cover image`}
 			/>
 			<main>
 				<section>
