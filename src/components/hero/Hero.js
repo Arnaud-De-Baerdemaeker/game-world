@@ -4,6 +4,8 @@
 	Arnaud De Baerdemaeker
 */
 
+import Image from "next/image";
+
 import heroStyles from "@/components/hero/Hero.module.scss";
 
 const Hero = (props) => {
@@ -11,9 +13,12 @@ const Hero = (props) => {
 		<div className={heroStyles.hero}>
 			{props.imageSrc
 				? (
-					<img
+					<Image
 						src={props.imageSrc}
 						alt={props.imageAlt}
+						width={500}
+						height={500}
+						responsive="true"
 						className={heroStyles.hero__backgroundImage}
 					/>
 				)
