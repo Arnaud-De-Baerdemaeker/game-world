@@ -32,7 +32,12 @@ const Hero = (props) => {
 					)
 					: (
 						props.catchword.map(item => (
-							<p className={heroStyles.hero__catchword}>{item.name}</p>
+							<p
+								key={item.id}
+								className={heroStyles.hero__catchword}
+							>
+								{item.name}
+							</p>
 						))
 					)
 				}
