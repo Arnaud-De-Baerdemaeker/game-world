@@ -17,6 +17,8 @@ import Footer from "@/components/footer/Footer";
 import {getGameDetails} from "@/api/games/getGameDetails";
 import {getGameScreenshots} from "@/api/games/getGameScreenshots";
 
+import gameStyles from "@/pages/game/Game.module.scss";
+
 const Game = (props) => {
 	const [isMenuOpen, toggleMenu] = useToggler(false);
 
@@ -48,113 +50,131 @@ const Game = (props) => {
 				imageSrc={props.gameDetails.background_image}
 				imageAlt={`${props.gameDetails.name} cover image`}
 			/>
-			<main>
-				<section>
-					<h3>Release date</h3>
+			<main className={gameStyles.game}>
+				<section className={gameStyles.game__mainInformations}>
+					<h3 className={gameStyles.game__heading}>Release date</h3>
 					{props.gameDetails.released
-						? <p>{props.gameDetails.released}</p>
-						: <p>TBA</p>
+						? <p className={gameStyles.game__value}>{props.gameDetails.released}</p>
+						: <p className={gameStyles.game__noData}>TBA</p>
 					}
 
-					{props.gameDetails.platforms.length === 1
-						? <h3>Platform</h3>
-						: <h3>Platforms</h3>
+					{props.gameDetails.platforms.length < 2
+						? <h3 className={gameStyles.game__heading}>Platform</h3>
+						: <h3 className={gameStyles.game__heading}>Platforms</h3>
 					}
 					{props.gameDetails.platforms.length > 0
-						? <ul>
+						? <ul className={gameStyles.game__list}>
 							{props.gameDetails.platforms.map(entry => (
-								<li key={entry.platform.slug}>{entry.platform.name}</li>
-							))}
-						</ul>
-						: <p>TBA</p>
-					}
-
-					{props.gameDetails.publishers.length === 1
-						? <h3>Publisher</h3>
-						: <h3>Publishers</h3>
-					}
-					{props.gameDetails.publishers.length > 0
-						? <ul>
-							{props.gameDetails.publishers.map(entry => (
-								<li key={entry.id}>{entry.name}</li>
-							))}
-						</ul>
-						: <p>TBA</p>
-					}
-
-					{props.gameDetails.developers.length === 1
-						? <h3>Developer</h3>
-						: <h3>Developers</h3>
-					}
-					{props.gameDetails.developers.length > 0
-						? <ul>
-							{props.gameDetails.developers.map(entry => (
-								<li key={entry.id}>{entry.name}</li>
-							))}
-						</ul>
-						: <p>TBA</p>
-					}
-
-					<h3>Summary</h3>
-					{props.gameDetails.description_raw
-						? <p>{props.gameDetails.description_raw}</p>
-						: <p>TBA</p>
-					}
-
-					{props.gameDetails.genres.length === 1
-						? <h3>Genre</h3>
-						: <h3>Genres</h3>
-					}
-					{props.gameDetails.genres.length > 0
-						? <menu>
-							{props.gameDetails.genres.map(entry => (
-								<li key={entry.id}>
-									<Link
-										href={{
-											pathname: entry.slug,
-											query: {
-												slug: entry.slug
-											}
-										}}
-										as={`/genre/${entry.slug}`}
-									>
-										{entry.name}
-									</Link>
+								<li
+									key={entry.platform.slug}
+									className={gameStyles.game__value}
+								>
+									{entry.platform.name}
 								</li>
 							))}
-						</menu>
-						: <p>TBA</p>
+						</ul>
+						: <p className={gameStyles.game__noData}>TBA</p>
 					}
 
-					{props.gameDetails.tags.length === 1
-						? <h3>Tag</h3>
-						: <h3>Tags</h3>
+					{props.gameDetails.publishers.length < 2
+						? <h3 className={gameStyles.game__heading}>Publisher</h3>
+						: <h3 className={gameStyles.game__heading}>Publishers</h3>
 					}
-					{props.gameDetails.tags.length > 0
-						? <ul>
-							{props.gameDetails.tags.map(entry => (
-								<li key={entry.id}>{entry.name}</li>
+					{props.gameDetails.publishers.length > 0
+						? <ul className={gameStyles.game__list}>
+							{props.gameDetails.publishers.map(entry => (
+								<li
+									key={entry.id}
+									className={gameStyles.game__value}
+								>
+									{entry.name}
+								</li>
 							))}
 						</ul>
-						: <p>TBA</p>
+						: <p className={gameStyles.game__noData}>TBA</p>
 					}
 
-					<h3>Rating</h3>
+					{props.gameDetails.developers.length < 2
+						? <h3 className={gameStyles.game__heading}>Developer</h3>
+						: <h3 className={gameStyles.game__heading}>Developers</h3>
+					}
+					{props.gameDetails.developers.length > 0
+						? <ul className={gameStyles.game__list}>
+							{props.gameDetails.developers.map(entry => (
+								<li
+									key={entry.id}
+									className={gameStyles.game__value}
+								>
+									{entry.name}
+								</li>
+							))}
+						</ul>
+						: <p className={gameStyles.game__noData}>TBA</p>
+					}
+
+					{props.gameDetails.genres.length < 2
+						? <h3 className={gameStyles.game__heading}>Genre</h3>
+						: <h3 className={gameStyles.game__heading}>Genres</h3>
+					}
+					{props.gameDetails.genres.length > 0
+						? <ul className={gameStyles.game__list}>
+							{props.gameDetails.genres.map(entry => (
+								<li
+									key={entry.id}
+									className={gameStyles.game__value}
+								>
+									{entry.name}
+								</li>
+							))}
+						</ul>
+						: <p className={gameStyles.game__noData}>TBA</p>
+					}
+
+					<h3 className={gameStyles.game__heading}>Rating</h3>
 					{props.gameDetails.esrb_rating
-						? <p>{props.gameDetails.esrb_rating.name}</p>
-						: <p>TBA</p>
+						? <p className={gameStyles.game__value}>{props.gameDetails.esrb_rating.name}</p>
+						: <p className={gameStyles.game__noData}>TBA</p>
 					}
 				</section>
 
-				<section>
-					{props.screenshots.results.length === 1
-						? <h3>Screenshot</h3>
-						: <h3>Screenshots</h3>
+				<section className={gameStyles.game__secondaryInformations}>
+					<h3 className={gameStyles.game__heading}>Summary</h3>
+					{props.gameDetails.description_raw
+						? <p className={gameStyles.game__value}>{props.gameDetails.description_raw}</p>
+						: <p className={gameStyles.game__noData}>TBA</p>
+					}
+
+					{props.gameDetails.tags.length < 2
+						? <h3 className={gameStyles.game__heading}>Tag</h3>
+						: <h3 className={gameStyles.game__heading}>Tags</h3>
+					}
+					{props.gameDetails.tags.length > 0
+						? <ul className={gameStyles.game__list}>
+							{props.gameDetails.tags.map(entry => (
+								<li
+									key={entry.id}
+									className={gameStyles.game__value}
+								>
+									{entry.name}
+								</li>
+							))}
+						</ul>
+						: <p className={gameStyles.game__noData}>TBA</p>
+					}
+				</section>
+
+				<section className={gameStyles.game__screenshots}>
+					{props.screenshots.results.length < 2
+						? <h3 className={gameStyles.game__heading}>Screenshot</h3>
+						: <h3 className={gameStyles.game__heading}>Screenshots</h3>
 					}
 					{props.screenshots.results.length > 0
-						? <ul>
+						? <ul className={gameStyles.game__list}>
 							{props.screenshots.results.map(entry => (
-								<li key={entry.id}>
+								<li
+									key={entry.id}
+									className={gameStyles.game__value}
+								>
 									<img
 										src={entry.image}
 										alt={`${props.gameDetails.name} screenshot`}
@@ -163,7 +183,7 @@ const Game = (props) => {
 								</li>
 							))}
 						</ul>
-						: <p>TBA</p>
+						: <p className={gameStyles.game__noData}>TBA</p>
 					}
 				</section>
 			</main>
