@@ -9,7 +9,8 @@
 
 .menu {
 	position: fixed;
-	z-index: 3;
+	top: 0;
+	z-index: 2;
 	display: flex;
 	justify-content: center;
 	align-items: center;
