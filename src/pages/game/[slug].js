@@ -64,7 +64,7 @@ const Game = (props) => {
 									<li key={entry.id}>{entry.name}</li>
 								))}
 							</ul>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							: <p>TBA</p>
 						}
 					</section>
 
@@ -79,7 +79,7 @@ const Game = (props) => {
 									<li key={entry.id}>{entry.name}</li>
 								))}
 							</ul>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							: <p>TBA</p>
 						}
 					</section>
 
@@ -94,15 +94,15 @@ const Game = (props) => {
 									<li key={entry.id}>{entry.name}</li>
 								))}
 							</ul>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							: <p>TBA</p>
 						}
 					</section>
 
 					<section className={gameStyles.game__mainInformationsSection}>
 						<h3 className={gameStyles.game__heading}>Release date</h3>
 						{props.gameDetails.released
-							? <p className={gameStyles.game__value}>{props.gameDetails.released}</p>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							? <p>{props.gameDetails.released}</p>
+							: <p>TBA</p>
 						}
 					</section>
 
@@ -117,15 +117,15 @@ const Game = (props) => {
 									<li key={entry.platform.slug}>{entry.platform.name}</li>
 								))}
 							</ul>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							: <p>TBA</p>
 						}
 					</section>
 
 					<section className={gameStyles.game__mainInformationsSection}>
 						<h3 className={gameStyles.game__heading}>Rating</h3>
 						{props.gameDetails.esrb_rating
-							? <p className={gameStyles.game__value}>{props.gameDetails.esrb_rating.name}</p>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							? <p>{props.gameDetails.esrb_rating.name}</p>
+							: <p>TBA</p>
 						}
 					</section>
 				</div>
@@ -134,8 +134,8 @@ const Game = (props) => {
 					<section>
 						<h3 className={gameStyles.game__heading}>Summary</h3>
 						{props.gameDetails.description_raw
-							? <p className={gameStyles.game__value}>{props.gameDetails.description_raw}</p>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							? <p>{props.gameDetails.description_raw}</p>
+							: <p>TBA</p>
 						}
 					</section>
 
@@ -150,7 +150,7 @@ const Game = (props) => {
 									<li key={entry.id}>{entry.name}</li>
 								))}
 							</ul>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							: <p>TBA</p>
 						}
 					</section>
 				</div>
@@ -176,7 +176,7 @@ const Game = (props) => {
 									</li>
 								))}
 							</ul>
-							: <p className={gameStyles.game__noData}>TBA</p>
+							: <p>TBA</p>
 						}
 					</section>
 				</div>
