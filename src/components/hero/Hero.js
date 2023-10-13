@@ -25,21 +25,23 @@ const Hero = (props) => {
 				: null
 			}
 			<hgroup className={heroStyles.hero__group}>
-				<h2 className={heroStyles.hero__title}>{props.title}</h2>
-				{typeof props.catchword == "string"
-					? (
-						<p className={heroStyles.hero__catchword}>{props.catchword}</p>
-					)
-					: (
-						props.catchword.map(item => (
-							<p
-								key={item.id}
-								className={heroStyles.hero__catchword}
-							>
-								{item.name}
-							</p>
-						))
-					)
+				<h2 className={props.catchword != null ? heroStyles["hero__title--withPseudoElement"] : heroStyles["hero__title--withoutPseudoElement"]}>{props.title}</h2>
+				{props.catchword != null
+					? typeof props.catchword == "string"
+						? (
+							<p className={heroStyles.hero__catchword}>{props.catchword}</p>
+						)
+						: (
+							props.catchword.map(item => (
+								<p
+									key={item.id}
+									className={heroStyles.hero__catchword}
+								>
+									{item.name}
+								</p>
+							))
+						)
+					: null
 				}
 			</hgroup>
 		</div>
