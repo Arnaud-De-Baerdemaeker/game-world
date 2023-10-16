@@ -16,12 +16,12 @@
 	padding: 4px;
 	border: {
 		top: {
-			left-radius: 10px;
+			left-radius: 12px;
 			right-radius: 50px;
 		}
 		bottom: {
 			left-radius: 50px;
-			right-radius: 10px;
+			right-radius: 12px;
 		}
 	}
 
@@ -42,12 +42,12 @@
 			width: 2px;
 			color: $lemonChiffon;
 			top: {
-				left-radius: 6px;
+				left-radius: 8px;
 				right-radius: 46px;
 			}
 			bottom: {
 				left-radius: 46px;
-				right-radius: 6px;
+				right-radius: 8px;
 			}
 		}
 		overflow: hidden;
@@ -65,7 +65,6 @@
 		aspect-ratio: 1 / 1;
 		object-fit: cover;
 		filter: brightness(0.4);
-		border-radius: 3px;
 	}
 
 	&__header {
