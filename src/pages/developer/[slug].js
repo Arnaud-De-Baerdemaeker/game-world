@@ -29,10 +29,12 @@ const Developer = (props) => {
 	const [hasFollowingCallsMoreResults, setHasFollowingCallsMoreResults] = useState(null);
 
 	useEffect(() => {
-		const range = document.createRange();
-		const fragment = range.createContextualFragment(props.developerDetails.description);
-		const target = document.querySelector("#companyDescription");
-		target.append(fragment);
+		if(props.developerDetails.description != "") {
+			const range = document.createRange();
+			const fragment = range.createContextualFragment(props.developerDetails.description);
+			const target = document.querySelector("#companyDescription");
+			target.append(fragment);
+		}
 
 		props.gamesFromDeveloper.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
 	}, []);
@@ -66,12 +68,17 @@ const Developer = (props) => {
 				imageAlt={`"${props.developerDetails.name}" cover image`}
 			/>
 			<main className={developerStyles.developer}>
-				<section
-					id="companyDescription"
-					className={developerStyles.developer__description}
-				>
-					<h3 className={developerStyles.developer__descriptionTitle}>Resume</h3>
-				</section>
+				{props.developerDetails.description != ""
+					? (
+						<section
+							id="companyDescription"
+							className={developerStyles.developer__description}
+						>
+							<h3 className={developerStyles.developer__descriptionTitle}>Resume</h3>
+						</section>
+					)
+					: null
+				}
 
 				{props.gamesFromDeveloper.results.length > 0
 					? <section className={developerStyles.developer__gamesFromDeveloper}>
