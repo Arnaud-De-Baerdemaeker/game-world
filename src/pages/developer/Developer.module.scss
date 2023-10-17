@@ -44,7 +44,7 @@
 	&__gamesFromDeveloper {
 		display: flex;
 		flex-direction: column;
-		row-gap: 20px;
+		row-gap: 50px;
 	}
 
 	&__sectionTitle {
@@ -54,6 +54,6 @@
 	&__gamesList {
 		display: flex;
 		flex-direction: column;
-		row-gap: 20px;
+		row-gap: 50px;
 	}
 }
