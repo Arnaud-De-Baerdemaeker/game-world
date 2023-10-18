@@ -7,8 +7,11 @@
 import Head from "next/head";
 import {useState, useEffect} from "react";
 
-import Menu from "@/components/menu/Menu";
+import useToggler from "@/hooks/useToggler";
+
 import Header from "@/components/header/Header";
+import Menu from "@/components/menu/Menu";
+import Hero from "@/components/hero/Hero";
 import GameCard from "@/components/cards/GameCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 import Footer from "@/components/footer/Footer";
@@ -16,18 +19,22 @@ import Footer from "@/components/footer/Footer";
 import {getPlatformDetails} from "@/api/platforms/getPlatformDetails";
 import {getGamesFromPlatform} from "@/api/games/getGamesFromPlatform";
 
+import platformStyles from "@/pages/platform/Platform.module.scss";
+
 const Platform = (props) => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
 	const [hasFollowingCallsMoreResults, setHasFollowingCallsMoreResults] = useState(null);
 
 	useEffect(() => {
-		const parser = new DOMParser();
-		const parsedContent = parser.parseFromString(props.platformDetails.description, "text/html");
-		const elements = parsedContent.body.children;
-		const target = document.querySelector("#platformDescription");
-		target.append(...elements);
+		if(props.platformDetails.description != "") {
+			const range = document.createRange();
+			const fragment = range.createContextualFragment(props.platformDetails.description);
+			const target = document.querySelector("#platformDescription");
+			target.append(fragment);
+		}
 
 		props.gamesFromPlatform.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
 	}, []);
@@ -49,33 +56,54 @@ const Platform = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
 			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title={props.platformDetails.name}
+				catchword={null}
 				imageSrc={props.platformDetails.image_background}
 				imageAlt={`"${props.platformDetails.name}" cover image`}
-				imageClass=""
-				mainTitle={props.platformDetails.name}
-				subTitle=""
 			/>
-			<main>
-				<div id="platformDescription"></div>
+			<main className={platformStyles.platform}>
+				{props.platformDetails.description != ""
+					? (
+						<section
+							id="platformDescription"
+							className={platformStyles.platform__description}
+						>
+							<h3 className={platformStyles.platform__descriptionTitle}>
+								Resume
+							</h3>
+						</section>
+					)
+					: null
+				}
 
-				<dl>
-					<dt>Games count</dt>
-					<dd>{props.platformDetails.games_count ? props.platformDetails.games_count : "N/A"}</dd>
+				<dl className={platformStyles.platform__informations}>
+					<div className={platformStyles.platform__informationsContainer}>
+						<dt className={platformStyles.platform__informationsLabel}>Games</dt>
+						<dd>{props.platformDetails.games_count ? props.platformDetails.games_count : "N/A"}</dd>
+					</div>
 
-					<dt>Release year</dt>
-					<dd>{props.platformDetails.year_start ? props.platformDetails.year_start : "N/A"}</dd>
+					<div className={platformStyles.platform__informationsContainer}>
+						<dt className={platformStyles.platform__informationsLabel}>Release</dt>
+						<dd>{props.platformDetails.year_start ? props.platformDetails.year_start : "N/A"}</dd>
+					</div>
 
-					<dt>End year</dt>
-					<dd>{props.platformDetails.year_end ? props.platformDetails.year_end : "N/A"}</dd>
+					<div className={platformStyles.platform__informationsContainer}>
+						<dt className={platformStyles.platform__informationsLabel}>End</dt>
+						<dd>{props.platformDetails.year_end ? props.platformDetails.year_end : "N/A"}</dd>
+					</div>
 				</dl>
 
 				{props.gamesFromPlatform.results.length > 0
-					? <section>
-						<h3>Games on {props.platformDetails.name}</h3>
+					? <section className={platformStyles.platform__gamesOnPlatform}>
+						<h3 className={platformStyles.platform__sectionTitle}>Games on {props.platformDetails.name}</h3>
 
-						<div>
+						<div className={platformStyles.platform__gamesList}>
 							{props.gamesFromPlatform.results.map(entry => (
 								<GameCard
 									key={entry.id}
@@ -83,23 +111,18 @@ const Platform = (props) => {
 									slug={entry.slug}
 									pathname={`/game/[slug]`}
 									as={`/game/${entry.slug}`}
-									dominantColor={entry.dominant_color}
-									saturatedColor={entry.saturated_color}
-									shortScreenshots={entry.short_screenshorts}
-									tags={entry.tags}
 									imageSrc={entry.background_image}
-									imageAlt=""
-									imageClass=""
+									imageAlt={`${entry.name} cover image`}
 									gameName={entry.name}
-									gamePlatforms={entry.platforms}
+									gameParentPlatforms={entry.parent_platforms}
 									gameRelease={entry.released}
-									gameGenres={entry.genres}
 								/>
 							))}
 						</div>
 					</section>
 					: <p>No results were returned</p>
 				}
+
 				{moreResults.length != 0
 					? moreResults.map(entry => (
 						<GameCard
@@ -108,21 +131,16 @@ const Platform = (props) => {
 							slug={entry.slug}
 							pathname={`/game/[slug]`}
 							as={`/game/${entry.slug}`}
-							dominantColor={entry.dominant_color}
-							saturatedColor={entry.saturated_color}
-							shortScreenshots={entry.short_screenshorts}
-							tags={entry.tags}
 							imageSrc={entry.background_image}
-							imageAlt=""
-							imageClass=""
+							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
-							gamePlatforms={entry.platforms}
+							gameParentPlatforms={entry.parent_platforms}
 							gameRelease={entry.released}
-							gameGenres={entry.genres}
 						/>
 					))
 					: null
 				}
+
 				<LoadMore
 					nextPage={nextPage}
 					setNextPage={setNextPage}
