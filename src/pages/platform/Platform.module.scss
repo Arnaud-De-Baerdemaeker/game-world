@@ -1,0 +1,76 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@import "../../styles/variables.scss";
+
+.platform {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 50px;
+	margin-top: 100vh;
+	padding: {
+		top: 20px;
+		right: 10px;
+		bottom: 20px;
+		left: 10px;
+	}
+	background: linear-gradient(
+		to bottom,
+		$charcoal 0%,
+		$eerieBlack 100%
+	);
+	border-top: {
+		left-radius: 10px;
+		right-radius: 10px;
+	}
+	box-shadow: 0 0 10px 5px $eerieBlack;
+
+	&__description {
+		display: flex;
+		flex-direction: column;
+		row-gap: 20px;
+
+		&Title {
+			font-size: 22px;
+		}
+	}
+
+	&__informations {
+		display: flex;
+		column-gap: 20px;
+		width: 100%;
+
+		&Container {
+			width: calc(100% / 3);
+			text-align: center;
+		}
+
+		&Label {
+			font-weight: 900;
+		}
+
+		&Value {}
+	}
+
+	&__gamesOnPlatform {
+		display: flex;
+		flex-direction: column;
+		row-gap: 50px;
+	}
+
+	&__sectionTitle {
+		font-size: 22px;
+	}
+
+	&__gamesList {
+		display: flex;
+		flex-direction: column;
+		row-gap: 50px;
+	}
+}
