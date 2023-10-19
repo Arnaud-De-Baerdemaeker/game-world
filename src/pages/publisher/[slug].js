@@ -7,19 +7,25 @@
 import Head from "next/head";
 import {useEffect} from "react";
 
-import Menu from "@/components/menu/Menu";
+import useToggler from "@/hooks/useToggler";
+
 import Header from "@/components/header/Header";
+import Menu from "@/components/menu/Menu";
+import Hero from "@/components/hero/Hero";
 import Footer from "@/components/footer/Footer";
 
 import {getPublisherDetails} from "@/api/publishers/getPublisherDetails";
 
+import publisherStyles from "@/pages/publisher/Publisher.module.scss";
+
 const Publisher = (props) => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
+
 	useEffect(() => {
-		const parser = new DOMParser();
-		const parsedContent = parser.parseFromString(props.publisherDetails.description, "text/html");
-		const elements = parsedContent.body.children;
+		const range = document.createRange();
+		const fragment = range.createContextualFragment(props.publisherDetails.description);
 		const target = document.querySelector("#companyDescription");
-		target.append(...elements);
+		target.append(fragment);
 	}, []);
 
 	return(
@@ -39,16 +45,22 @@ const Publisher = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
 			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title={props.publisherDetails.name}
+				catchword={null}
 				imageSrc={props.publisherDetails.image_background}
 				imageAlt={`"${props.publisherDetails.name}" cover image`}
-				imageClass=""
-				mainTitle={props.publisherDetails.name}
-				subTitle=""
 			/>
-			<main>
-				<div id="companyDescription"></div>
+			<main className={publisherStyles.publisher}>
+				<div
+					id="companyDescription"
+					className={publisherStyles.publisher__presentation}
+				></div>
 			</main>
 			<Footer />
 		</>

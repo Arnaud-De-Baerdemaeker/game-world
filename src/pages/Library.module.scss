@@ -7,11 +7,14 @@
 @import "../styles/variables.scss";
 
 .library {
+	position: relative;
+	z-index: 1;
 	display: flex;
 	flex-direction: column;
 	row-gap: 40px;
 	width: 100%;
 	height: 100%;
+	margin-top: 100vh;
 	padding: {
 		top: 50px;
 		right: 10px;

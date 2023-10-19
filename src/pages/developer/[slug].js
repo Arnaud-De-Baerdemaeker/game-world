@@ -7,8 +7,11 @@
 import Head from "next/head";
 import {useState, useEffect} from "react";
 
-import Menu from "@/components/menu/Menu";
+import useToggler from "@/hooks/useToggler";
+
 import Header from "@/components/header/Header";
+import Menu from "@/components/menu/Menu";
+import Hero from "@/components/hero/Hero";
 import GameCard from "@/components/cards/GameCard";
 import LoadMore from "@/components/loadMore/LoadMore";
 import Footer from "@/components/footer/Footer";
@@ -16,18 +19,22 @@ import Footer from "@/components/footer/Footer";
 import {getDeveloperDetails} from "@/api/developers/getDeveloperDetails";
 import {getGamesFromDeveloper} from "@/api/games/getGamesFromDeveloper";
 
+import developerStyles from "@/pages/developer/Developer.module.scss";
+
 const Developer = (props) => {
+	const [isMenuOpen, toggleMenu] = useToggler(false);
 	const [nextPage, setNextPage] = useState(2);
 	const [moreResults, setMoreResults] = useState([]);
 	const [hasFirstCallMoreResults, setHasFirstCallMoreResults] = useState(null);
 	const [hasFollowingCallsMoreResults, setHasFollowingCallsMoreResults] = useState(null);
 
 	useEffect(() => {
-		const parser = new DOMParser();
-		const parsedContent = parser.parseFromString(props.developerDetails.description, "text/html");
-		const elements = parsedContent.body.children;
-		const target = document.querySelector("#companyDescription");
-		target.append(...elements);
+		if(props.developerDetails.description != "") {
+			const range = document.createRange();
+			const fragment = range.createContextualFragment(props.developerDetails.description);
+			const target = document.querySelector("#companyDescription");
+			target.append(fragment);
+		}
 
 		props.gamesFromDeveloper.next != null ? setHasFirstCallMoreResults(true) : setHasFirstCallMoreResults(false);
 	}, []);
@@ -49,21 +56,35 @@ const Developer = (props) => {
 					href="/favicon.ico"
 				/>
 			</Head>
-			<Menu />
 			<Header
+				isMenuOpen={isMenuOpen}
+				toggleMenu={toggleMenu}
+			/>
+			<Menu isMenuOpen={isMenuOpen} />
+			<Hero
+				title={props.developerDetails.name}
+				catchword={null}
 				imageSrc={props.developerDetails.image_background}
 				imageAlt={`"${props.developerDetails.name}" cover image`}
-				imageClass=""
-				title={<h2>{props.developerDetails.name}</h2>}
 			/>
-			<main>
-				<div id="companyDescription"></div>
+			<main className={developerStyles.developer}>
+				{props.developerDetails.description != ""
+					? (
+						<section
+							id="companyDescription"
+							className={developerStyles.developer__description}
+						>
+							<h3 className={developerStyles.developer__descriptionTitle}>Resume</h3>
+						</section>
+					)
+					: null
+				}
 
 				{props.gamesFromDeveloper.results.length > 0
-					? <section>
-						<h3>Games from {props.developerDetails.name}</h3>
+					? <section className={developerStyles.developer__gamesFromDeveloper}>
+						<h3 className={developerStyles.developer__sectionTitle}>Games from {props.developerDetails.name}</h3>
 
-						<div>
+						<div className={developerStyles.developer__gamesList}>
 							{props.gamesFromDeveloper.results.map(entry => (
 								<GameCard
 									key={entry.id}
@@ -71,23 +92,18 @@ const Developer = (props) => {
 									slug={entry.slug}
 									pathname={`/game/[slug]`}
 									as={`/game/${entry.slug}`}
-									dominantColor={entry.dominant_color}
-									saturatedColor={entry.saturated_color}
-									shortScreenshots={entry.short_screenshorts}
-									tags={entry.tags}
 									imageSrc={entry.background_image}
-									imageAlt=""
-									imageClass=""
+									imageAlt={`${entry.name} cover image`}
 									gameName={entry.name}
-									gamePlatforms={entry.platforms}
+									gameParentPlatforms={entry.parent_platforms}
 									gameRelease={entry.released}
-									gameGenres={entry.genres}
 								/>
 							))}
 						</div>
 					</section>
 					: <p>No results were returned</p>
 				}
+
 				{moreResults.length != 0
 					? moreResults.map(entry => (
 						<GameCard
@@ -96,21 +112,16 @@ const Developer = (props) => {
 							slug={entry.slug}
 							pathname={`/game/[slug]`}
 							as={`/game/${entry.slug}`}
-							dominantColor={entry.dominant_color}
-							saturatedColor={entry.saturated_color}
-							shortScreenshots={entry.short_screenshorts}
-							tags={entry.tags}
 							imageSrc={entry.background_image}
-							imageAlt=""
-							imageClass=""
+							imageAlt={`${entry.name} cover image`}
 							gameName={entry.name}
-							gamePlatforms={entry.platforms}
+							gameParentPlatforms={entry.parent_platforms}
 							gameRelease={entry.released}
-							gameGenres={entry.genres}
 						/>
 					))
 					: null
 				}
+
 				<LoadMore
 					nextPage={nextPage}
 					setNextPage={setNextPage}
