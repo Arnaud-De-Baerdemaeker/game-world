@@ -1,0 +1,22 @@
+/*
+	Game World
+	April 2023
+	Arnaud De Baerdemaeker
+*/
+
+@mixin pagesMainContent() {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	row-gap: 50px;
+	width: 100%;
+	height: 100%;
+	margin-top: 100vh;
+	padding: {
+		top: 50px;
+		right: 10px;
+		bottom: 50px;
+		left: 10px;
+	}
+}
