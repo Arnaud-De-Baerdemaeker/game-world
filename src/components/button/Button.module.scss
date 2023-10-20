@@ -5,6 +5,7 @@
 */
 
 @import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
 @import "../../styles/keyframes.scss";
 
 .button {
@@ -128,10 +129,10 @@
 	&__submit {
 		font: {
 			family: $jost;
-			weight: 600;
+			weight: 700;
 		}
 		width: 100px;
-		height: 30px;
+		height: 35px;
 		border: {
 			style: solid;
 			width: 1px;
@@ -159,6 +160,14 @@
 		}
 
 		@media screen {
+			@media #{$portrait} {
+				@include fluidContent(font-size, 13px, 15, 13, 100vw);
+
+				@media #{$mq-w1080-up} {
+					font-size: 15px;
+				}
+			}
+
 			@media #{$desktop} {
 				&:hover {
 					background-color: $lemonChiffon;
@@ -170,9 +179,8 @@
 
 	&__clear {
 		font-family: $jost;
-		font-weight: 600;
 		width: 100px;
-		height: 30px;
+		height: 35px;
 		border: {
 			style: solid;
 			width: 1px;
@@ -201,6 +209,14 @@
 		}
 
 		@media screen {
+			@media #{$portrait} {
+				@include fluidContent(font-size, 13px, 15, 13, 100vw);
+
+				@media #{$mq-w1080-up} {
+					font-size: 15px;
+				}
+			}
+
 			@media #{$desktop} {
 				&:hover {
 					border-color: $lemonChiffon;
