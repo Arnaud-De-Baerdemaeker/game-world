@@ -20,6 +20,7 @@ const LatestReleasesResults = (props) => {
 	return(
 		<section className={latestReleasesStyles.latestReleases}>
 			<h3 className={latestReleasesStyles.latestReleases__title}>Latest Releases</h3>
+
 			<div className={latestReleasesStyles.latestReleases__container}>
 				{props.latestReleases.results.length > 0
 					? props.latestReleases.results.map(entry => (
