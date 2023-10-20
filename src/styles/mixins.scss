@@ -4,6 +4,12 @@
 	Arnaud De Baerdemaeker
 */
 
+@mixin fluidContent($property, $minimum-size-rem, $maximum-size, $minimum-size, $maximum-viewport-vw-vh) {
+	#{$property}: calc(#{$minimum-size-rem} + (#{$maximum-size} - #{$minimum-size}) * ((#{$maximum-viewport-vw-vh} - 306px) / (1080 - 306)));
+}
+
+
+// Mixins for styles in common
 @mixin pagesMainContent() {
 	position: relative;
 	z-index: 1;
