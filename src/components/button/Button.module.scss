@@ -10,15 +10,13 @@
 
 .button {
 	&__menu {
-		position: relative;
+		position: absolute;
+		left: 10px;
 		z-index: 3;
-		width: 40px;
-		height: 40px;
 		border: {
 			style: solid;
 			width: 1px;
 			color: $cadetGray;
-			radius: 40px;
 		}
 		color: $cadetGray;
 		background-color: $eerieBlack;
@@ -47,6 +45,18 @@
 		}
 
 		@media screen {
+			@media #{$portrait} {
+				@include fluidContent(width, 40px, 60, 40, 100vw);
+				@include fluidContent(height, 40px, 60, 40, 100vw);
+				@include fluidContent(border-radius, 40px, 60, 40, 100vw);
+
+				@media #{$mq-w1080-up} {
+					width: 60px;
+					height: 60px;
+					border-radius: 60px;
+				}
+			}
+
 			@media #{$desktop} {
 				&:hover {
 					border-color: $lemonChiffon;
@@ -231,14 +241,16 @@
 			family: $jost;
 			weight: 600;
 		}
-		width: 140px;
-		height: 30px;
+		width: fit-content;
 		color: $eerieBlack;
+		padding: {
+			right: 20px;
+			left: 20px;
+		}
 		border: {
 			style: solid;
 			width: 1px;
 			color: $cadetGray;
-			radius: 30px;
 		}
 		background-color: $cadetGray;
 		box-shadow: 0 0 10px 0 $eerieBlack;
@@ -260,6 +272,18 @@
 		}
 
 		@media screen {
+			@media #{$portrait} {
+				@include fluidContent(font-size, 13px, 15, 13, 100vw);
+				@include fluidContent(height, 40px, 50, 40, 100vw);
+				@include fluidContent(border-radius, 40px, 50, 40, 100vw);
+
+				@media #{$mq-w1080-up} {
+					font-size: 15px;
+					height: 50px;
+					border-radius: 50px;
+				}
+			}
+
 			@media #{$desktop} {
 				&:hover {
 					background-color: $lemonChiffon;
