@@ -18,6 +18,7 @@ const SearchResults = (props) => {
 	return(
 		<>
 			<h3>Search results for "{props.searchQuery}"</h3>
+
 			<div>
 				{props.searchResults.results.length > 0
 					? props.searchResults.results.map(entry => (
@@ -36,6 +37,7 @@ const SearchResults = (props) => {
 					))
 					: null
 				}
+
 				{moreResults.length != 0
 					? moreResults.map(entry => (
 						<Card
@@ -54,6 +56,7 @@ const SearchResults = (props) => {
 					: null
 				}
 			</div>
+
 			<LoadMore
 				searchQuery={props.searchQuery}
 				nextPage={nextPage}
