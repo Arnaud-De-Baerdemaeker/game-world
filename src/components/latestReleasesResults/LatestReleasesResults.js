@@ -57,21 +57,21 @@ const LatestReleasesResults = (props) => {
 					))
 					: null
 				}
-
-				<LoadMore
-					nextPage={nextPage}
-					setNextPage={setNextPage}
-					moreResults={moreResults}
-					setMoreResults={setMoreResults}
-					setHasFirstCallMoreResults={props.setHasFirstCallMoreResults}
-					setHasFollowingCallsMoreResults={props.setHasFollowingCallsMoreResults}
-					apiCall={getLatestReleases}
-					next={props.hasFirstCallMoreResults || props.hasFollowingCallsMoreResults
-						? true
-						: false
-					}
-				/>
 			</div>
+
+			<LoadMore
+				nextPage={nextPage}
+				setNextPage={setNextPage}
+				moreResults={moreResults}
+				setMoreResults={setMoreResults}
+				setHasFirstCallMoreResults={props.setHasFirstCallMoreResults}
+				setHasFollowingCallsMoreResults={props.setHasFollowingCallsMoreResults}
+				apiCall={getLatestReleases}
+				next={props.hasFirstCallMoreResults || props.hasFollowingCallsMoreResults
+					? true
+					: false
+				}
+			/>
 		</section>
 	);
 };
