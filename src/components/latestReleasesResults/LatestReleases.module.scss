@@ -5,17 +5,27 @@
 */
 
 @import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
 
 .latestReleases {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	row-gap: 50px;
 
 	&__title {
 		position: relative;
-		align-self: center;
 		width: fit-content;
-		font-size: 28px;
+
+		@media screen {
+			@media #{$portrait} {
+				@include fluidContent(font-size, 30px, 50, 30, 100vw);
+
+				@media #{$mq-w1080-up} {
+					font-size: 50px;
+				}
+			}
+		}
 
 		&:after {
 			content: "";
@@ -26,12 +36,25 @@
 			height: 4px;
 			border-radius: 4px;
 			background-color: $lemonChiffon;
+
+			@media screen {
+				@media #{$portrait} {
+					@include fluidContent(height, 4px, 7, 4, 100vw);
+					@include fluidContent(border-radius, 4px, 7, 4, 100vw);
+
+					@media #{$mq-w1080-up} {
+						height: 7px;
+						border-radius: 7px;
+					}
+				}
+			}
 		}
 	}
 
 	&__container {
 		display: flex;
 		justify-content: center;
+		column-gap: 50px;
 		row-gap: 50px;
 		flex-wrap: wrap;
 	}
