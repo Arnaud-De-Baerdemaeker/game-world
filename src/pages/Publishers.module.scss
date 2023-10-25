@@ -9,6 +9,7 @@
 
 .publishers {
 	@include pagesMainContent();
+	row-gap: 50px;
 	background:
 		url("../images/tile.svg"),
 		radial-gradient(circle at top left, $cadetGray 0%, transparent 50%),
@@ -23,8 +24,10 @@
 
 	&__container {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: center;
 		row-gap: 50px;
+		column-gap: 50px;
 		flex-wrap: wrap;
 	}
 }
