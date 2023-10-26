@@ -29,7 +29,7 @@
 	@media screen {
 		@media #{$portrait} {
 			@include fluidContent(padding-right, 10px, 20, 10, 100vw);
-			@include fluidContent(padding-right, 10px, 20, 10, 100vw);
+			@include fluidContent(padding-left, 10px, 20, 10, 100vw);
 
 			@media #{$mq-w1080-up} {
 				padding: {
