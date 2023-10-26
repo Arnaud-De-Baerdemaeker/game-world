@@ -74,6 +74,7 @@ const Developers = (props) => {
 						))
 						: <p>No results were returned</p>
 					}
+
 					{moreResults.length != 0
 						? moreResults.map(entry => (
 							<CompanyCard
@@ -90,6 +91,7 @@ const Developers = (props) => {
 						: null
 					}
 				</div>
+
 				<LoadMore
 					nextPage={nextPage}
 					setNextPage={setNextPage}

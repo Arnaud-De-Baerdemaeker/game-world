@@ -13,13 +13,17 @@
 		max-width: 320px;
 		height: 320px;
 		border-radius: 12px;
-		transition-property: transform;
-		transition-duration: 0.1s;
+		transition: {
+			property: transform;
+			duration: 0.1s;
+		}
 
 		&:focus-visible {
-			animation-name: focusAnimation;
-			animation-duration: 2s;
-			animation-iteration-count: infinite;
+			animation: {
+				name: focusAnimation;
+				duration: 2s;
+				iteration-count: infinite;
+			}
 		}
 
 		&:active {
@@ -78,8 +82,10 @@
 		height: 100%;
 		object-fit: cover;
 		filter: brightness(40%);
-		transition-property: transform;
-		transition-duration: 0.5s;
+		transition: {
+			property: transform;
+			duration: 0.5s;
+		}
 
 		@media screen {
 			@media #{$desktop} {
