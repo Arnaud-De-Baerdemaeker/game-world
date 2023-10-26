@@ -53,9 +53,9 @@
 
 	&__container {
 		display: flex;
-		justify-content: center;
-		column-gap: 50px;
-		row-gap: 50px;
 		flex-wrap: wrap;
+		justify-content: center;
+		row-gap: 50px;
+		column-gap: 50px;
 	}
 }
