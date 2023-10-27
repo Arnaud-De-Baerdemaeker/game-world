@@ -5,22 +5,11 @@
 */
 
 @import "../styles/variables.scss";
+@import "../styles/mixins.scss";
 
 .library {
-	position: relative;
-	z-index: 1;
-	display: flex;
-	flex-direction: column;
-	row-gap: 40px;
-	width: 100%;
-	height: 100%;
-	margin-top: 100vh;
-	padding: {
-		top: 50px;
-		right: 10px;
-		bottom: 50px;
-		left: 10px;
-	}
+	@include pagesMainContent();
+	row-gap: 50px;
 	background:
 		url("../images/tile.svg"),
 		radial-gradient(circle at top left, $cadetGray 0%, transparent 50%),
@@ -34,6 +23,8 @@
 	}
 
 	&__tabsOuterContainer {
+		width: 100%;
+		max-width: 400px;
 		background-color: $charcoal;
 		padding: 4px;
 		border-radius: 10px;
@@ -66,14 +57,23 @@
 	&__gallery {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		row-gap: 50px;
 	}
 
 	&__title {
 		position: relative;
-		align-self: center;
 		width: fit-content;
-		font-size: 28px;
+
+		@media screen {
+			@media #{$portrait} {
+				@include fluidContent(font-size, 30px, 50, 30, 100vw);
+
+				@media #{$mq-w1080-up} {
+					font-size: 50px;
+				}
+			}
+		}
 
 		&:after {
 			content: "";
@@ -84,22 +84,47 @@
 			height: 4px;
 			border-radius: 4px;
 			background-color: $lemonChiffon;
+
+			@media screen {
+				@media #{$portrait} {
+					@include fluidContent(height, 4px, 7, 4, 100vw);
+					@include fluidContent(border-radius, 4px, 7, 4, 100vw);
+
+					@media #{$mq-w1080-up} {
+						height: 7px;
+						border-radius: 7px;
+					}
+				}
+			}
 		}
 	}
 
 	&__games {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		row-gap: 20px;
+		width: 100%;
 
 		&Title {
-			font-size: 25px;
+			@media screen {
+				@media #{$portrait} {
+					@include fluidContent(font-size, 25px, 35, 25, 100vw);
+
+					@media #{$mq-w1080-up} {
+						font-size: 35px;
+					}
+				}
+			}
 		}
 
 		&List {
-			display: inherit;
-			flex-direction: inherit;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
 			row-gap: 50px;
+			column-gap: 50px;
+			width: 100%;
 		}
 	}
 
