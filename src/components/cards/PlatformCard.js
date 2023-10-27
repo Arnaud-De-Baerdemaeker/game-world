@@ -244,6 +244,7 @@ const PlatformCard = (props) => {
 	return(
 		<article className={platformCardStyles.platformCard}>
 			<ActionComplete isPopupOn={isPopupOn} />
+
 			<div className={platformCardStyles.platformCard__container}>
 				{props.imageSrc
 					? <Image
