@@ -77,6 +77,7 @@ const Platforms = (props) => {
 						))
 						: <p>No results were returned</p>
 					}
+
 					{moreResults.length != 0
 						? moreResults.map(entry => (
 							<PlatformCard
@@ -96,6 +97,7 @@ const Platforms = (props) => {
 						: null
 					}
 				</div>
+
 				<LoadMore
 					nextPage={nextPage}
 					setNextPage={setNextPage}

@@ -5,11 +5,19 @@
 */
 
 @import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
 
 .searchField {
 	background-color: $charcoal;
 	padding: 4px;
 	border-radius: 10px;
+	width: 100%;
+
+	@media screen {
+		@media #{$portrait} {
+			max-width: 500px;
+		}
+	}
 
 	&__container {
 		display: flex;
@@ -20,36 +28,57 @@
 			style: solid;
 			width: 2px;
 			color: $cadetGray;
-			radius: 8px;
+			radius: 6px;
 		}
 	}
 
 	&__field {
 		display: inherit;
 		flex-direction: inherit;
-		border-radius: 10px;
+		border-radius: 6px;
 		padding: 10px;
 		background-color: $eerieBlack;
 	}
 
 	&__label {
-		font-size: 13px;
 		color: $cadetGray;
+
+		@media screen {
+			@media #{$portrait} {
+				@include fluidContent(font-size, 12px, 14, 12, 100vw);
+
+				@media #{$mq-w1080-up} {
+					font-size: 14px;
+				}
+			}
+		}
 	}
 
 	&__input {
-		font-family: $jost;
-		font-size: 15px;
+		font: {
+			family: $jost;
+			style: italic;
+		}
 		height: 30px;
 		border: none;
-		border-radius: 30px;
 		background-color: transparent;
 		color: $lemonChiffon;
+		padding: 0;
+
+		@media screen {
+			@media #{$portrait} {
+				@include fluidContent(font-size, 14px, 16, 14, 100vw);
+
+				@media #{$mq-w1080-up} {
+					font-size: 16px;
+				}
+			}
+		}
 	}
 
 	&__buttons {
 		display: inherit;
-		justify-content: space-between;
-		column-gap: 10px;
+		justify-content: end;
+		column-gap: 20px;
 	}
 }
