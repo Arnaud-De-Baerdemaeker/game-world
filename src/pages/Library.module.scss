@@ -10,17 +10,7 @@
 .library {
 	@include pagesMainContent();
 	row-gap: 50px;
-	background:
-		url("../images/tile.svg"),
-		radial-gradient(circle at top left, $cadetGray 0%, transparent 50%),
-		radial-gradient(circle at bottom right, $cadetGray 0%, transparent 50%)
-	;
-	background: {
-		color: $eerieBlack;
-		size: auto 100vh;
-		position: 50% 50%;
-		attachment: fixed;
-	}
+	background-color: $richBlack;
 
 	&__tabsOuterContainer {
 		width: 100%;
@@ -34,10 +24,10 @@
 		border: {
 			style: solid;
 			width: 2px;
-			color: $cadetGray;
+			color: $powderBlue;
 			radius: 6px;
 		}
-		background-color: $eerieBlack;
+		background-color: $richBlack;
 		border-radius: 6px;
 		padding: 4px;
 	}

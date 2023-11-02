@@ -10,17 +10,7 @@
 .publishers {
 	@include pagesMainContent();
 	row-gap: 50px;
-	background:
-		url("../images/tile.svg"),
-		radial-gradient(circle at top left, $cadetGray 0%, transparent 50%),
-		radial-gradient(circle at bottom right, $cadetGray 0%, transparent 50%)
-	;
-	background: {
-		color: $eerieBlack;
-		size: auto 100vh;
-		position: 50% 50%;
-		attachment: fixed;
-	}
+	background-color: $richBlack;
 
 	&__container {
 		display: flex;
