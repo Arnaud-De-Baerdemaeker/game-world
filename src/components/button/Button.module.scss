@@ -16,11 +16,11 @@
 		border: {
 			style: solid;
 			width: 1px;
-			color: $cadetGray;
+			color: $powderBlue;
 		}
-		color: $cadetGray;
-		background-color: $eerieBlack;
-		box-shadow: 0 0 2px $eerieBlack;
+		color: $powderBlue;
+		background-color: $richBlack;
+		box-shadow: 0 0 2px $richBlack;
 		-webkit-tap-highlight-color: transparent;
 		transition: {
 			property: box-shadow, border-color, stroke, transform;
@@ -75,12 +75,12 @@
 		border: {
 			style: solid;
 			width: 1px;
-			color: $cadetGray;
+			color: $powderBlue;
 			radius: 40px;
 		}
-		background-color: $eerieBlack;
+		background-color: $richBlack;
 		-webkit-tap-highlight-color: transparent;
-		box-shadow: 0 0 10px 5px $eerieBlack;
+		box-shadow: 0 0 10px 5px $richBlack;
 		transition: {
 			property: border-color, fill, stroke, transform;
 			duration: 0.5s, 0.5s, 0.5s, 0.1s;
@@ -146,12 +146,12 @@
 		border: {
 			style: solid;
 			width: 1px;
-			color: $cadetGray;
+			color: $powderBlue;
 			radius: 30px;
 		}
-		color: $eerieBlack;
-		background-color: $cadetGray;
-		box-shadow: 0 0 10px 0 $eerieBlack;
+		color: $richBlack;
+		background-color: $powderBlue;
+		box-shadow: 0 0 10px 0 $richBlack;
 		transition: {
 			property: background-color, border-color, transform;
 			duration: 0.5s, 0.5s, 0.1s;
@@ -194,12 +194,12 @@
 		border: {
 			style: solid;
 			width: 1px;
-			color: $cadetGray;
+			color: $powderBlue;
 			radius: 30px;
 		}
-		color: $cadetGray;
-		background-color: $eerieBlack;
-		box-shadow: 0 0 10px 0 $eerieBlack;
+		color: $powderBlue;
+		background-color: $richBlack;
+		box-shadow: 0 0 10px 0 $richBlack;
 		transition: {
 			property: border-color, color, transform;
 			duration: 0.5s, 0.5s, 0.1s;
@@ -242,7 +242,7 @@
 			weight: 600;
 		}
 		width: fit-content;
-		color: $eerieBlack;
+		color: $richBlack;
 		padding: {
 			right: 20px;
 			left: 20px;
@@ -250,10 +250,10 @@
 		border: {
 			style: solid;
 			width: 1px;
-			color: $cadetGray;
+			color: $powderBlue;
 		}
-		background-color: $cadetGray;
-		box-shadow: 0 0 10px 0 $eerieBlack;
+		background-color: $powderBlue;
+		box-shadow: 0 0 10px 0 $richBlack;
 		transition: {
 			property: background-color, border-color, transform;
 			duration: 0.5s, 0.5s, 0.1s;
@@ -298,7 +298,7 @@
 		height: 100%;
 		font-family: $jost;
 		font-size: 16px;
-		color: $cadetGray;
+		color: $powderBlue;
 		border-radius: 2px;
 
 		&--active {

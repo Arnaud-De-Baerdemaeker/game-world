@@ -27,7 +27,7 @@
 		border: {
 			style: solid;
 			width: 2px;
-			color: $cadetGray;
+			color: $powderBlue;
 			radius: 6px;
 		}
 	}
@@ -37,11 +37,11 @@
 		flex-direction: inherit;
 		border-radius: 6px;
 		padding: 10px;
-		background-color: $eerieBlack;
+		background-color: $richBlack;
 	}
 
 	&__label {
-		color: $cadetGray;
+		color: $powderBlue;
 
 		@media screen {
 			@media #{$portrait} {

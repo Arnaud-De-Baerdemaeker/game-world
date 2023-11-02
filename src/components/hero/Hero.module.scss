@@ -20,10 +20,10 @@
 	height: 100vh;
 	background:
 		url("../../images/tile.svg"),
-		radial-gradient(circle at center, transparent 25%, $cadetGray 75%, transparent 100%)
+		radial-gradient(circle at center, transparent 25%, $powderBlue 70%, transparent 87%)
 	;
 	background: {
-		color: $eerieBlack;
+		color: $richBlack;
 		size: auto 100vh;
 		position: 50% 50%;
 		attachment: fixed;

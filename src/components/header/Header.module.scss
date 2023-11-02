@@ -19,9 +19,9 @@
 		left: 10px;
 	}
 	padding: 4px;
-	background: radial-gradient(ellipse at center 170%, $cadetGray 0%, $eerieBlack 75%);
-	background-color: $eerieBlack;
-	box-shadow: 0 0 10px 5px $eerieBlack;
+	background: radial-gradient(ellipse at center 170%, $powderBlue 0%, $richBlack 75%);
+	background-color: $richBlack;
+	box-shadow: 0 0 10px 5px $richBlack;
 
 	@media screen {
 		@media #{$portrait} {
@@ -45,7 +45,7 @@
 		border: {
 			style: solid;
 			width: 2px;
-			color: $cadetGray;
+			color: $powderBlue;
 			radius: 60px;
 		}
 	}
@@ -68,7 +68,7 @@
 
 	&__link {
 		display: inline-block;
-		color: $cadetGray;
+		color: $powderBlue;
 		border-radius: 50px;
 		transition-property: color, transform;
 		transition-duration: 0.5s, 0.1s;

@@ -122,12 +122,12 @@
 		border: {
 			style: solid;
 			width: 1px;
-			color: $cadetGray;
+			color: $powderBlue;
 			radius: 40px;
 		}
-		background-color: $eerieBlack;
+		background-color: $richBlack;
 		-webkit-tap-highlight-color: transparent;
-		box-shadow: 0 0 10px 5px $eerieBlack;
+		box-shadow: 0 0 10px 5px $richBlack;
 		transition: {
 			property: border-color, stroke, transform;
 			duration: 0.5s, 0.5s, 0.1s;

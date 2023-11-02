@@ -14,7 +14,7 @@
 	padding: 4px;
 	border-radius: 12px;
 	border-bottom-right-radius: 50px;
-	background: radial-gradient(circle at 50% 121.5px, $charcoal 50%, $eerieBlack 100%);
+	background: radial-gradient(circle at 50% 121.5px, $charcoal 40%, rgba($charcoal, 0.4) 85%);
 
 	&__container {
 		display: flex;
@@ -44,7 +44,7 @@
 			left: 0;
 			width: inherit;
 			height: inherit;
-			background: radial-gradient(circle at center top, rgba($eerieBlack, 0) 70%, rgba($eerieBlack, 1) 90%);
+			background: radial-gradient(circle at center top, rgba($richBlack, 0) 70%, rgba($richBlack, 1) 90%);
 			border-radius: 5px;
 		}
 	}
@@ -87,12 +87,12 @@
 		border: {
 			style: solid;
 			width: 1px;
-			color: $cadetGray;
+			color: $powderBlue;
 			radius: 40px;
 		}
-		background-color: $eerieBlack;
+		background-color: $richBlack;
 		-webkit-tap-highlight-color: transparent;
-		box-shadow: 0 0 10px 5px $eerieBlack;
+		box-shadow: 0 0 10px 5px $richBlack;
 		transition: {
 			property: border-color, stroke, transform;
 			duration: 0.5s, 0.5s, 0.1s;
@@ -141,7 +141,7 @@
 
 		&Title {
 			font-size: 13px;
-			color: $cadetGray;
+			color: $powderBlue;
 		}
 
 		&List {

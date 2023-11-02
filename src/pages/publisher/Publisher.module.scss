@@ -22,13 +22,13 @@
 	background: linear-gradient(
 		to bottom,
 		$charcoal 0%,
-		$eerieBlack 100%
+		$richBlack 100%
 	);
 	border-top: {
 		left-radius: 10px;
 		right-radius: 10px;
 	}
-	box-shadow: 0 0 10px 5px $eerieBlack;
+	box-shadow: 0 0 10px 5px $richBlack;
 
 	&__presentation {
 		display: flex;
